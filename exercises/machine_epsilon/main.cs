@@ -46,7 +46,7 @@ class main{
 		Write("Comparing doubles: task\n");
                 WriteLine($"d1={d1:e15}");
                 WriteLine($"d2={d2:e15}");
-                WriteLine($"d1==d2 ? => {approx(d1,d2)}");
+                WriteLine($"d1==d2 ? => {approx(d1,d2, 2*epsilon)}");
 	return 0;
 	}
 }
