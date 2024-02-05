@@ -10,5 +10,3 @@ sfuns.dll: sfuns.cs
 clean: 
 	$(RM) sfuns.dll main.exe Out.txt
 
-test:
-	echo $(RM)

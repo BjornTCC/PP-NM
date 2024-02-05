@@ -1,0 +1,17 @@
+Part 1:
+my max int = 2147483647, tabulated = 2147483647
+my min int = -2147483648, tabulated = -2147483648
+Part 2:
+double machine e = 2.22044604925031E-16, 2^-52 = 2.22044604925031E-16
+float machine e = 1.192093E-07, 2^-23 = 1.19209289550781E-07
+Part 3:
+sumA-1 = 0.000000e+000 should be 1.110223e-010
+sumB-1 = 1.110223e-010 should be 1.110223e-010
+Part 4:
+d1=7.999999999999999e-001
+d2=8.000000000000000e-001
+d1==d2 ? => False
+Comparing doubles: task
+d1=7.999999999999999e-001
+d2=8.000000000000000e-001
+d1==d2 ? => True
