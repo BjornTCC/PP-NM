@@ -21,6 +21,7 @@ class main{
 		Write("Part 1:\n");
 		while (i+1 > i) {i++;}
 		Write($"my max int = {i}, tabulated = {int.MaxValue}\n");
+		i = 0;
 		while (i-1 < i) {i--;}
 		Write($"my min int = {i}, tabulated = {int.MinValue}\n");
 		
@@ -46,7 +47,7 @@ class main{
 		Write("Comparing doubles: task\n");
                 WriteLine($"d1={d1:e15}");
                 WriteLine($"d2={d2:e15}");
-                WriteLine($"d1==d2 ? => {approx(d1,d2, 2*epsilon)}");
+                WriteLine($"d1 ~ d2 ? => {approx(d1,d2, 2*epsilon)}");
 	return 0;
 	}
 }
