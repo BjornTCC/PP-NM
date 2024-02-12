@@ -10,7 +10,7 @@ class main{
 			var numbers=words[1].Split(',');
 			foreach(var number in numbers){
 				double x = double.Parse(number);
-				Error.WriteLine($"{x} {Sin(x)} {Cos(x)}");
+				WriteLine($"x = {x}, Sin({x}) = {Sin(x)}, Cos({x}) = {Cos(x)}");
 				}
 			}
 		}

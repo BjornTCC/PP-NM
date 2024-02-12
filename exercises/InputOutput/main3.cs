@@ -3,7 +3,7 @@ using static System.Console;
 using static System.Math;
 
 class main{
-	public static void Main(string[] args){
+	public static int Main(string[] args){
 	string infile=null,outfile=null;
 	foreach(var arg in args){
 		var words=arg.Split(':');
@@ -18,9 +18,10 @@ class main{
 	var outstream=new System.IO.StreamWriter(outfile,append:false);
 	for(string line=instream.ReadLine();line!=null;line=instream.ReadLine()){
 		double x=double.Parse(line);
-		outstream.WriteLine($"{x} {Sin(x)} {Cos(x)}");
+		outstream.WriteLine($"x = {x}, Sin({x}) = {Sin(x)}, Cos({x}) = {Cos(x)}");
         	}
 	instream.Close();
 	outstream.Close();
+	return 0;
 	}
 }
