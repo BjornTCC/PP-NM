@@ -1,4 +1,5 @@
 using static System.Math;
+using static cmath;
 
 public static class sfuns{
 
@@ -24,4 +25,11 @@ public static class sfuns{
 	if(x<9) return lngamma(x+1)-Log(x);
 	return x*Log(x+1/(12*x-1/x/10))-x+Log(2*PI/x)/2;
 	}//lngamma
+	 
+	public static complex cgamma(complex z){
+		if(z.Re<0)return PI/sin(PI*z)/cgamma(1-z);
+        	if(z.Re<9)return cgamma(z+1)/z;
+        	complex lngamma=z*log(z+1/(12*z-1/z/10))-z+log(2*PI/z)/2;
+		return exp(lngamma);
+	}//cgamma
 }//sfuns class

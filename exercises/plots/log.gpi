@@ -1,11 +1,12 @@
 \
-                set terminal svg background "white" ;\
-                set out "Out.Lngamma.gnuplot.svg" ;\
-                set xlabel "x";\
-                set ylabel "lngamma(x)";\
-                set title "Log of gamma function";\
-                set grid ;\
-                plot [0:10]\
-                        "Out.Lngamma.txt" with lines notitle \
-                        ,"LngammaData.txt" using 1:2 with points pointtype 6 notitle ;\
-        
+	set terminal svg background "white" ;\
+	set out "Out.Cgamma.gnuplot.svg" ;\
+	set xr [-4:4] ;\
+	set xlabel "Re(z)";\
+	set yr [-5:5] ;\
+	set ylabel "Im(z)" ;\
+	set zr [0:6] ;\
+	set zlabel "Gamma(z)" ;\
+	set view 60,330 ,, ;\
+	splot "Out.Cgamma.txt" using 1:2:3:4 with lines notitle;\
+
