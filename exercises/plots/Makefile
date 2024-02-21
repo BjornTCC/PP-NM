@@ -59,7 +59,8 @@ Out.Cgamma.gnuplot.svg: Out.Cgamma.txt Makefile
 		set zr [0:6] ;\
 		set zlabel "Gamma(z)" ;\
 		set view 60,330 ,, ;\
-		splot "$<" using 1:2:3:4 with lines notitle;\
+		set hidden3d ;\
+		splot "$<" using 1:2:3 with lines notitle;\
 	'| tee log.gpi | gnuplot
 
 Out.erf.txt: main.erf.exe

@@ -1,0 +1,8 @@
+\
+	set terminal svg background "white" ;\
+	set out "Out.times.svg" ;\
+	set xlabel "Number of processors" ;\
+	set ylabel "Time (s)" ;\
+	set title "Harmonic sum with multiprocessing" ;\
+	plot "out.times.txt" with lp ;\
+	
