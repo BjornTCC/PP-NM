@@ -6,9 +6,11 @@ MKLIB = mcs -target:library -out:$@ $(LIBS) $(CODE)
 Out.txt: main.exe
 	mono $< > $@
 
-main.exe: main.cs vec.dll; $(MKEXE)
+main.exe: main.cs vec.dll matrix.dll; $(MKEXE)
 
 vec.dll: vec.cs; $(MKLIB) 
+
+matrix.dll: matrix.cs; $(MKLIB)
 
 clean: 
 	$(RM) *.dll *.exe [Oo]ut*
