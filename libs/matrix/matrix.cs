@@ -9,8 +9,8 @@ public double[][] data;
 
 //constructors
 public matrix(int n, int m){
-	size1 = n; size2 = m; data = new double[size1][];
-	for(int i = 0; i<size1; i++) data[i] = new double[size2];
+	size1 = n; size2 = m; data = new double[size2][];
+	for(int i = 0; i<size2; i++) data[i] = new double[size1];
 }
 
 public matrix(int n) {
@@ -35,8 +35,8 @@ public matrix(string s){
 }
 
 public double this[int n, int m]{
-	get{return data[n][m];}
-	set{data[n][m] = value;}
+	get{return data[m][n];}
+	set{data[m][n] = value;}
 }
 
 public double[] this[int n]{
