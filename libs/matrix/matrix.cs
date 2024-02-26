@@ -46,8 +46,8 @@ public double[] this[int n]{
 
 public matrix transpose(){
 	matrix M = new matrix(size2, size1);
-	for(int i = 0; i < size1; i++){
-	for(int j = 0; j < size2; j++)
+	for(int i = 0; i < size2; i++){
+	for(int j = 0; j < size1; j++)
 		M[i,j] = this[j,i];
 	}
 	return M;
@@ -146,7 +146,7 @@ public matrix copy(){
 }
 
 //String methods
-public void print(string s="", string format="{0,2:g3} "){
+public void print(string s="", string format="{0,10:g3} "){
 	WriteLine(s);
 	for(int ir=0; ir < this.size1; ir++){
 	for(int ic=0; ic < this.size2; ic++)
