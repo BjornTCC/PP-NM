@@ -1,0 +1,9 @@
+\
+	set terminal svg background "white" ;\
+	set out "Out.times.svg" ;\
+	set logscale y 2 ;\
+	set xlabel "Matrix size N";\
+	set ylabel "real time";\
+	set title "Running time as function of matrix size";\
+	plot "Out.times.txt" with lp ;\
+	
