@@ -186,4 +186,18 @@ public bool approx(matrix B,double acc=1e-6, double eps=1e-6){
 	return true;
 }
 
+//Dot product of arrays
+public static double dot(double[] a, double[] b){
+	if( a.Length == b.Length){
+		double res = 0;
+		for(int i = 0; i < a.Length; i++)res+=a[i]*b[i];
+		return res;
+		}
+	throw new ArgumentException($"Cannot dot arrays with lengths {a.Length} and {b.Length}.");
+}
+
+public static double norm(double[] a){
+	return Sqrt(dot(a,a));
+}
+
 }//matrix

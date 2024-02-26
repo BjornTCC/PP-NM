@@ -10,6 +10,7 @@ static class main{
 		matrix B = M*b; 
 		M.print();
 		B.print();
+		WriteLine(matrix.norm(M[0]));
 	}
 }
 
