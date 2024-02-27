@@ -44,6 +44,12 @@ public vector this[int n]{
 	set{data[n] = (double[])value;}
 }
 
+public void set(int i, int j, double a){data[j][i] = a;}
+public void set(int i, vector a, bool row = false){
+	if(!row)data[i] = (double[])a;
+	if(row)for(int j = 0; j < size2; j++)data[j][i] = a[j];	
+}
+
 public matrix transpose(){
 	matrix M = new matrix(size2, size1);
 	for(int i = 0; i < size2; i++){

@@ -4,14 +4,16 @@ using static System.Math;
 
 static class main{
 	static void Main(){
-		matrix M = new matrix("1 0 1;0 1 0;0 0 1");
-		matrix b = matrix.id(3);
-		b.print();
-		matrix B = M*b; 
+		matrix M = new matrix("1 0 0 0; 0 1 0 0; 0 0 1 0"); 
 		M.print();
-		B.print();
-		//for(int i = 0; i < M[0].Length; i++)WriteLine(M[0][i]);
-		WriteLine(matrix.norm(M[0]));
+		M.set(1,2,2.0);
+		M.print();
+		double[] a = new double[]{10,20,30};
+		double[] b = new double[]{-1, -2, -3, -4};
+		M.set(0, a);
+		M.print();
+		M.set(1,b, row: true);
+		M.print();
 	}
 }
 
