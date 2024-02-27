@@ -3,31 +3,30 @@ using static System.Math;
 public static class QRGS{
 	
 	public static (matrix, matrix) decomp(matrix A){ //returns in format [Q, R]
-		int n = A.size1;
 		int m = A.size2;
 		matrix Q=A.copy(), R=new matrix(m,m);
 		for(int i = 0; i<m; i++){
 			R[i,i]=matrix.norm(Q[i]);
-			for(int k = 0; k < n; k++)Q[k,i]/=R[i,i]; //normalize the Q vectors
+			Q[i]/=R[i,i]; //normalize the Q vectors
 			for(int j=i+1; j<m; j++){
-				R[i,j]=matrix.dot(Q[i],Q[j]);
-				for(int k = 0; k < n; k++)Q[k,j] -= Q[k,i]*R[i,j]; //Orthognalize the Q vectors
+				R[i,j]=Q[i].dot(Q[j]);
+				Q[j] -= Q[i]*R[i,j]; //Orthognalize the Q vectors
 			}}
 		return (Q, R);
 	}//decomp	
 	
-	public static double[] backsub(matrix A, double[] b){ //back substitution inplace
-		for(int i = b.Length-1; i >= 0; i--){
+	public static vector backsub(matrix A, vector b){ //back substitution inplace
+		for(int i = b.size-1; i >= 0; i--){
                         double sum = 0;
-                        for(int j = i + 1; j < b.Length; j++)sum+=A[i,j]*b[j];
+                        for(int j = i + 1; j < b.size; j++)sum+=A[i,j]*b[j];
                         b[i] = (b[i] - sum)/A[i,i];
                 	}
                 return b;
 	}//backsub
 
-	public static double[] solve(matrix A, double[] b){ 
+	public static vector solve(matrix A, vector b){ 
 		(matrix Q, matrix R) = decomp(A);
-		double[] sol = Q.transpose()*b;
+		vector sol = Q.transpose()*b;
 		return backsub(R, sol);
 	}//solve
 	

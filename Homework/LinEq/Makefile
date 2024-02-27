@@ -30,9 +30,7 @@ time.exe: time.cs matrix.dll QRGS.dll; $(MKEXE)
 
 main.exe: main.cs matrix.dll QRGS.dll; $(MKEXE)
 
-vector.dll: ../../libs/matrix/vector.cs; $(MKLIB)
-
-matrix.dll: ../../libs/matrix/matrix.cs; $(MKLIB)
+matrix.dll: ../../libs/matrix/matrix.cs ../../libs/matrix/vector.cs; $(MKLIB)
 
 QRGS.dll: QRGS.cs matrix.dll; $(MKLIB)
 

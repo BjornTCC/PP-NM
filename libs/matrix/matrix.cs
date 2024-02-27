@@ -39,9 +39,9 @@ public double this[int n, int m]{
 	set{data[m][n] = value;}
 }
 
-public double[] this[int n]{
-	get{return data[n];}
-	set{data[n] = value;}
+public vector this[int n]{
+	get{return (vector)data[n];}
+	set{data[n] = (double[])value;}
 }
 
 public matrix transpose(){
@@ -154,6 +154,8 @@ public void print(string s="", string format="{0,10:g3} "){
 		WriteLine();
 	}
 }
+
+
 
 //Diagonals
 public static matrix id(int n){

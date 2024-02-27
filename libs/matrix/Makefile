@@ -12,7 +12,7 @@ vec.dll: vec.cs; $(MKLIB)
 
 vector.dll: vector.cs; $(MKLIB)
 
-matrix.dll: matrix.cs; $(MKLIB)
+matrix.dll: matrix.cs vector.cs; $(MKLIB)
 
 clean: 
 	$(RM) *.dll *.exe [Oo]ut*
