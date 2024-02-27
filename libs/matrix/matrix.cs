@@ -170,10 +170,9 @@ public static matrix id(int n){
 	return M;
 }
 
-public static matrix diag(double[] d){
-	int n = d.Length;
-	matrix M = new matrix(n);
-	for(int i = 0; i < n; i++)M[i,i]=d[i];
+public static matrix diag(vector d){
+	matrix M = new matrix(d.size);
+	for(int i = 0; i < d.size; i++)M[i,i]=d[i];
 	return M;
 }
 
