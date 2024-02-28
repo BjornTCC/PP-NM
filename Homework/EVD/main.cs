@@ -2,7 +2,7 @@ using static System.Console;
 
 public class main{
 	public static void Main(){
-		int n = 3;
+		int n = 6;
 		matrix A = new matrix(n);
 		System.Random random = new System.Random();
 		for(int i = 0; i < n; i++)

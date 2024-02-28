@@ -170,9 +170,10 @@ public static matrix id(int n){
 	return M;
 }
 
-public static matrix diag(vector d){
-	matrix M = new matrix(d.size);
-	for(int i = 0; i < d.size; i++)M[i,i]=d[i];
+public static matrix diag(vector d, int j = 0){ //constructs square matrix with a given diagonal or shifted diagonal
+	matrix M = new matrix(d.size + Abs(j));
+	if(j >= 0)for(int i = 0; i < d.size; i++)M[i,i+j]=d[i];
+        if(j < 0)for(int i = -j; i < d.size-j; i++)M[i,i+j]=d[i+j]; 
 	return M;
 }
 
