@@ -4,16 +4,18 @@ public static class jacobi{
 	public static void timesJ(matrix A, int p, int q, double theta){
 		double c = Cos(theta), s = Sin(theta);
 		for(int i = 0; i < A.size1; i++){
-			A[i,p] = c*A[i,p] - s*A[i,q];
-			A[i,q] = c*A[i,q] + s*A[i,p];
+			double Aip = A[i,p], Aiq = A[i,q];
+			A[i,p] = c*Aip - s*Aiq;
+			A[i,q] = c*Aiq + s*Aip;
 			}
 	}//timesJ
 	
 	public static void Jtimes(matrix A, int p, int q, double theta){
                 double c = Cos(theta), s = Sin(theta);
                 for(int i = 0; i < A.size2; i++){
-                        A[p,i] = c*A[p,i] + s*A[q,i];
-                        A[q,i] = c*A[q,i] - s*A[p,i];
+			double Api = A[p,i], Aqi = A[q,i];
+                        A[p,i] = c*Api + s*Aqi;
+                        A[q,i] = c*Aqi - s*Api;
                         }
 	}//Jtimes
 	 

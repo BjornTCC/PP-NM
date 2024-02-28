@@ -1,3 +1,5 @@
+using static System.Console;
+
 public class main{
 	public static void Main(){
 		int n = 3;

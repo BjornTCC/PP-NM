@@ -49,6 +49,6 @@ public static class QRGS{
 			for(int i = 0; i < n; i++)Ainv[i] = backsub(R,QT[i]);
 		       	return Ainv;	
 		}
-		throw new System.ArgumentException($"Can't invert non square matrix, size: ({A.size1}, {A.size2})");
+		throw new System.ArgumentException($"Can't invert non square matrix with size: ({A.size1}, {A.size2})");
 	}//inv
 }//QRGS
