@@ -10,16 +10,19 @@ Out.times.svg: Out.times.txt Makefile
 	echo '\
 		set terminal svg background "white" ;\
 		set out "$@" ;\
-		set logscale y 2 ;\
 		set xlabel "Matrix size N";\
-		set ylabel "real time";\
+		set ylabel "Decomposition time";\
 		set title "Running time as function of matrix size";\
-		plot "$<" with lp ;\
+		f(x)=b+(x/a)**c;\
+		b=1; a=90; c=3;\
+		fit f(x) "$<" via a,b;\
+		plot "$<" with lp \
+		,f(x) title sprintf("fit: (n/%.f)^{%.2f}+%.3f",a,c,b) \
 		'|tee log.gpi |gnuplot
 
 Out.times.txt: time.exe Makefile
 	>$@
-	for N in $$(seq 200 25 800); do \
+	for N in $$(seq 200 25 600); do \
 		$(TIME) mono $< -msize:$$N 1>out 2>err ;\
 	done
 
