@@ -107,11 +107,11 @@ public static matrix operator*(matrix A, double b){
 }
 
 public static double[] operator*(matrix A, double[] B){
-        if(A.size1 == B.Length){
-                double[] C = new double[B.Length];
-		for(int i=0; i < B.Length; i++){
+        if(A.size2 == B.Length){
+                double[] C = new double[A.size1];
+		for(int i=0; i < A.size1; i++){
                 for(int j=0; j < A.size2; j++)
-                        C[i] += A[i, j]*B[j];
+                        C[i] += A[i,j]*B[j];
                 }
                 return C;
                 }
@@ -119,11 +119,11 @@ public static double[] operator*(matrix A, double[] B){
 }
 
 public static double[] operator*(double[] B, matrix A){
-	if(A.size1 == B.Length){
-                double[] C = new double[B.Length];
-                for(int i=0; i < B.Length; i++){
-                for(int j=0; j < A.size2; j++)
-                        C[i] += A[j, i]*B[j];
+	if(A.size2 == B.Length){
+                double[] C = new double[A.size2];
+                for(int i=0; i < A.size2; i++){
+                for(int j=0; j < A.size1; j++)
+                        C[i] += A[j,i]*B[j];
                 }
                 return C;
                 }
