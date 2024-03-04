@@ -1,0 +1,7 @@
+Comparison test with analytical values: Success
+c1:         0          0          0          0 
+spline1:         0          0          0          0 
+c2:         0          0          0          0 
+spline2:         0          0          0          0 
+c3:         1          1          1          1 
+spline3:         1          1          1          1 

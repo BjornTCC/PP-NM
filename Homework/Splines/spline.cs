@@ -30,17 +30,19 @@ public class interp{
 	}//linterpInt
 	
 	public class qspline{
-		vector x,y,b,c;
+		public vector x,y,b,c;
 		public qspline(vector xs,vector ys){
 			if(xs.size != ys.size) throw new ArgumentException($"Data sizes incompatible x: {xs.size}, y:{ys.size}");
 			x=xs.copy(); y=ys.copy();
 			int n = x.size;
-		     	vector p = new vector(n-1), dx = new vector(n-1), b = new vector(n-1), c = new vector(n-1);
+		     	vector p = new vector(n-1), dx = new vector(n-1);
+			b = new vector(n-1); 
+			c = new vector(n-1);
 			for(int i = 0; i < n-1; i++){
 				dx[i] = x[i+1] - x[i];
 				p[i] = (y[i+1] - y[i])/dx[i];}
-			for(int i = 0; i < n-2; i++)c[i] =(p[i+1] - p[i] -c[i]*dx[i])/dx[i+1];
-			c[n-2]/=2;
+			for(int i = 0; i < n-2; i++)c[i+1] =(p[i+1] - p[i] -c[i]*dx[i])/dx[i+1];
+			c[n-2] /= 2;
 			for(int j = n-3; j >= 0; j--)c[j] = (p[j+1] - p[j] -c[j+1]*dx[j+1])/dx[j];
 			for(int i = 0; i < n-1; i++)b[i] = p[i] - c[i]*dx[i];
 		}//constructor

@@ -1,18 +1,5 @@
-1 0.373739693022212
-2 0.891865118356359
-3 0.722332074177606
-4 0.455751642331365
-5 0.393653738961394
-6 0.113198530447296
-7 0.3631225104272
-8 0.0976692312851871
-9 0.029899208820378
-10 0.480116415061111
-
-Unhandled Exception:
-System.NullReferenceException: Object reference not set to an instance of an object
-  at interp+qspline.evaluate (System.Double z, System.Int32 i) [0x00026] in <74a02ef2ed114e7697989c99719c17e2>:0 
-  at main.Main () [0x000e9] in <7dab4e8df7bc49dc921d8b653acdcbcf>:0 
-[ERROR] FATAL UNHANDLED EXCEPTION: System.NullReferenceException: Object reference not set to an instance of an object
-  at interp+qspline.evaluate (System.Double z, System.Int32 i) [0x00026] in <74a02ef2ed114e7697989c99719c17e2>:0 
-  at main.Main () [0x000e9] in <7dab4e8df7bc49dc921d8b653acdcbcf>:0 
+0 1 0 0
+1 1 1 1
+2 1 2 4
+3 1 3 9
+4 1 4 16
