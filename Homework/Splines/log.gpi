@@ -1,9 +1,13 @@
 \
-	set terminal svg background "white" ;\
-	set out "Out.Linterp.svg" ;\
-	set xlabel "x";\
-	set ylabel "y";\
-	set title "Linear interpolation";\
-	plot "Out2.txt" with p pt 7 ps 0.5 title "Data"\
-	,"Out1.txt" with l title "Interpolation"\
-	
+                set terminal svg background "white" ;\
+                set out "Out.qterp.svg" ;\
+                set xlabel "x";\
+                set ylabel "y";\
+                set title "Quadratic spline";\
+	plot "Outq2.txt" using 1:2 with p pt 7 ps 0.5 title "Data"\
+	,"Outq2.txt" using 1:3 with p pt 7 ps 0.5 notitle \
+                ,"Outq2.txt" using 1:4 with p pt 7 ps 0.5 notitle \
+	,"Outq1.txt" using 1:2 with l title "Interpolation"\
+                ,"Outq1.txt" using 1:3 with l notitle\
+                ,"Outq1.txt" using 1:4 with l notitle\
+                

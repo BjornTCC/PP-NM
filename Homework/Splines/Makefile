@@ -3,6 +3,8 @@ LIBS = $(addprefix -reference:,$(filter %.dll,$^)) # macros
 MKEXE = mcs -target:exe -out:$@ $(LIBS) $(CODE)
 MKLIB = mcs -target:library -out:$@ $(LIBS) $(CODE)
 
+all: Out.Linterp.svg Out.qterp.svg Out1.txt Outq1.txt Outq2.txt
+
 Out.Linterp.svg: Out1.txt Out2.txt Makefile
 	echo '\
 		set terminal svg background "white" ;\
