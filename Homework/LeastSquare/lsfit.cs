@@ -10,9 +10,10 @@ public static class fit{
 		for(int i = 0; i < x.size; i++){
 			b[i] = y[i]/dy[i];
 			for(int k = 0; k < fs.Length; k++)A[i,k] = fs[k](x[i])/dy[i];}
-		vector c = QRGS.solve(A, b);
-		matrix ATA = A.transpose()*A;
-		matrix cov = QRGS.inv(ATA);
+		(matrix Q, matrix R) = QRGS.decomp(A);
+		vector c = QRGS.backsub(R, Q.transpose()*b);
+		matrix Rinv = QRGS.inv(R);
+		matrix cov = Rinv*Rinv.transpose();
 		return (c,cov);
 	}//lsfit
 }//lsfit

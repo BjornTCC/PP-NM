@@ -1,0 +1,9 @@
+\
+	set terminal svg background "white" ;\
+	set out "Out.Linterp.svg" ;\
+	set xlabel "x";\
+	set ylabel "y";\
+	set title "Linear interpolation";\
+	plot "Out2.txt" with p pt 7 ps 0.5 title "Data"\
+	,"Out1.txt" with l title "Interpolation"\
+	
