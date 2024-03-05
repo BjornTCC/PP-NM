@@ -1,0 +1,13 @@
+Code for solving tri-diag. systems can be found in PP-NM/libs/QRDecomp/QRGS.cs.
+I wanted to place it next to the other lin-eq. solvers.
+Test of TriDiagSol succesful
+A:
+     0.217      0.451          0          0          0 
+     0.939      0.206        0.7          0          0 
+         0      0.339     0.0343      0.396          0 
+         0          0      0.851      0.355      0.988 
+         0          0          0      0.125      0.973 
+b:     0.793      0.759      0.165      0.816      0.909 
+x:     0.367       1.58      0.129     -0.946       1.06 
+A*x:     0.793      0.759      0.165      0.816      0.909 
+known solution:     0.367       1.58      0.129     -0.946       1.06 

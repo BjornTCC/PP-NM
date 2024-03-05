@@ -68,4 +68,56 @@ public class interp{
 			return res;	
 		}//integral
 	}//qspline
+	 
+	public class cspline{
+		public vector x,y,b,c,d;
+		public cspline(vector xs, vector ys){
+			if(xs.size != ys.size) throw new ArgumentException($"Data sizes incompatible x: {xs.size}, y:{ys.size}");
+			x = xs.copy(); y = ys.copy();
+			int n = x.size;
+			//construct all relevant vectors and matrices
+			vector h = new vector(n-1), p = new vector(n-1), B = new vector(n);
+			b = new vector(n); c = new vector(n-1); d = new vector(n-1);
+			matrix A = new matrix(n);
+			for(int i = 0; i < n-1; i++){
+				h[i] = x[i+1]-x[i];
+				p[i] = (y[i+1] - y[i])/h[i];}
+			A[0,0] = 2; A[n-1,n-1] = 2; A[0,1] = 1; B[1] = 3*p[1]; B[n-1] = 3*p[n-2];
+			for(int i = 0; i < n-3; i++){
+				A[i+1,i+1] = 2*h[i]/h[i+1] + 2;
+				A[i+1,i+2] = h[i]/h[i+1];
+				B[i+1] = 3*(p[i]+p[i+1]*h[i]/h[i+1]);}
+			//Now solve for b using tridiag-solver
+			b = linsol.TriDiagSol(A,B);
+			//compute c and d using eq. 19-20 in the book
+			c[0] = 0;
+			for(int i = 0; i < n-2; i++){
+				c[i+1] =(-2*b[i+1] -b[i+2]+3*p[i+1])/h[i+1];
+				d[i] = (b[i] +b[i+1] - 2*p[i])/(h[i]*h[i]);}
+			d[n-2] = -c[n-2]/(3*h[n-2]);
+		}//constructor
+		
+		public double evaluate(double z){
+                        int i = binsearch(x, z);
+                        double res = y[i] + b[i]*(z - x[i]) + c[i]*Pow(z-x[i],2) + d[i]*Pow(z-x[i],3);
+                        return res;
+                }//evaluate
+
+		public double derivative(double z){
+                        int i = binsearch(x, z);
+                        double res = b[i] + 2*c[i]*(z-x[i]) + 3*d[i]*(z-x[i])*(z-x[i]);
+                        return res;
+                }//derivative
+
+                public double integral(double z){
+                        int i=binsearch(x,z);
+                        double res = 0;
+			for(int j = 0; j < i; j++){ //split terms for ease of reading
+				double T12 = (x[j+1] - x[j])*y[j] + b[j]*Pow(x[j+1]-x[j],2)/2;
+				double T34 = c[i]*Pow(x[j+1] - x[j],3)/3 + d[i]*Pow(x[j+1]-x[j],4)/4;
+                                res += T12 + T34;}
+                        res+= (z - x[i])*y[i] + b[i]*Pow(z-x[i],2)/2 + c[i]*Pow(z - x[i],3)/3 + d[i]*Pow(z-x[i],4)/4;
+                        return res;
+                }//integral
+	}
 }//spline
