@@ -3,11 +3,22 @@
                 set out "Out.qterp.svg" ;\
                 set xlabel "x";\
                 set ylabel "y";\
+	set size ratio 1.5;\
+	set multiplot layout 1,3 columns scale 1.1;\
                 set title "Quadratic spline";\
 	plot "Outq2.txt" using 1:2 with p pt 7 ps 0.5 title "Data"\
 	,"Outq2.txt" using 1:3 with p pt 7 ps 0.5 notitle \
                 ,"Outq2.txt" using 1:4 with p pt 7 ps 0.5 notitle \
-	,"Outq1.txt" using 1:2 with l title "Interpolation"\
-                ,"Outq1.txt" using 1:3 with l notitle\
-                ,"Outq1.txt" using 1:4 with l notitle\
+	,"Outq1.txt" using 1:2 with l notitle linecolor rgb "#4627E2"\
+                ,"Outq1.txt" using 1:3 with l notitle linecolor rgb "#27E23A"\
+                ,"Outq1.txt" using 1:4 with l notitle linecolor rgb "#F0860C";\
+	set title "Quadratic spline derivatives";\
+                plot "Outq1.txt" using 1:5 with l notitle linecolor rgb "#4627E2"\
+                ,"Outq1.txt" using 1:6 with l notitle linecolor rgb "#27E23A"\
+                ,"Outq1.txt" using 1:7 with l notitle linecolor rgb "#F0860C";\
+	set title "Quadratic spline integrals";\
+	plot "Outq1.txt" using 1:8 with l notitle linecolor rgb "#4627E2"\
+                ,"Outq1.txt" using 1:9 with l notitle linecolor rgb "#27E23A"\
+	,"Outq1.txt" using 1:10 with l notitle linecolor rgb "#F0860C";;\
+	unset multiplot;\
                 

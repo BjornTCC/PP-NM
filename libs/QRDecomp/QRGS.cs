@@ -64,8 +64,8 @@ public static class linsol{
 			A[i,i] -= w*A[i-1,i];
 			b[i] -= w*b[i-1];}
 		vector sol = new vector(n); //Construct solution
-		sol[n-1] = b[n-1]/A[n-1,n-1]
-		for(int i = n-2; i > 0; i--)sol[i] = (b[i] - A[i,i+1]*x[i+1])/A[i,i];
+		sol[n-1] = b[n-1]/A[n-1,n-1];
+		for(int i = n-2; i > 0; i--)sol[i] = (b[i] - A[i,i+1]*sol[i+1])/A[i,i];
 		return sol;
 	}//TriDiagSol
 }//linsol

@@ -13,7 +13,7 @@ public class main{
 			Error.WriteLine($"{x[i]} {y[i]}");}
 		for(int i = 0; i < M; i++){
 			z[i] = x[0] + i*(x[N-1]-x[0])/(M-1);
-			Out.WriteLine($"{z[i]} {interp.linterp(x,y,z[i])}");}
+			Out.WriteLine($"{z[i]} {interp.linterp(x,y,z[i])} {interp.linterpInt(x,y,z[i])}");}
 		return 0;
 	}//Main
 }//main

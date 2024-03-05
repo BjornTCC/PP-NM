@@ -24,7 +24,7 @@ public class interp{
 	public static double linterpInt(double[] x, double[] y, double z){
 		int i = binsearch(x, z);
 		double res = 0;
-		for(int j = 0; j < i-1; j++)res += (x[j+1]-x[j])*(y[j+1]+y[j])/2;
+		for(int j = 0; j < i; j++)res += (x[j+1]-x[j])*(y[j+1]+y[j])/2; //add the integrals of each triangle/trapezoid rule
 		res += (z-x[i])*(linterp(x,y,z,i) + y[i])/2;
 		return res;
 	}//linterpInt
@@ -62,9 +62,9 @@ public class interp{
 		public double integral(double z){
 			int i=binsearch(x,z);
 			double res = 0;
-			for(int j = 0; j < i - 1; j++){
-				res += (x[j+1] - x[j])*y[j] + b[j]*Pow(x[j+1]-x[j],2) + c[i]*Pow(x[j+1] - x[j],3);}
-			res+= (z - x[i])*y[i] + b[i]*Pow(z-x[i],2) + c[i]*Pow(z - x[i],3);
+			for(int j = 0; j < i; j++){
+				res += (x[j+1] - x[j])*y[j] + b[j]*Pow(x[j+1]-x[j],2)/2 + c[i]*Pow(x[j+1] - x[j],3)/3;}
+			res+= (z - x[i])*y[i] + b[i]*Pow(z-x[i],2)/2 + c[i]*Pow(z - x[i],3)/3;
 			return res;	
 		}//integral
 	}//qspline

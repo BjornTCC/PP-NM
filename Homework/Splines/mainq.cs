@@ -29,7 +29,7 @@ public class main{
                 interp.qspline qs3 = new interp.qspline(x,y3);
                 for(int i = 0; i < M; i++){
                         z[i] = x[0] + i*(x[N-1]-x[0])/(M-1);
-                        Error.WriteLine($"{z[i]} {qs1.evaluate(z[i])} {qs2.evaluate(z[i])} {qs3.evaluate(z[i])}");}
+                        Error.WriteLine($"{z[i]} {qs1.evaluate(z[i])} {qs2.evaluate(z[i])} {qs3.evaluate(z[i])} {qs1.derivative(z[i])} {qs2.derivative(z[i])} {qs3.derivative(z[i])} {qs1.integral(z[i])} {qs2.integral(z[i])} {qs3.integral(z[i])}");}
                 vector c1 = new vector("0 0 0 0");
 		vector c2 = new vector("0 0 0 0");
 		vector c3 = new vector("1 1 1 1");//analytic c's
