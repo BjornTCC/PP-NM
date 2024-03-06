@@ -3,7 +3,7 @@ LIBS = $(addprefix -reference:,$(filter %.dll,$^)) # macros
 MKEXE = mcs -target:exe -out:$@ $(LIBS) $(CODE)
 MKLIB = mcs -target:library -out:$@ $(LIBS) $(CODE)
 
-all: Out.Linterp.svg Out.qterp.svg Outl1.txt Outq1.txt Outq2.txt Out3diag.txt
+all: [Oo]ut*
 
 Out.Linterp.svg: Outl1.txt Outl2.txt Makefile
 	echo '\
@@ -11,6 +11,8 @@ Out.Linterp.svg: Outl1.txt Outl2.txt Makefile
 		set out "$@" ;\
 		set xlabel "x";\
 		set ylabel "y";\
+		set size 1,1;\
+                set term svg size 600, 800 ;\
                 set multiplot layout 2,1 columns ;\
 		set title "Linear interpolation";\
 		plot "Outl2.txt" with p pt 7 ps 0.5 title "Data"\
@@ -26,8 +28,9 @@ Out.qterp.svg: Outq1.txt Outq2.txt Makefile
                 set out "$@" ;\
                 set xlabel "x";\
                 set ylabel "y";\
-		set size ratio 1.5;\
-		set multiplot layout 1,3 columns scale 1.1;\
+		set size 1,1;\
+                set term svg size 600, 1200 ;\
+		set multiplot layout 3,1 columns;\
                 set title "Quadratic spline";\
 		plot "Outq2.txt" using 1:2 with p pt 7 ps 0.5 title "Data"\
 		,"Outq2.txt" using 1:3 with p pt 7 ps 0.5 notitle \
@@ -46,6 +49,26 @@ Out.qterp.svg: Outq1.txt Outq2.txt Makefile
 		unset multiplot;\
                 '|tee log.gpi | gnuplot
 
+Out.cterp.svg: Outc1.txt Outc2.txt Makefile
+	echo '\
+                set terminal svg background "white" ;\
+                set out "$@" ;\
+                set xlabel "x";\
+                set ylabel "y";\
+		set size 1,1;\
+		set term svg size 600, 1200 ;\
+                set multiplot layout 3,1 columns ;\
+                set title "Cubic spline";\
+                plot "Outc2.txt" with p pt 7 ps 0.5 title "Data"\
+		,"" smooth csplines t "gnuplot spline"\
+                ,"Outc1.txt" using 1:2 with l title "Homemade spline";\
+                set title "Cubic spline derivative";\
+                plot "Outc1.txt" using 1:3 with l notitle;\
+		set title "Cubic spline integral";\
+		plot "Outc1.txt" using 1:4 with l notitle;\
+                unset multiplot;\
+                '|tee log.gpi | gnuplot
+
 Outl1.txt: mainl.exe
 	mono $< 1> $@ 2> Outl2.txt
 
@@ -55,9 +78,14 @@ Outq1.txt: mainq.exe
 Out3diag.txt: main3diag.exe
 	mono $< > $@
 
+Outc1.txt: mainc.exe
+	mono $< 1> $@ 2> Outc2.txt
+
 mainq.exe: mainq.cs spline.dll; $(MKEXE)
 
 mainl.exe: mainl.cs spline.dll; $(MKEXE)
+
+mainc.exe: mainc.cs spline.dll; $(MKEXE)
 
 main3diag.exe: main3diag.cs spline.dll; $(MKEXE)
 

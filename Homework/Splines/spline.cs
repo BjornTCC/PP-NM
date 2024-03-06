@@ -82,10 +82,11 @@ public class interp{
 			for(int i = 0; i < n-1; i++){
 				h[i] = x[i+1]-x[i];
 				p[i] = (y[i+1] - y[i])/h[i];}
-			A[0,0] = 2; A[n-1,n-1] = 2; A[0,1] = 1; B[1] = 3*p[1]; B[n-1] = 3*p[n-2];
-			for(int i = 0; i < n-3; i++){
+			A[0,0] = 2; A[n-1,n-1] = 2; A[0,1] = 1; B[0] = 3*p[0]; B[n-1] = 3*p[n-2]; A[n-1,n-2] = 1;
+			for(int i = 0; i < n-2; i++){
 				A[i+1,i+1] = 2*h[i]/h[i+1] + 2;
 				A[i+1,i+2] = h[i]/h[i+1];
+				A[i+1,i] = 1;
 				B[i+1] = 3*(p[i]+p[i+1]*h[i]/h[i+1]);}
 			//Now solve for b using tridiag-solver
 			b = linsol.TriDiagSol(A,B);
@@ -99,7 +100,7 @@ public class interp{
 		
 		public double evaluate(double z){
                         int i = binsearch(x, z);
-                        double res = y[i] + b[i]*(z - x[i]) + c[i]*Pow(z-x[i],2) + d[i]*Pow(z-x[i],3);
+                        double res = y[i] + b[i]*(z-x[i]) + c[i]*Pow(z-x[i],2) + d[i]*Pow(z-x[i],3);
                         return res;
                 }//evaluate
 
@@ -114,7 +115,7 @@ public class interp{
                         double res = 0;
 			for(int j = 0; j < i; j++){ //split terms for ease of reading
 				double T12 = (x[j+1] - x[j])*y[j] + b[j]*Pow(x[j+1]-x[j],2)/2;
-				double T34 = c[i]*Pow(x[j+1] - x[j],3)/3 + d[i]*Pow(x[j+1]-x[j],4)/4;
+				double T34 = c[j]*Pow(x[j+1] - x[j],3)/3 + d[j]*Pow(x[j+1]-x[j],4)/4;
                                 res += T12 + T34;}
                         res+= (z - x[i])*y[i] + b[i]*Pow(z-x[i],2)/2 + c[i]*Pow(z - x[i],3)/3 + d[i]*Pow(z-x[i],4)/4;
                         return res;

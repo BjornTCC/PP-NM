@@ -21,7 +21,6 @@ public class main{
 		vector TriSol = linsol.TriDiagSol(Ac, bc);
 		vector compSol = QRGS.solve(A, b);
 		vector ATriSol = A*TriSol;
-		vector AcompSol = A*compSol;
 		if(TriSol.approx(compSol))WriteLine("Test of TriDiagSol succesful");
 		else WriteLine("Test of TriDiagSol failed");
 		A.print("A:");
