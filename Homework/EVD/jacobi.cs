@@ -43,32 +43,35 @@ public static class jacobi{
 	}//cyclic
 	
 	public static (vector, matrix) cyclic_opt(matrix A){
-		matrix D = A.copy(), V = matrix.id(A.size1);
-                vector w = new vector(D.size1);
+		int n = A.size1;
+		matrix V = matrix.id(n);
+                vector w = new vector(n); 		//vector of diagonal elements of A
+		for(int i = 0; i < n; i++)w[i] = A[i,i];
                 bool changed;
                 do{
                         changed = false; //assume succesful diagonalization until proven otherwise
-                        for(int p = 0; p < D.size1-1; p++) //loop over upper triangle part of matrix to do rotation
-                        for(int q = p+1; q < D.size2; q++){
-                                double theta = 0.5*Atan2(2*D[p,q], D[q,q] - D[p,p]); //find theta
+                        for(int p = 0; p < n; p++) //loop over upper triangle part of matrix to do rotation
+                        for(int q = p+1; q < n; q++){
+                                double theta = 0.5*Atan2(2*A[p,q], w[q] - w[p]); //find theta
                                 double c = Cos(theta), s = Sin(theta);
-                                double new_Dpp = c*c*D[p,p] - 2*s*c*D[p,q] + s*s*D[q,q]; //find new diagonal elements
-                                double new_Dqq = c*c*D[q,q] + 2*s*c*D[p,q] + s*s*D[p,p];
-                                if(new_Dpp != D[p,p] || new_Dqq != D[q,q]){
+                                double new_App = c*c*w[p] - 2*s*c*A[p,q] + s*s*w[q]; //find new diagonal elements
+                                double new_Aqq = c*c*w[q] + 2*s*c*A[p,q] + s*s*w[p];
+                                if(new_App != w[p] || new_Aqq != w[q]){
 					changed = true;
 					timesJ(V, p, q, theta); 			//V <- VJ
-					D[p,q] = s*c*(D[p,p] - D[q,q]) + (c*c - s*s)*D[p,q]; //update cross point
-					D[p,p] = new_Dpp; D[q,q] = new_Dqq; 		//update diagonal
-					for(int i = 0; i < D.size2; i++){
+					A[p,q] = s*c*(w[p] - w[q]) + (c*c - s*s)*A[p,q]; //update cross point
+					w[p] = new_App; w[q] = new_Aqq; 		//update diagonal
+					for(int i = 0; i < n; i++){
 					if(i!=q && i!=p){
 						int Mqi = Max(q,i), mqi = Min(q,i), Mpi = Max(p,i), mpi = Min(p,i); 
-						double Dpi = D[mpi, Mpi], Dqi = D[mqi,Mqi]; //set old data 
-						D[mpi,Mpi] = c*Dpi - s*Dqi;			//update data
-						D[mqi,Mqi] = s*Dpi + c*Dqi;}}
+						double Api = A[mpi, Mpi], Aqi = A[mqi,Mqi]; //set old data 
+						A[mpi,Mpi] = c*Api - s*Aqi;			//update remaining data
+						A[mqi,Mqi] = s*Api + c*Aqi;}}
 					}
 			}
 		}while(changed);
-		for(int i = 0; i < w.size; i++)w[i] = D[i,i]; //collect the eigenvalues as the diagonal elements of D
+		for(int i = 0; i < n; i++)
+		for(int j = i+1; j < n; j++)A[i,j] = A[j,i];
                 return (w, V);
 	}//cyclic_opt
 }//jacobi
