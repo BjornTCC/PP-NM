@@ -5,7 +5,7 @@ MKLIB = mcs -target:library -out:$@ $(LIBS) $(CODE)
 
 all: OutA.svg OutB.txt OutB.svg OutC.svg
 
-OutC.svg: DataC.txt Makefile
+OutC.svg: dataC.txt Makefile
 	echo '\
 		set terminal svg background "white" ;\
 		set out "$@" ;\
@@ -19,7 +19,7 @@ OutC.svg: DataC.txt Makefile
 		'|tee logC.gpi | gnuplot
 
 
-OutB.svg: DataBNC.txt DataBNE.txt DataBGR.txt Makefile
+OutB.svg: dataBNC.txt dataBNE.txt dataBGR.txt Makefile
 	echo '\
                 set terminal svg background "white" ;\
                 set out "$@" ;\
@@ -30,15 +30,15 @@ OutB.svg: DataBNC.txt DataBNE.txt DataBGR.txt Makefile
                 set term svg size 1200, 600 ;\
 		set multiplot layout 1,3 columns;\
                 set title "Circular Newtonian orbit";\
-		plot "DataBNC.txt" using (1/$$2)*cos($$1):(1/$$2)*sin($$1) with lines notitle;\
+		plot "dataBNC.txt" using (1/$$2)*cos($$1):(1/$$2)*sin($$1) with lines notitle;\
 		set title "Elliptic Newtonian orbit";\
-                plot "DataBNE.txt" using (1/$$2)*cos($$1):(1/$$2)*sin($$1) with lines notitle;\
+                plot "dataBNE.txt" using (1/$$2)*cos($$1):(1/$$2)*sin($$1) with lines notitle;\
 		set title "Relativistic precession in GR";\
-                plot "DataBGR.txt" using (1/$$2)*cos($$1):(1/$$2)*sin($$1) with lines notitle;\
+                plot "dataBGR.txt" using (1/$$2)*cos($$1):(1/$$2)*sin($$1) with lines notitle;\
 		unset multiplot;\
                 '|tee logB.gpi | gnuplot
 
-OutA.svg: DataAHarm.txt DataAPend.txt Makefile
+OutA.svg: dataAHarm.txt dataAPend.txt Makefile
 	echo '\
 		set terminal svg background "white" ;\
 		set out "$@" ;\
@@ -46,27 +46,27 @@ OutA.svg: DataAHarm.txt DataAPend.txt Makefile
 		set grid;\
 		set size 1,1;\
 		set title "Solution to Harmonic oscillator and damped pendulum";\
-		plot "DataAHarm.txt" using 1:2 with l t "Harmonic oscillator"\
-		,"DataAPend.txt" using 1:2 with l t "theta(t)"\
-		,"DataAPend.txt" using 1:3 with l t "omega(t)"\
+		plot "dataAHarm.txt" using 1:2 with l t "Harmonic oscillator"\
+		,"dataAPend.txt" using 1:2 with l t "theta(t)"\
+		,"dataAPend.txt" using 1:3 with l t "omega(t)"\
 		'|tee logA.gpi | gnuplot
 
-DataAHarm.txt: mainA.exe
-	mono $< 1> $@ 2> DataAPend.txt
+dataAHarm.txt: mainA.exe
+	mono $< 1> $@ 2> dataAPend.txt
 
-DataBNC.txt: mainB.exe Makefile
+dataBNC.txt: mainB.exe Makefile
 	mono $< -u0:1 1> $@ 2>> OutB.txt
 
-DataBNE.txt: mainB.exe Makefile
+dataBNE.txt: mainB.exe Makefile
 	mono $< -u0:1 -uprime0:-0.5 1> $@ 2>> OutB.txt
 
-DataBGR.txt: mainB.exe Makefile
+dataBGR.txt: mainB.exe Makefile
 	mono $< -u0:1 -uprime0:-0.5 -epsilon:0.01 -phiL:20 1> $@ 2>> OutB.txt
 
 OutB.txt: 
 	echo 'Test of ODE solver with no path-recording:' > $@
 
-DataC.txt: mainC.exe
+dataC.txt: mainC.exe
 	mono $< > $@
 
 mainA.exe: mainA.cs genlib.dll ode.dll; $(MKEXE)
