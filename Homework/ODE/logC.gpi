@@ -1,0 +1,11 @@
+\
+	set terminal svg background "white" ;\
+	set out "OutC.svg" ;\
+	set xlabel "x";\
+	set ylabel "y";\
+	set size ratio -1;\
+	set title "Figure-8 solution";\
+	plot "DataC.txt" using 1:2 with lines notitle\
+	, "DataC.txt" using 3:4 with lines notitle\
+	, "DataC.txt" using 5:6 with lines notitle\
+	

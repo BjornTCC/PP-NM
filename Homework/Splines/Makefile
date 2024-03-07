@@ -3,7 +3,7 @@ LIBS = $(addprefix -reference:,$(filter %.dll,$^)) # macros
 MKEXE = mcs -target:exe -out:$@ $(LIBS) $(CODE)
 MKLIB = mcs -target:library -out:$@ $(LIBS) $(CODE)
 
-all: [Oo]ut*
+all: Out.Linterp.svg Out.qterp.svg Out.cterp.svg Outl1.txt Outl2.txt Outq1.txt Outq2.txt Outc1.txt Outc2.txt Out3diag.txt 
 
 Out.Linterp.svg: Outl1.txt Outl2.txt Makefile
 	echo '\
