@@ -37,7 +37,7 @@ public static class QRGS{
 			for(int i = 0; i < R.size1; i++)res*=R[i,i];
 			return res;
 		}
-		throw new System.ArgumentException($"Can't take determinant of non-square matrix with size ({A.size1}, {A.size2}).");
+		throw new System.ArgumentException($"det: Can't take determinant of non-square matrix with size ({A.size1}, {A.size2}).");
 	}//det
 	 
 	public static matrix inv(matrix A){
@@ -49,7 +49,7 @@ public static class QRGS{
 			for(int i = 0; i < n; i++)Ainv[i] = backsub(R,QT[i]);
 		       	return Ainv;	
 		}
-		throw new System.ArgumentException($"Can't invert non square matrix with size: ({A.size1}, {A.size2})");
+		throw new System.ArgumentException($"inv: Can't invert non square matrix with size: ({A.size1}, {A.size2})");
 	}//inv
 }//QRGS
  
@@ -57,7 +57,7 @@ public static class linsol{
 
 	public static vector TriDiagSol(matrix A, vector b){ //solves a tri-diagonal system in-place
 		if(A.size1 != A.size2 || A.size2 != b.size){
-			throw new System.ArgumentException($"Bad dimensions, A: ({A.size1},{A.size2}), b: {b.size}");}
+			throw new System.ArgumentException($"triDiagSol: Bad dimensions, A: ({A.size1},{A.size2}), b: {b.size}");}
 		int n = b.size;
 		for(int i = 1; i < n; i++){ //Do gaussian elimination
 			double w = A[i,i-1]/A[i-1,i-1]; //Ai = A[i,i-1], Di = A[i,i], Qi = A[i,i+1]

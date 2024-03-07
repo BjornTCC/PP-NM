@@ -4,7 +4,7 @@ public static class fit{
 	
 	public static (vector,matrix) lsfit(System.Func<double,double>[] fs, vector x, vector y, vector dy){
 		if(x.size != y.size || x.size != dy.size || y.size != dy.size){
-			throw new System.ArgumentException($"Incompatible data sizes: ({x.size} {y.size} {dy.size}).");}
+			throw new System.ArgumentException($"lsfit: Incompatible data sizes: ({x.size} {y.size} {dy.size}).");}
 		matrix A = new matrix(x.size, fs.Length);
 		vector b = new vector(y.size);
 		for(int i = 0; i < x.size; i++){

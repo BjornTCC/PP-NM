@@ -37,7 +37,7 @@ public static class QRGS{
 			for(int i = 0; i < R.size1; i++)res*=R[i,i];
 			return res;
 		}
-		throw new System.ArgumentException($"Can't take determinant of non-square matrix with size ({A.size1}, {A.size2}).");
+		throw new System.ArgumentException($"det: Can't take determinant of non-square matrix with size ({A.size1}, {A.size2}).");
 	}//det
 	 
 	public static matrix inv(matrix A){
@@ -49,6 +49,6 @@ public static class QRGS{
 			for(int i = 0; i < n; i++)Ainv[i] = backsub(R,QT[i]);
 		       	return Ainv;	
 		}
-		throw new System.ArgumentException($"Can't invert non square matrix with size: ({A.size1}, {A.size2})");
+		throw new System.ArgumentException($"inv: Can't invert non square matrix with size: ({A.size1}, {A.size2})");
 	}//inv
 }//QRGS

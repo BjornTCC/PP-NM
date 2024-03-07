@@ -78,7 +78,7 @@ public static matrix operator+(matrix A, matrix B){
         	}
         	return M;
 		}
-	throw new ArgumentException($"Matrices with sizes ({A.size1}, {A.size2}) and ({B.size1}, {B.size2}) cannot be added.");
+	throw new ArgumentException($"Matrix +: Matrices with sizes ({A.size1}, {A.size2}) and ({B.size1}, {B.size2}) cannot be added.");
 }
 
 public static matrix operator-(matrix A, matrix B){
@@ -90,7 +90,7 @@ public static matrix operator-(matrix A, matrix B){
                 }
                 return M;
                 }
-        throw new ArgumentException($"Matrices with sizes ({A.size1}, {A.size2}) and ({B.size1}, {B.size2}) cannot be subtracted.");
+        throw new ArgumentException($"Matrix -: Matrices with sizes ({A.size1}, {A.size2}) and ({B.size1}, {B.size2}) cannot be subtracted.");
 }
 
 public static matrix operator*(double a, matrix B){
@@ -115,7 +115,7 @@ public static double[] operator*(matrix A, double[] B){
                 }
                 return C;
                 }
-        throw new ArgumentException($"Matrix with size ({A.size1}, {A.size2}) cannot be multiplied with array of length {B.Length}.");
+        throw new ArgumentException($"Matrix*: Matrix with size ({A.size1}, {A.size2}) cannot be multiplied with array of length {B.Length}.");
 }
 
 public static double[] operator*(double[] B, matrix A){
@@ -127,7 +127,7 @@ public static double[] operator*(double[] B, matrix A){
                 }
                 return C;
                 }
-        throw new ArgumentException($"Array of size {B.Length} cannot be multiplied by matrix with size ({A.size1}, {A.size2}).");
+        throw new ArgumentException($"Matrix*: Array of size {B.Length} cannot be multiplied by matrix with size ({A.size1}, {A.size2}).");
 }
 
 public static matrix operator*(matrix A, matrix B){
@@ -140,7 +140,7 @@ public static matrix operator*(matrix A, matrix B){
 		}
 		return C;
 	}
-	throw new ArgumentException($"Matrices with sizes ({A.size1}, {A.size2}) and ({B.size1}, {B.size2}) cannot be multiplied");
+	throw new ArgumentException($"Matrix*: Matrices with sizes ({A.size1}, {A.size2}) and ({B.size1}, {B.size2}) cannot be multiplied");
 }
 
 public matrix copy(){
@@ -201,7 +201,7 @@ public static double dot(double[] a, double[] b){
 		for(int i = 0; i < a.Length; i++)res+=a[i]*b[i];
 		return res;
 		}
-	throw new ArgumentException($"Cannot dot arrays with lengths {a.Length} and {b.Length}.");
+	throw new ArgumentException($"Dot: Cannot dot arrays with lengths {a.Length} and {b.Length}.");
 }
 
 public static double norm(double[] a){

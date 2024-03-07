@@ -6,13 +6,13 @@ public class interp{
 	public static double linterp(double[] x, double[] y, double z, int i = -1){
 		if(i == -1)i = binsearch(x, z); //if statement in case binsearch has been performed previously
 		double dx=x[i+1]-x[i]; 
-		if(!(dx>0)) throw new Exception("x-Array improperly ordered");
+		if(!(dx>0)) throw new Exception("linterp: x-Array improperly ordered");
         	double dy=y[i+1]-y[i];
         	return y[i]+dy/dx*(z-x[i]);
 	}//linterp
 	 
 	public static int binsearch(double[] x, double z){
-		if(!(x[0] <= z && x[x.Length - 1] >= z)) throw new ArgumentException($"z = {z} outside interval [{x[0]},{x[x.Length-1]}].");
+		if(!(x[0] <= z && x[x.Length - 1] >= z)) throw new ArgumentException($"binsearch: z = {z} outside interval [{x[0]},{x[x.Length-1]}].");
 		int i = 0, j = x.Length-1; //endpoints
 		while(j-i>1){ 
 			int mid=(i+j)/2;
@@ -32,7 +32,7 @@ public class interp{
 	public class qspline{
 		public vector x,y,b,c;
 		public qspline(vector xs,vector ys){
-			if(xs.size != ys.size) throw new ArgumentException($"Data sizes incompatible x: {xs.size}, y:{ys.size}");
+			if(xs.size != ys.size) throw new ArgumentException($"qspline: Data sizes incompatible x: {xs.size}, y:{ys.size}");
 			x=xs.copy(); y=ys.copy();
 			int n = x.size;
 		     	vector p = new vector(n-1), dx = new vector(n-1);
@@ -72,7 +72,7 @@ public class interp{
 	public class cspline{
 		public vector x,y,b,c,d;
 		public cspline(vector xs, vector ys){
-			if(xs.size != ys.size) throw new ArgumentException($"Data sizes incompatible x: {xs.size}, y:{ys.size}");
+			if(xs.size != ys.size) throw new ArgumentException($"cspline: Data sizes incompatible x: {xs.size}, y:{ys.size}");
 			x = xs.copy(); y = ys.copy();
 			int n = x.size;
 			//construct all relevant vectors and matrices
