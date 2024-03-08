@@ -1,0 +1,2 @@
+1: Analytic: 2, Numerical: 1.99999950243225, err: 0.000210180957228597, #evals: 32
+1: Analytic: -4, Numerical: -3.99993242597408, err: 0.000726112187093009, #evals: 172
