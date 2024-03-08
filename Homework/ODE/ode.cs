@@ -29,41 +29,24 @@ public static class ODE{
 		){
 		if(a>b) throw new ArgumentException("driver: a>b");
 		double x=a; vector y=ya.copy(), tol = new vector(y.size);
-		//if list is initialized
-		if(xlist != null && ylist != null){
-			xlist.add(x);
-			ylist.add(y);
-			do{
-	        	if(x>=b) return y; /* job done */
-        		if(x+h>b) h=b-x;   /* last step should end at b */
-        		(var yh,var err) = rkstep12(f,x,y,h);
-        		for(int i=0;i<y.size;i++)tol[i]=(acc+eps*Abs(yh[i]))*Sqrt(h/(b-a)); /* Evaluate the tolerances*/
-                        bool ok=true;
-                        for(int i=0;i<y.size;i++)if(!(err[i]<tol[i])) ok=false; /* check whether to accept step */
-                        if(ok){ 
-				x+=h; y=yh;
-		       		xlist.add(x);
-				ylist.add(y);} /* step accepted */
-                        double factor = tol[0]/Abs(err[0]);
-                        for(int i=1;i<y.size;i++) factor=Min(factor,tol[i]/Abs(err[i])); /* figure out new step size*/
-                        h *= Min( Pow(factor,0.25)*0.95 ,2);
-			if(h > hmax)h=hmax;
-        		}while(true);}
-		//if no list is initialized
-		if(xlist == null && ylist == null){
-                        do{
-                        if(x>=b) return y; /* job done */
-                        if(x+h>b) h=b-x;   /* last step should end at b */
-                        (var yh,var err) = rkstep12(f,x,y,h); /* take step*/
-			for(int i=0;i<y.size;i++)tol[i]=(acc+eps*Abs(yh[i]))*Sqrt(h/(b-a)); /* Evaluate the tolerances*/
-			bool ok=true;
-			for(int i=0;i<y.size;i++)if(!(err[i]<tol[i])) ok=false; /* check whether to accept step */
-			if(ok){ x+=h; y=yh; } /* step accepted */
-			double factor = tol[0]/Abs(err[0]); 
-			for(int i=1;i<y.size;i++) factor=Min(factor,tol[i]/Abs(err[i])); /* figure out new step size*/
-			h *= Min( Pow(factor,0.25)*0.95 ,2);
-                        }while(true);}
-		throw new ArgumentException("driver: Either both x and y lists must be initialized or none");
+		if(xlist!=null)xlist.add(x);
+		if(ylist!=null)ylist.add(y);
+		do{
+	        if(x>=b) return y; /* job done */
+        	if(x+h>b) h=b-x;   /* last step should end at b */
+        	(var yh,var err) = rkstep12(f,x,y,h);
+        	for(int i=0;i<y.size;i++)tol[i]=(acc+eps*Abs(yh[i]))*Sqrt(h/(b-a)); /* Evaluate the tolerances*/
+                bool ok=true;
+                for(int i=0;i<y.size;i++)if(!(err[i]<tol[i])) ok=false; /* check whether to accept step */
+                if(ok){ 
+			x+=h; y=yh;
+		   	if(xlist!=null)xlist.add(x);
+			if(ylist!=null)ylist.add(y);} /* step accepted */
+                double factor = tol[0]/Abs(err[0]);
+                for(int i=1;i<y.size;i++) factor=Min(factor,tol[i]/Abs(err[i])); /* figure out new step size*/
+                h *= Min( Pow(factor,0.25)*0.95 ,2);
+		if(h > hmax)h=hmax;
+        	}while(true);
 	}//driver
 
 }//ODE

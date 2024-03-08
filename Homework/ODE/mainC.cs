@@ -14,9 +14,9 @@ class main{
                         w[4*i+2] += deltar*(r[4*k] - r[4*i]);
 			w[4*i+3] += deltar*(r[4*k+1] - r[4*i+1]);}}
 			return w;};
-		genlist<double> ts = new genlist<double>(); genlist<vector> rs = new genlist<vector>();
-		vector rL = ODE.driver(f, t0, r0, tL, xlist: ts, ylist: rs);
-		for(int i = 0; i < ts.size; i++)WriteLine($"{rs[i][0]} {rs[i][1]} {rs[i][4]} {rs[i][5]} {rs[i][8]} {rs[i][9]}");
+		genlist<vector> rs = new genlist<vector>();
+		vector rL = ODE.driver(f, t0, r0, tL, ylist: rs);
+		for(int i = 0; i < rs.size; i++)WriteLine($"{rs[i][0]} {rs[i][1]} {rs[i][4]} {rs[i][5]} {rs[i][8]} {rs[i][9]}");
 		return 0;
 	}//Main
 }//main
