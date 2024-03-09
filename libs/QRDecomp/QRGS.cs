@@ -25,8 +25,9 @@ public static class QRGS{
 	}//backsub
 
 	public static vector solve(matrix A, vector b){ 
-		(matrix Q, matrix R) = decomp(A);
-		vector sol = Q.transpose()*b;
+		(matrix QT, matrix R) = decomp(A);
+		QT = QT.transpose();
+		vector sol = QT*b;
 		return backsub(R, sol);
 	}//solve
 	
