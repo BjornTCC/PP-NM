@@ -54,4 +54,36 @@ public class integrate{
         var result=(mean*V,sigma*V);
         return result;
         }//plainmc
+	
+	public static (double,double) stratmc(Func<vector,double> f,vector a,vector b,int N, int nmin = 500){
+	if(N<nmin) return plainmc(f,a,b,N);
+	int dim = a.size; double V=1; for(int i=0;i<dim;i++)V*=b[i]-a[i];
+	double sum=0,sum2=0;
+        vector x=new vector(dim);
+	var rnd = new Random();
+	matrix sums = new matrix(2,dim), sums2 = new matrix(2,dim), vars = new matrix(2,dim);
+	for(int i=0;i<nmin;i++){						//create nmin random points and add the values in the sums
+        for(int k=0;k<dim;k++)x[k]=a[k]+rnd.NextDouble()*(b[k]-a[k]);
+		double fx = f(x); sum+=fx; sum2+=fx*fx;
+		for(int k=0;k<dim;k++){
+		if(x[k] < (b[k] + a[k])/2){sums[0,k]+=fx; sums2[0,k]+=fx*fx;} 	//record the values to the dimension specific memory
+		else{sums[1,k]+=fx; sums2[1,k]+=fx*fx;}}
+	}
+	double mean=sum/nmin, sigma=V*Sqrt(sum2/nmin-mean*mean)/Sqrt(nmin);	//evalute the integral and variance
+        int wdim = 0; double maxvar = 0;
+	for(int k=0;k<dim;k++){ 						//find the dimension with the largest sub-variance
+		vars[0,k] = (sums2[0,k]-sums[0,k]*sums[0,k]/nmin)/nmin;
+                vars[1,k] = (sums2[1,k]-sums[1,k]*sums[1,k]/nmin)/nmin;
+		if(vars[0,k] > maxvar){maxvar=vars[0,k]; wdim = k;}
+                if(vars[1,k] > maxvar){maxvar=vars[1,k]; wdim = k;}}
+	vector a_new = a.copy(), b_new = b.copy();				//subdivide the volume
+	a_new[wdim] = (a[wdim]+b[wdim])/2; b_new[wdim] = (a[wdim]+b[wdim])/2;
+	int N_up = 0; do{N_up++;}while(N_up+1<(N-nmin)/(1+vars[0,wdim]/vars[1,wdim]));	//calculate the point distribution
+        int N_down = N-nmin - N_up;
+	(double int_down, double sigma_down) = stratmc(f, a, b_new, N_down, nmin);
+        (double int_up, double sigma_up) = stratmc(f, a_new, b, N_up, nmin);
+	double grandint = ((int_down+int_up)*(N-nmin) + V*mean*nmin)/N;	//estimate the grand integral and error
+	double grandsigma = Sqrt(Pow(sigma_down*(N-nmin)/N,2) + Pow(sigma_up*(N-nmin)/N,2) + Pow(sigma*nmin/N,2));
+	return (grandint,grandsigma);
+	}//stratmc
 }//integrate

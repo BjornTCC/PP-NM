@@ -3,7 +3,7 @@ LIBS = $(addprefix -reference:,$(filter %.dll,$^)) # macros
 MKEXE = mcs -target:exe -out:$@ $(LIBS) $(CODE)
 MKLIB = mcs -target:library -out:$@ $(LIBS) $(CODE)
 
-all: OutA.txt OutA.svg OutB.txt OutB.svg
+all: OutA.txt OutA.svg OutB.txt OutB.svg OutC.txt
 
 OutA.svg: dataA.txt Makefile
 	echo '\
@@ -64,11 +64,16 @@ OutA.txt: mainA.exe
 OutB.txt: mainB.exe
 	mono $< 1> $@ 2> dataB.txt
 
+OutC.txt: mainC.exe
+	mono $< > $@
+
 mainA.exe: mainA.cs int.dll extlib.dll; $(MKEXE)
 
 mainB.exe: mainB.cs int.dll extlib.dll; $(MKEXE)
 
-extlib.dll: ../../libs/matrix/vector.cs; $(MKLIB)
+mainC.exe: mainC.cs int.dll extlib.dll; $(MKEXE)
+
+extlib.dll: ../../libs/matrix/vector.cs ../../libs/matrix/matrix.cs; $(MKLIB)
 
 int.dll: int.cs extlib.dll; $(MKLIB)
 
