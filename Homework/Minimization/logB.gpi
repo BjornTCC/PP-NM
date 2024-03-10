@@ -1,0 +1,10 @@
+\
+                set terminal svg background "white" ;\
+                set out "OutBhiggs.svg" ;\
+                set xlabel "E [GeV]";\
+                set ylabel "{/symbol s} (background subtracted)";\
+	set title "Higgs particle resonance fit with quasi-newton method";\
+	set grid;\
+                plot "datahiggs.txt" with errorbars t "Data"\
+	, "outBdatahiggs.txt" with l t "Breit-Wigner fit"\
+                

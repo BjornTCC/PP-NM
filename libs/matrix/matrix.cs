@@ -208,4 +208,16 @@ public static double norm(double[] a){
 	return Sqrt(dot(a,a));
 }
 
+//updates
+public void update(vector u, vector v, double s=1){
+	for(int i=0;i<size1;i++)
+	for(int j=0;j<size2;j++)
+		this[i,j]+=u[i]*v[j]*s;
+	}
+
+public void sym2update(vector u, vector v, double s=1){
+        for(int i=0;i<size1;i++)
+        for(int j=0;j<size2;j++)
+                this[i,j]+=(u[i]*v[j] + u[j]*v[i])*s;
+        }
 }//matrix

@@ -1,0 +1,10 @@
+\
+                set terminal svg background "white" ;\
+                set out "OutChiggs.svg" ;\
+                set xlabel "E [GeV]";\
+                set ylabel "{/symbol s} (background subtracted)";\
+                set title "Higgs particle resonance fit with downhill simplex";\
+                set grid;\
+                plot "datahiggs.txt" with errorbars t "Data"\
+                , "outCdatahiggs.txt" with l t "Breit-Wigner fit"\
+                

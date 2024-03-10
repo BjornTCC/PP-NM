@@ -1,0 +1,22 @@
+Starting vectors:
+         1         -1         -1          1 
+         1          1         -1         -1 
+
+Rosenbrocks function: f(x,y) = (1-x)^2 + 100*(y-x^2)^2
+Minima: vmin = (1,1) f(vmin) = 0
+
+Numerical minima: vmin = (0.999999997082341,0.999999999272404), f(vmin) = 0, steps = 1
+Numerical minima: vmin = (0.999995923681646,0.999992648262356), f(vmin) = 4.48672549329446E-10, steps = 3
+Numerical minima: vmin = (0.99997830271089,0.999955755386638), f(vmin) = 1.76357289272614E-09, steps = 38
+Numerical minima: vmin = (0.999783462125052,0.999565054052268), f(vmin) = 1.8405680831206E-07, steps = 44
+
+Himmelblau's function: f(x,y) = (x^2+y-11)^2 + (x+y^2-7)^2
+Minima: vmin = (3,2), f(vmin) = 0
+Minima: vmin = (-2.805,3.313), f(vmin) = 0
+Minima: vmin = (-3.779,-3.283), f(vmin) = 0
+Minima: vmin = (3.584,-1.848), f(vmin) = 0
+
+Numerical minima: vmin = (2.99999796703148,1.999990580631), f(vmin) = 2.04421465289821E-09, steps = 17
+Numerical minima: vmin = (-2.80511878548256,3.13131771194594), f(vmin) = 1.09603989814259E-09, steps = 20
+Numerical minima: vmin = (-3.779307562324,-3.28318310016439), f(vmin) = 5.69951649591034E-10, steps = 18
+Numerical minima: vmin = (3.58442308873537,-1.84812680456116), f(vmin) = 1.45619878035806E-09, steps = 23
