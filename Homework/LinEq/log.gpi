@@ -6,7 +6,7 @@
 	set title "Running time as function of matrix size";\
 	f(x)=b+(x/a)**c;\
 	b=1; a=90; c=3;\
-	fit f(x) "Out.times.txt" via a,b;\
-	plot "Out.times.txt" with lp \
+	fit f(x) "outtimes.txt" via a,b;\
+	plot "outtimes.txt" with lp \
 	,f(x) title sprintf("fit: (n/%.f)^{%.2f}+%.3f",a,c,b) \
 	

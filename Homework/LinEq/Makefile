@@ -6,7 +6,7 @@ TIME = time --output=$@ --append --format "$$N %e %U"
 
 default: Out.txt Out.times.svg Makefile
 
-Out.times.svg: Out.times.txt Makefile
+Out.times.svg: outtimes.txt Makefile
 	echo '\
 		set terminal svg background "white" ;\
 		set out "$@" ;\
@@ -20,7 +20,7 @@ Out.times.svg: Out.times.txt Makefile
 		,f(x) title sprintf("fit: (n/%.f)^{%.2f}+%.3f",a,c,b) \
 		'|tee log.gpi |gnuplot
 
-Out.times.txt: time.exe Makefile
+outtimes.txt: time.exe Makefile
 	>$@
 	for N in $$(seq 200 25 600); do \
 		$(TIME) mono $< -msize:$$N 1>out 2>err ;\
