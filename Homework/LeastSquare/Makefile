@@ -12,6 +12,7 @@ Out.fit.svg: data.txt Makefile
 		set out "$@";\
 		set xlabel "t (days)" ;\
 		set ylabel "Activity" ;\
+		set grid;\
 		set title "exponential fit of radioactive decay of 224Ra";\
 		f(x) = a*exp(-b*x) ;\
 		fp(x) = a*exp(da)*exp(-(b-db)*x) ;\
