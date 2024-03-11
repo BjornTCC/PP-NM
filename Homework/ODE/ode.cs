@@ -21,7 +21,7 @@ public static class ODE{
 		vector ya,                   /* y(a) */
 		double b,                    /* the end-point of the integration */
 		double h=0.01,               /* initial step-size */
-		double hmax = 1e9,	     /* maximal allowed stepsize */
+		double hmax = Double.NaN,    /* maximal allowed stepsize */
 		double acc=0.01,             /* absolute accuracy goal */
 		double eps=0.01,             /* relative accuracy goal */
 		genlist<double> xlist=null,  /* Initialized x list if path needs to be recorded*/
@@ -45,7 +45,7 @@ public static class ODE{
                 double factor = tol[0]/Abs(err[0]);
                 for(int i=1;i<y.size;i++) factor=Min(factor,tol[i]/Abs(err[i])); /* figure out new step size*/
                 h *= Min( Pow(factor,0.25)*0.95 ,2);
-		if(h > hmax)h=hmax;
+		if(hmax!=Double.NaN && h > hmax)h=hmax;
         	}while(true);
 	}//driver
 
