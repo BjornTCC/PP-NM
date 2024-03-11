@@ -3,7 +3,7 @@ using static System.Math;
 
 public class root{
 
-	public static matrix jacobian(Func<vector,vector> f, vector x){ //compute the jacobian of a function f
+	static matrix jacobian(Func<vector,vector> f, vector x){ //compute the jacobian of a function f
 		vector f0 = f(x);
 		int m = x.size, n = f0.size;
 		matrix jac = new matrix(n,m);
