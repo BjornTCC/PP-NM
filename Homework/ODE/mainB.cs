@@ -14,10 +14,11 @@ class main{
 		}
 		Func<double,vector,vector> f = delegate(double phi, vector u){vector w = new vector(2);
 			w[0] = u[1]; w[1] = 1-u[0] + epsilon*u[0]*u[0]; return w;};
-		genlist<double> phis = new genlist<double>(); genlist<vector> us = new genlist<vector>();
-		vector ul = ODE.driver(f, phi0, u0, phiL, hmax: 0.1, xlist: phis, ylist: us);
+		vector ul = ODE.driver(f, phi0, u0, phiL, hmax: 10);
+		interp.vcspline sol = ODE.driver_interp(f, phi0, u0, phiL, hmax: 10);
 		Error.WriteLine($"ul = {ul[0]}, ul\' = {ul[1]}");
-		for(int i = 0; i < phis.size; i++)WriteLine($"{phis[i]} {us[i][0]}");
+		int N = 400; double ph = phi0;
+		for(int i = 0; i < N; i++){WriteLine($"{ph} {sol.evaluate(ph)[0]}"); ph+=(phiL-phi0)/N;}
 		return 0;
 	}//Main
 }//main

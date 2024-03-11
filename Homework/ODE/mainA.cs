@@ -14,8 +14,8 @@ public static class main{
 		var ts = new genlist<double>();
 		var us = new genlist<vector>();
 	        var thetas = new genlist<vector>();
-		vector ul = ODE.driver(Fharm, x0, u0, end, xlist: xs, ylist: us);
-		vector thetal = ODE.driver(Fpend, x0, u0, end, xlist: ts, ylist: thetas);
+		ODE.driver(Fharm, x0, u0, end, xlist: xs, ylist: us);
+		ODE.driver(Fpend, x0, u0, end, xlist: ts, ylist: thetas);
 		for(int i = 0; i < xs.size; i++)Out.WriteLine($"{xs[i]} {us[i][0]} ");
 		for(int i = 0; i < ts.size; i++)Error.WriteLine($"{ts[i]} {thetas[i][0]} {thetas[i][1]}");
 	}//Main

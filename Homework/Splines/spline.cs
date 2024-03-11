@@ -131,6 +131,7 @@ public class interp{
 			if(ys[0].size!=xs.size) throw new ArgumentException($"vcspline: x({xs.size}) and y({ys[0].size}) must have same size.");
 			n = xs.size; dim = ys.Length;
 			x = xs.copy();
+			y = new vector[dim];
 			splines = new cspline[dim];
 			for(int i=0;i<dim;i++){
 				y[i] = ys[i].copy();
@@ -138,21 +139,21 @@ public class interp{
 			}
 		}//constructor
 
-		public vector evaluate(vector z){
+		public vector evaluate(double z){
 			vector res = new vector(n);
-			for(int i=0;i<dim;i++)res[i]=splines[i].evaluate(z[i]);
+			for(int i=0;i<dim;i++)res[i]=splines[i].evaluate(z);
 			return res;
 		}//evaluate
 		
-		public vector derivative(vector z){
+		public vector derivative(double z){
                         vector res = new vector(n);
-                        for(int i=0;i<dim;i++)res[i]=splines[i].derivative(z[i]);
+                        for(int i=0;i<dim;i++)res[i]=splines[i].derivative(z);
                         return res;
                 }//derivative
 
-		public vector integral(vector z){
+		public vector integral(double z){
                         vector res = new vector(n);
-                        for(int i=0;i<dim;i++)res[i]=splines[i].evaluate(z[i]);
+                        for(int i=0;i<dim;i++)res[i]=splines[i].evaluate(z);
                         return res;
                 }//integral
 	}//vcspline 

@@ -92,7 +92,8 @@ mainc.exe: mainc.cs spline.dll; $(MKEXE)
 
 main3diag.exe: main3diag.cs spline.dll; $(MKEXE)
 
-spline.dll: spline.cs ../../libs/matrix/matrix.cs ../../libs/matrix/vector.cs ../../libs/QRDecomp/QRGS.cs; $(MKLIB)
+spline.dll: spline.cs ../../libs/matrix/matrix.cs ../../libs/matrix/vector.cs\
+       	../../libs/QRDecomp/QRGS.cs ../../libs/genlist/genlist.cs; $(MKLIB)
 
 clean: 
 	$(RM) *.dll *.exe [Oo]ut* [Ll]og*
