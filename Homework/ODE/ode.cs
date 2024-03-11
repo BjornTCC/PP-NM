@@ -38,10 +38,10 @@ public static class ODE{
         	for(int i=0;i<y.size;i++)tol[i]=(acc+eps*Abs(yh[i]))*Sqrt(h/(b-a)); /* Evaluate the tolerances*/
                 bool ok=true;
                 for(int i=0;i<y.size;i++)if(!(err[i]<tol[i])) ok=false; /* check whether to accept step */
-                if(ok){ 
+                if(ok){ 						/* step accepted */
 			x+=h; y=yh;
-		   	if(xlist!=null)xlist.add(x);
-			if(ylist!=null)ylist.add(y);} /* step accepted */
+		   	if(xlist!=null)xlist.add(x);			/* record path if desired */
+			if(ylist!=null)ylist.add(y);} 
                 double factor = tol[0]/Abs(err[0]);
                 for(int i=1;i<y.size;i++) factor=Min(factor,tol[i]/Abs(err[i])); /* figure out new step size*/
                 h *= Min( Pow(factor,0.25)*0.95 ,2);

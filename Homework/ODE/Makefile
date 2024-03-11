@@ -13,9 +13,9 @@ OutC.svg: dataC.txt Makefile
 		set ylabel "y";\
 		set size ratio -1;\
 		set title "Figure-8 solution";\
-		plot "$<" using 1:2 with lines notitle\
-		, "$<" using 3:4 with lines notitle\
-		, "$<" using 5:6 with lines notitle\
+		plot[-1.3:2] "$<" using 1:2 with lines t "Planet 1"\
+		, "$<" using 3:4 with lines t "Planet 2"\
+		, "$<" using 5:6 with lines t "Planet 3"\
 		'|tee logC.gpi | gnuplot
 
 
