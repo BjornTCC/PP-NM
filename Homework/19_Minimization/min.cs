@@ -150,13 +150,18 @@ public class min{
 			for(int i=1;i<=dim;i++)fact*=i;
 			return Abs(QRGS.det(M))/fact;
 		}
+
+		public double size(){
+			return (points[nmax]-points[nmin]).norm();
+		}//size
 	}//simplex
 	
-	public static (vector,double) downhill_sim(
+	public static (vector,double,int) downhill_sim(
 			Func<vector,double> f, /* objective function */
 			vector start, /* starting point */
 			double acc = 0.001
 			){
+			int steps = 0;
 			simplex simp = new simplex(f,start);
 			acc = Pow(acc,simp.dim);
 			do{
@@ -170,7 +175,8 @@ public class min{
 				else if(simp.con_val() < simp.maxval) simp.contraction();
 				else simp.reduction();
 			}
+			steps++;
 			}while(simp.volume()>acc);
-			return(simp.min(),simp.minval);
+			return(simp.min(),simp.minval,steps);
 	}//downhill_sim
 }//min
