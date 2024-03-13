@@ -12,6 +12,6 @@ class time{
 		for(int i = 0; i < N; i++){
 		for(int j = 0; j < N; j++) A[i,j] = random.NextDouble();
 		}
-		(matrix Q,matrix R) = QRGS.decomp(A);
+		QRGS.decomp(A);
 	}//Main
 }//time

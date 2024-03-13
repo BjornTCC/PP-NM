@@ -25,15 +25,14 @@ public static class QRGS{
 	}//backsub
 
 	public static vector solve(matrix A, vector b){ 
-		(matrix QT, matrix R) = decomp(A);
-		QT = QT.transpose();
-		vector sol = QT*b;
+		(matrix Q, matrix R) = decomp(A);
+		vector sol = Q.transpose()*b;
 		return backsub(R, sol);
 	}//solve
 	
 	public static double det(matrix A){ //only returns determinant up to sign
 		if(A.size1 == A.size2){
-			(matrix Q, matrix R) = decomp(A);
+			matrix R = decomp(A).Item2;
 			double res = 1;
 			for(int i = 0; i < R.size1; i++)res*=R[i,i];
 			return res;
@@ -53,20 +52,3 @@ public static class QRGS{
 		throw new System.ArgumentException($"inv: Can't invert non square matrix with size: ({A.size1}, {A.size2})");
 	}//inv
 }//QRGS
- 
-public static class linsol{
-
-	public static vector TriDiagSol(matrix A, vector b){ //solves a tri-diagonal system in-place
-		if(A.size1 != A.size2 || A.size2 != b.size){
-			throw new System.ArgumentException($"triDiagSol: Bad dimensions, A: ({A.size1},{A.size2}), b: {b.size}");}
-		int n = b.size;
-		for(int i = 1; i < n; i++){ //Do gaussian elimination
-			double w = A[i,i-1]/A[i-1,i-1]; //Ai = A[i,i-1], Di = A[i,i], Qi = A[i,i+1]
-			A[i,i] -= w*A[i-1,i];
-			b[i] -= w*b[i-1];}
-		vector sol = new vector(n); //Construct solution
-		sol[n-1] = b[n-1]/A[n-1,n-1];
-		for(int i = n-2; i >= 0; i--)sol[i] = (b[i] - A[i,i+1]*sol[i+1])/A[i,i];
-		return sol;
-	}//TriDiagSol
-}//linsol

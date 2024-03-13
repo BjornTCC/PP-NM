@@ -15,6 +15,7 @@ Out.Linterp.svg: outlin1.txt outlin2.txt Makefile
 		set xlabel "x";\
 		set ylabel "y";\
 		set size 1,1;\
+		set key outside;\
                 set term svg size 600, 800 ;\
                 set multiplot layout 2,1 columns ;\
 		set title "Linear interpolation";\
@@ -59,6 +60,7 @@ Out.Cubterp.svg: outcub1.txt outcub2.txt Makefile
                 set xlabel "x";\
                 set ylabel "y";\
 		set size 1,1;\
+		set key outside;\
 		set term svg size 600, 1200 ;\
                 set multiplot layout 3,1 columns ;\
                 set title "Cubic spline";\
@@ -84,16 +86,19 @@ Out3diag.txt: main3diag.exe
 outcub1.txt: mainc.exe
 	mono $< 1> $@ 2> outcub2.txt
 
-mainq.exe: mainq.cs spline.dll; $(MKEXE)
+mainq.exe: mainq.cs spline.dll extlib.dll; $(MKEXE)
 
-mainl.exe: mainl.cs spline.dll; $(MKEXE)
+mainl.exe: mainl.cs spline.dll extlib.dll; $(MKEXE)
 
-mainc.exe: mainc.cs spline.dll; $(MKEXE)
+mainc.exe: mainc.cs spline.dll extlib.dll; $(MKEXE)
 
-main3diag.exe: main3diag.cs spline.dll; $(MKEXE)
+main3diag.exe: main3diag.cs spline.dll extlib.dll; $(MKEXE)
 
-spline.dll: spline.cs ../../libs/matrix/matrix.cs ../../libs/matrix/vector.cs\
-       	../../libs/QRDecomp/QRGS.cs ../../libs/genlist/genlist.cs; $(MKLIB)
+spline.dll: spline.cs extlib.dll; $(MKLIB)
+	
+extlib.dll: ../../libs/matrix/matrix.cs ../../libs/matrix/vector.cs\
+       	../../libs/QRDecomp/QRGS.cs ../../libs/QRDecomp/linsol.cs \
+	../../libs/genlist/genlist.cs; $(MKLIB)
 
 clean: 
 	$(RM) *.dll *.exe [Oo]ut* [Ll]og*

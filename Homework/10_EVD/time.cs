@@ -14,7 +14,7 @@ class time{
 			A[i,j] = random.NextDouble();
 			A[j,i] = A[i,j];
 		}
-		(vector w, matrix V) = jacobi.cyclic(A);
+		jacobi.cyclic(A);
 		return 0;
 	}//Main
 }//time

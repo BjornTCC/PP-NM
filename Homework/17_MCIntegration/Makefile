@@ -20,17 +20,17 @@ OutA.svg: dataA.txt Makefile
 		fit f(x) "$<" using 1:3 via a,b;\
 		plot "$<" using 1:2 with points t "Est. error"\
 		,"$<" using 1:3 with points t "Exact error"\
-		,f(x) with l title sprintf("fit: %.f + %.2f/N^{%.3f}",b,a,c);\
+		,f(x) with l title sprintf("fit: %.f + %.2f*N^{%.3f}",b,a,c);\
                 set title "Volume of 3d half ball";\
                 fit f(x) "$<" using 1:5 via a,b;\
                 plot "$<" using 1:4 with points t "Est. error"\
                 ,"$<" using 1:5 with points t "Exact error"\
-                ,f(x) with l title sprintf("fit: %.f + %.2f/N^{%.3f}",b,a,c);\
+                ,f(x) with l title sprintf("fit: %.f + %.2f*N^{%.3f}",b,a,c);\
                 set title "Measure of 4d half ball";\
                 fit f(x) "$<" using 1:7 via a,b;\
                 plot "$<" using 1:6 with points t "Est. error"\
                 ,"$<" using 1:7 with points t "Exact error"\
-                ,f(x) with l title sprintf("fit: %.f + %.2f/N^{%.3f}",b,a,c);\
+                ,f(x) with l title sprintf("fit: %.f + %.2f*N^{%.3f}",b,a,c);\
 		unset multiplot;\
 		'| tee logA.gpi | gnuplot
 

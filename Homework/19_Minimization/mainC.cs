@@ -28,7 +28,7 @@ public class main{
 						for(int i=0;i<n;i++)chi+=Pow((F(energy[i],m,gam,A)-signal[i])/error[i],2);
 						return chi;};
 		
-		(vector param, double chival) = min.downhill_sim(chi2, geuss);
+		(vector param, double chival, double steps) = min.downhill_sim(chi2, geuss);
 		int N = 1000;
 		double En = 0, fit = 0;
 		for(int i=0;i<N;i++){
@@ -36,7 +36,7 @@ public class main{
 			fit = F(En,param[0],param[1],param[2]);
 			Out.WriteLine($"{En} {fit}");
 		}
-		Error.WriteLine($"Chi^2 value: {chival}.");
+		Error.WriteLine($"Chi^2 value: {chival}. #Simplex steps: {steps}");
 		Error.WriteLine($"Parameters: m = {param[0]}, gamma = {param[1]}, A = {param[2]}");
 		return 0;
 	}//Main

@@ -4,6 +4,7 @@
                 set xlabel "x";\
                 set ylabel "y";\
 	set size 1,1;\
+	set key outside;\
 	set term svg size 600, 1200 ;\
                 set multiplot layout 3,1 columns ;\
                 set title "Cubic spline";\

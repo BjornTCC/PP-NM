@@ -26,7 +26,7 @@ public class main{
 		vector Es = root.newton(M, Estart);
 		Func<double,vector,vector> end_diff = delegate(double r, vector f){vector w = new vector(2); w[0] = f[1];
                                                                 w[1] = (-2.0/r - 2*Es[0])*f[0]; return w;};
-		vector ress = ODE.driver(end_diff, rmin, fmin, rmax, acc:acc, eps:eps, xlist:rs, ylist:fs);
+		ODE.driver(end_diff, rmin, fmin, rmax, acc:acc, eps:eps, xlist:rs, ylist:fs);
 		for(int i=0;i<rs.size;i++)Error.WriteLine($"{rs[i]} {fs[i][0]}");
 
 		//Start of convergence calculations

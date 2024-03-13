@@ -32,7 +32,7 @@ public static class QRGS{
 	
 	public static double det(matrix A){ //only returns determinant up to sign
 		if(A.size1 == A.size2){
-			(matrix Q, matrix R) = decomp(A);
+			matrix R = decomp(A).Item2;
 			double res = 1;
 			for(int i = 0; i < R.size1; i++)res*=R[i,i];
 			return res;

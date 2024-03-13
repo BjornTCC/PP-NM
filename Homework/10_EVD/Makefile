@@ -4,7 +4,7 @@ MKEXE = mcs -target:exe -out:$@ $(LIBS) $(CODE)
 MKLIB = mcs -target:library -out:$@ $(LIBS) $(CODE)
 TIME = time --output=$@ --append --format "$$N %e %U"
 
-all: Out.txt Out.HydrogenRmax.svg Out.HydrogenDr.svg Out.times.svg
+all: Out.txt Out.HydrogenRmax.svg Out.HydrogenDr.svg Out.times.svg Out.HydrogenWavef.svg
 
 Out.HydrogenRmax.svg: Out.HydrogenRmax.txt Makefile
 	echo '\
