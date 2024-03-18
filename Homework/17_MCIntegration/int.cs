@@ -53,7 +53,7 @@ public class integrate{
         double mean1 = sum/N, mean2=sum2/N, mean=(mean1+mean2)/2, sigma=Abs(mean1-mean2);
         var result=(mean*V,sigma*V);
         return result;
-        }//plainmc
+        }//quasimc
 	
 	public static (double,double) stratmc(Func<vector,double> f,vector a,vector b,int N, int nmin = 500){
 	if(N<nmin) return plainmc(f,a,b,N);

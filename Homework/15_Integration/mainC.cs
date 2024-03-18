@@ -10,8 +10,8 @@ public class main{
 		double[] a = new double[4]{double.NegativeInfinity, double.NegativeInfinity, 0, 0};
 		double[] b = new double[4]{double.PositiveInfinity, 1, double.PositiveInfinity, double.PositiveInfinity};
 		for(int i = 0; i < 4; i++){
-			double[] res = integrate.integral(fs[i],a[i],b[i]);
-			WriteLine($"{names[i]}: Exact: {vals[i]}, Numerical: {res[0]}, err: {res[1]}, #eval: {res[2]}");
+			(double res,double err,int eval) = integrate.integral(fs[i],a[i],b[i]);
+			WriteLine($"{names[i]}: Exact: {vals[i]}, Numerical: {res}, err: {err}, #eval: {eval}");
 		}	
 	        return 0;	
 	}//Main

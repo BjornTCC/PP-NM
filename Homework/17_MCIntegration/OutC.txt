@@ -1,5 +1,5 @@
-Area of circle, N = 100000 exact: 3.14159265358979, MC: 3.14015490199325, Estimated error: NaN
-Volume of half ball, N = 100000 exact: 2.0943951023932, MC: 2.09736738852865, Estimated error: 0.00362940148536308
-Volume of 4d half ball, N = 100000 exact: 2.46740110027234, MC: 2.47435505804502, Estimated error: 0.00776754955795822
+Area of circle, N = 100000 exact: 3.14159265358979, MC: 3.14233702107716, Estimated error: 0.0041635247072828
+Volume of half ball, N = 100000 exact: 2.0943951023932, MC: 2.08546643896631, Estimated error: 0.00361992459434429
+Volume of 4d half ball, N = 100000 exact: 2.46740110027234, MC: 2.46757246887922, Estimated error: 0.00738566522607364
 
-Hard integral, N = 1000000. MC: NaN, est. err. NaN, Exact: 1.39320392968568
+Hard integral, N = 1000000. MC: 1.36963978748693, est. err. 0.0261855106397264, Exact: 1.39320392968568

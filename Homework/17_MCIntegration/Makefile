@@ -45,7 +45,7 @@ OutB.svg: dataB.txt dataA.txt Makefile
                 set multiplot layout 3,1 columns;\
                 set title "Area of 2d circle";\
                 plot "$<" using 1:2 with l t "Est. error"\
-                ,"$<" using 1:3 with lp t "Exact error"\
+                ,"$<" using 1:3 with l t "Exact error"\
                 ,"dataA.txt" using 1:3 with l t "Error of plainMC";\
                 set title "Volume of 3d half ball";\
                 plot "$<" using 1:4 with l t "Est. error"\
