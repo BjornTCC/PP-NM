@@ -44,9 +44,9 @@ public class ann{
 	public void train_interp(vector x,vector y){
 		Func<vector,double> cost = delegate(vector v){double cst = 0; 
 			for(int i=0;i<x.size;i++)cst+=Pow(response(x[i],v)-y[i],2); return cst;};
-		(vector pmin, double mcst, int step) = min.downhill_sim(cost,p);
-		steps = step;	
-		p = pmin;
+		var minip = min.downhill_sim(cost,p);
+		steps = minip.Item3;	
+		p = minip.Item1;
 	}
 
 }//ann
@@ -108,12 +108,12 @@ public class diff_nn{
 			double res = alp*Pow(Fc[0]-response(c,I),2) + bet*Pow(Fc[1]-dresponse(c,I),2);
 			Func<double,double>[] y = {x=>response(x,I),x=>dresponse(x,I),x=>ddresponse(x,I)};
 			Func<double,double> Phi2 = x=>Pow(Phi(y,x),2);
-			res += integrate.adint(Phi2,a,b)[0];
+			res += integrate.adint(Phi2,a,b).Item1;
 			return res;
 		};
-		(vector pmin, double mcst, int step) = min.downhill_sim(cost,p);
-                steps = step;
-                p = pmin;
+		var minip = min.downhill_sim(cost,p);
+                steps = minip.Item3;
+                p = minip.Item1;
 	}//train	
 		
 }//diff_nn

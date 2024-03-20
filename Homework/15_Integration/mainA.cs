@@ -35,7 +35,7 @@ public class main{
 		int[] evals = new int[4];
 		for(int i = 0; i < 4; i++){
 			(NumRes[i],err[i],evals[i]) = integrate.adint(fs[i],0,1,1e-5);
-			Out.WriteLine($"{i}: Analytical: {AnalyticalRes[i]}, Numerical: {NumRes[i]}, err: {err[i]}, Evals: {evals[i]}");}
+			Out.WriteLine($"{i}: Analytic: {AnalyticalRes[i]}, Numerical: {NumRes[i]}, err: {err[i]}, Evals: {evals[i]}");}
 		if(vector.approx(NumRes,AnalyticalRes,1e-4)) Out.WriteLine("Numerical integration succesful");
                 if(!(vector.approx(NumRes,AnalyticalRes,1e-4))) Out.WriteLine("Numerical integration failed");
 		//second part of A
