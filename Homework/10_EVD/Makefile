@@ -69,17 +69,22 @@ Out.times.svg: out.times.txt out.times_opt.txt Makefile
 Out.txt: main.exe
 	mono $< > $@
 
+Ns := $(shell seq 100 25 300)
 out.times.txt: time.exe Makefile
+	for N in $(Ns); do \
+		time -ao log.$$N -f "$$N %e" mono $< -msize:$$N 1>out 2>err & \
+    done; wait
 	>$@
-	for N in $$(seq 100 25 300); do \
-		$(TIME) mono $< -msize:$$N 1>out 2>err ;\
-	done
+	for N in $(Ns); do cat log.$$N >> $@; done
+	$(RM) log*
 
 out.times_opt.txt: time_opt.exe Makefile
+	for N in $(Ns); do \
+		time -ao log.$$N -f "$$N %e" mono $< -msize:$$N 1>out 2>err & \
+    done; wait
 	>$@
-	for N in $$(seq 100 25 300); do \
-		$(TIME) mono $< -msize:$$N 1>out 2>err ;\
-	done
+	for N in $(Ns); do cat log.$$N >> $@; done
+	$(RM) log*
 
 out.HydrogenRmax.txt: hydrogen.exe Makefile
 	>>$@ 

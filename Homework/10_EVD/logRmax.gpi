@@ -1,8 +1,0 @@
-\
-	set terminal svg background "white" ;\
-	set out "Out.HydrogenRmax.svg" ;\
-	set xlabel "rmax";\
-	set ylabel "Energy";\
-	set title "Convergence of energy wrt. rmax, dr = 0.05";\
-	plot "out.HydrogenRmax.txt" using 1:3 with lp notitle\
-	
