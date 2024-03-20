@@ -1,7 +1,9 @@
-0: Analytical: 0.666666666666667, Numerical: 0.666689290406816, err: 0.000364267610388309, Evals: 44
-1: Analytical: 2, Numerical: 1.99996150007805, err: 0.000412012551873554, Evals: 8580
-2: Analytical: 3.14159265358979, Numerical: 3.14161878669555, err: 0.000784025184364594, Evals: 60
-3: Analytical: -4, Numerical: -3.99997150974347, err: 0.000408049836369902, Evals: 8688
+Python evaluations are computed using scipy.integrate.quad routine with same requested precision.
+
+0: Analytic: 0.666666666666667, Numerical: 0.666689290406816, err: 0.000364267610388309, Evals: 44, Python evals: 105
+1: Analytic: 2, Numerical: 1.99996150007805, err: 0.000412012551873554, Evals: 8580, Python evals: 231
+2: Analytic: 3.14159265358979, Numerical: 3.14161878669555, err: 0.000784025184364594, Evals: 60, Python evals: 147
+3: Analytic: -4, Numerical: -3.99997150974347, err: 0.000408049836369902, Evals: 8688, Python evals: 315
 Numerical integration succesful
 
 Comparison of accuracy between Plots approx and numerical integral of Erf:

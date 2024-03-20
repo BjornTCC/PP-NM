@@ -33,9 +33,12 @@ public class main{
 		vector NumRes = new vector(4);
 		vector err = new vector(4);
 		int[] evals = new int[4];
+		WriteLine("Python evaluations are computed using scipy.integrate.quad routine with same requested precision.");
+                int[] PyN= {105,231,147,315};
+                WriteLine("");
 		for(int i = 0; i < 4; i++){
-			(NumRes[i],err[i],evals[i]) = integrate.adint(fs[i],0,1,1e-5);
-			Out.WriteLine($"{i}: Analytic: {AnalyticalRes[i]}, Numerical: {NumRes[i]}, err: {err[i]}, Evals: {evals[i]}");}
+		(NumRes[i],err[i],evals[i]) = integrate.adint(fs[i],0,1,1e-5);
+		Out.WriteLine($"{i}: Analytic: {AnalyticalRes[i]}, Numerical: {NumRes[i]}, err: {err[i]}, Evals: {evals[i]}, Python evals: {PyN[i]}");}
 		if(vector.approx(NumRes,AnalyticalRes,1e-4)) Out.WriteLine("Numerical integration succesful");
                 if(!(vector.approx(NumRes,AnalyticalRes,1e-4))) Out.WriteLine("Numerical integration failed");
 		//second part of A

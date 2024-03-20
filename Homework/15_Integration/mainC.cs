@@ -9,9 +9,12 @@ public class main{
 	      	double[] vals = new double[4]{Sqrt(PI), E, 24, 362880};
 		double[] a = new double[4]{double.NegativeInfinity, double.NegativeInfinity, 0, 0};
 		double[] b = new double[4]{double.PositiveInfinity, 1, double.PositiveInfinity, double.PositiveInfinity};
+		WriteLine("Python evaluations are computed using scipy.integrate.quad routine with same requested precision.");
+		int[] PyN= {150,75,135,135};
+		WriteLine("");
 		for(int i = 0; i < 4; i++){
-			(double res,double err,int eval) = integrate.integral(fs[i],a[i],b[i]);
-			WriteLine($"{names[i]}: Exact: {vals[i]}, Numerical: {res}, err: {err}, #eval: {eval}");
+		(double res,double err,int eval) = integrate.integral(fs[i],a[i],b[i]);
+		WriteLine($"{names[i]}: Exact: {vals[i]}, Numerical: {res}, err: {err}, #eval: {eval}, Python #eval: {PyN[i]}");
 		}	
 	        return 0;	
 	}//Main
