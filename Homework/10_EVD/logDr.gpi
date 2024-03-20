@@ -1,0 +1,9 @@
+\
+                set terminal svg background "white" ;\
+                set out "Out.HydrogenDr.svg" ;\
+                set xlabel "dr";\
+                set ylabel "Energy";\
+	set xrange [0.2:0.01] ;\
+                set title "Convergence of energy wrt. dr rmax = 10";\
+                plot "out.HydrogenDr.txt" using 2:3 with lp notitle \
+                

@@ -26,6 +26,7 @@ public static class hydrogen{
 		matrix V = matrix.diag(Vs);
 		matrix H = K + V; //Hamiltonian
 		(vector Energies, matrix EigenVectors) = jacobi.cyclic_opt(H);
+		for(int i=0;i<3;i++){if(EigenVectors[i][1] < 0) EigenVectors[i]*=-1;}
 	      	if(Wavef_conv == "conv")WriteLine($"{rmax} {dr} {Energies[EnergyLevel]}");
 		if(Wavef_conv == "Wavef"){
 		for(int i = 0; i < N; i++){
