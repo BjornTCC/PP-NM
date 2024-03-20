@@ -78,4 +78,4 @@ extlib.dll: ../../libs/matrix/vector.cs ../../libs/matrix/matrix.cs; $(MKLIB)
 int.dll: int.cs extlib.dll; $(MKLIB)
 
 clean: 
-	$(RM) *.dll *.exe [Oo]ut* [Dd]ata*
+	$(RM) *.dll *.exe [Oo]ut* [Dd]ata* [Ll]og* *.log

@@ -24,7 +24,7 @@ outtimes.txt: time.exe Makefile
 	>$@
 	for N in $$(seq 200 25 600); do \
 		$(TIME) mono $< -msize:$$N 1>out 2>err ;\
-	done
+	done ; wait
 
 Out.txt: main.exe
 	mono $< > $@
@@ -38,4 +38,4 @@ matrix.dll: ../../libs/matrix/matrix.cs ../../libs/matrix/vector.cs; $(MKLIB)
 QRGS.dll: QRGS.cs matrix.dll; $(MKLIB)
 
 clean: 
-	$(RM) *.dll *.exe [Oo]ut* [Ll]og*
+	$(RM) *.dll *.exe [Oo]ut* [Ll]og* *.[Ll]og

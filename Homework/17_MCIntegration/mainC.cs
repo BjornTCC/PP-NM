@@ -10,7 +10,7 @@ public class main{
 		vector b2d = new vector("1 1");
 		vector a3d = new vector("-1 -1 -1");
 		vector b3d = new vector("1 1 1");
-		int N = (int)1e5;
+		int N = 4*(int)1e4;
 		double[] exact = new double[3]{PI, 2*PI/3, PI*PI/4};
 		double circl = 0, ball2 = 0, ball4 = 0, circ_err = 0, ball2_err = 0, ball4_err = 0;
 		(circl, circ_err) = integrate.stratmc(circ, a2d, b2d, N);
