@@ -87,16 +87,20 @@ out.times_opt.txt: time_opt.exe Makefile
 	$(RM) log*
 
 out.HydrogenRmax.txt: hydrogen.exe Makefile
-	>>$@ 
 	for R in $$(seq 4 1 10); do \
-		mono $< -rmax:$$R -dr:0.05 1>> $@;\
-	done
+		mono $< -rmax:$$R -dr:0.05 1>> log.$$R & \
+	done; wait
+	>$@
+	for R in $$(seq 4 1 10); do cat log.$$R >> $@; done
+	$(RM) log*
 
 out.HydrogenDr.txt: hydrogen.exe Makefile
-	>>$@
-	for Dr in $$(seq 0.01 0.01 0.2); do \
-                mono $< -rmax:10 -dr:$$Dr 1>> $@;\
-        done
+	for r in $$(seq 0.01 0.01 0.2); do \
+                mono $< -rmax:10 -dr:$$r 1>> log.$$r;\
+        done; wait
+	>$@
+	for r in $$(seq 0.01 0.01 0.2); do cat log.$$r >> $@; done
+	$(RM) log*
 
 out.HydrogenWavef.txt: hydrogen.exe Makefile
 	mono $< -rmax:25 -dr:0.05 -Wavef_conv:Wavef > $@

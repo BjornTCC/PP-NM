@@ -102,8 +102,8 @@ public class diff_nn{
 			double a, double b,						/* interval */
 			double c, 							/*starting point*/
 			double[] Fc,							/* initial values */
-			double alp=1, 
-			double bet=1){
+			double alp=100, 
+			double bet=100){
 		Func<vector,double> cost = delegate(vector I){
 			double res = alp*Pow(Fc[0]-response(c,I),2) + bet*Pow(Fc[1]-dresponse(c,I),2);
 			Func<double,double>[] y = {x=>response(x,I),x=>dresponse(x,I),x=>ddresponse(x,I)};

@@ -13,7 +13,7 @@ OutC.svg: outdataC.txt Makefile
 		set xlabel "x";\
 		set ylabel "y";\
 		set grid;\
-		f(x) = cos(x);\
+		f(x) = (cos(x)+sin(x)/2)*exp(-x/2);\
 		set title "Harmonic oscillator with Neural Network";\
 		plot "$<" with l t "Network solution, 10 nodes" \
 		,f(x) with l lt 0 t "exact solution"\
