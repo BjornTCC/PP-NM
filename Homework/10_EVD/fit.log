@@ -1,7 +1,7 @@
 
 
 *******************************************************************************
-Fri Mar 29 14:47:00 2024
+Wed Apr  3 10:08:30 2024
 
 
 FIT:    data read from "out.times.txt"
@@ -14,21 +14,21 @@ function used for fitting: f(x)
 fitted parameters initialized with current variable values
 
 iter      chisq       delta/lim  lambda   a             b            
-   0 2.8450043974e+03   0.00e+00  3.93e+01    9.000000e+01   1.000000e+00
-   7 4.5802390555e-02  -2.69e-02  3.93e-06    2.171479e+02   2.889758e-01
+   0 2.8885331464e+03   0.00e+00  3.93e+01    9.000000e+01   1.000000e+00
+   7 5.5414051755e-02  -6.42e-02  3.93e-06    2.217075e+02   2.187304e-01
 
 After 7 iterations the fit converged.
-final sum of squares of residuals : 0.0458024
-rel. change during last iteration : -2.69065e-07
+final sum of squares of residuals : 0.0554141
+rel. change during last iteration : -6.42417e-07
 
 degrees of freedom    (FIT_NDF)                        : 7
-rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.08089
-variance of residuals (reduced chisquare) = WSSR/ndf   : 0.0065432
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.0889736
+variance of residuals (reduced chisquare) = WSSR/ndf   : 0.00791629
 
 Final set of parameters            Asymptotic Standard Error
 =======================            ==========================
-a               = 217.148          +/- 2.352        (1.083%)
-b               = 0.288976         +/- 0.04282      (14.82%)
+a               = 221.708          +/- 2.812        (1.268%)
+b               = 0.21873          +/- 0.0471       (21.53%)
 
 correlation matrix of the fit parameters:
                 a      b      
@@ -37,7 +37,7 @@ b               0.777  1.000
 
 
 *******************************************************************************
-Fri Mar 29 14:47:00 2024
+Wed Apr  3 10:08:30 2024
 
 
 FIT:    data read from "out.times_opt.txt"
@@ -50,21 +50,21 @@ function used for fitting: fo(x)
 fitted parameters initialized with current variable values
 
 iter      chisq       delta/lim  lambda   ao            bo           
-   0 3.0276109940e+03   0.00e+00  3.93e+01    9.000000e+01   1.000000e+00
-   8 2.7974943927e-02  -4.64e-05  3.93e-07    2.551755e+02   2.191760e-01
+   0 3.0284256555e+03   0.00e+00  3.93e+01    9.000000e+01   1.000000e+00
+   8 3.6414000874e-02  -3.35e-05  3.93e-07    2.529912e+02   1.893326e-01
 
 After 8 iterations the fit converged.
-final sum of squares of residuals : 0.0279749
-rel. change during last iteration : -4.64431e-10
+final sum of squares of residuals : 0.036414
+rel. change during last iteration : -3.35241e-10
 
 degrees of freedom    (FIT_NDF)                        : 7
-rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.0632172
-variance of residuals (reduced chisquare) = WSSR/ndf   : 0.00399642
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.0721249
+variance of residuals (reduced chisquare) = WSSR/ndf   : 0.005202
 
 Final set of parameters            Asymptotic Standard Error
 =======================            ==========================
-ao              = 255.175          +/- 3.506        (1.374%)
-bo              = 0.219176         +/- 0.03346      (15.27%)
+ao              = 252.991          +/- 3.865        (1.528%)
+bo              = 0.189333         +/- 0.03818      (20.16%)
 
 correlation matrix of the fit parameters:
                 ao     bo     

@@ -3,8 +3,12 @@ using static System.Math;
 
 public class root{
 
-	static matrix jacobian(Func<vector,vector> f, vector x){ //compute the jacobian of a function f
-		vector f0 = f(x);
+	static matrix jacobian(
+			Func<vector,vector> f, 
+			vector x,
+			vector f0 = null
+			){ 				//compute the jacobian of a function f
+		if(f0==null)f0 = f(x);
 		int m = x.size, n = f0.size;
 		matrix jac = new matrix(n,m);
 		double eps = Pow(2,-26), dx = 1;
@@ -21,15 +25,15 @@ public class root{
 	public static vector newton(Func<vector,vector> f, vector x, double eps = 1e-3){
 		double lambda = 1;
 		int m = x.size, n = f(x).size;
-		vector x0 = x.copy(), Dx = x.copy();
+		vector x0 = x.copy(), Dx = x.copy(), f0 = new vector(n);
 		do{
-		vector f0 = f(x0);
-		matrix J = jacobian(f,x0);
+		f0 = f(x0);
+		matrix J = jacobian(f,x0,f0);
 		Dx = QRGS.solve(J, -f0);
 		lambda = 1;
 		while(f(x0 + lambda*Dx).norm() > (1-lambda/2)*f0.norm() && 1 < lambda*1024){lambda/=2;}
 		x0 +=lambda*Dx;
-		}while(f(x0).norm() >= eps && Dx.norm() >= Pow(2,-26)*x0.norm());
+		}while(f0.norm() >= eps && Dx.norm() >= Pow(2,-26)*x0.norm());
 		return x0;
 	}//newton
 }//root

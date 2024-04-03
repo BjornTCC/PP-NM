@@ -84,7 +84,7 @@ out.times_opt.txt: time_opt.exe Makefile
     done; wait
 	>$@
 	for N in $(Ns); do cat log.$$N >> $@; done
-	$(RM) log*
+	$(RM) log* 
 
 out.HydrogenRmax.txt: hydrogen.exe Makefile
 	for R in $$(seq 4 1 10); do \
@@ -94,7 +94,7 @@ out.HydrogenRmax.txt: hydrogen.exe Makefile
 	for R in $$(seq 4 1 10); do cat log.$$R >> $@; done
 	$(RM) log*
 
-out.HydrogenDr.txt: hydrogen.exe Makefile
+out.HydrogenDr.txt: hydrogen.exe Makefile 
 	for r in $$(seq 0.01 0.01 0.2); do \
                 mono $< -rmax:10 -dr:$$r 1>> log.$$r;\
         done; wait

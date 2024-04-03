@@ -9,3 +9,6 @@ extlib.dll: ../matrix/vector.cs ../matrix/matrix.cs ../QRDecomp/QRGS.cs \
 	../ODE/ode.cs ../genlist/genlist.cs; $(MKLIB)
 
 root.dll: root.cs extlib.dll; $(MKLIB)
+	
+clean:
+	$(RM) *.dll
