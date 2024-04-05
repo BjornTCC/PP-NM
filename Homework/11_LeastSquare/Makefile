@@ -25,11 +25,14 @@ Out.fit.svg: data.txt Makefile
 		'|tee log.gpi | gnuplot
 
 Out.txt: main.exe
-	mono $< > $@
+	mono $< -input:data.txt > $@
 
-main.exe: main.cs matlib.dll; $(MKEXE)
+main.exe: main.cs extlib.dll lsfit.dll; $(MKEXE)
 
-matlib.dll: ../../libs/matrix/matrix.cs ../../libs/matrix/vector.cs ../../libs/QRDecomp/QRGS.cs lsfit.cs; $(MKLIB)
+extlib.dll: ../../libs/matrix/matrix.cs ../../libs/matrix/vector.cs \
+	../../libs/QRDecomp/QRGS.cs ../../libs/genlist/genlist.cs; $(MKLIB) 
+	
+lsfit.dll: extlib.dll lsfit.cs; $(MKLIB)
 
 clean: 
 	$(RM) *.dll *.exe [Oo]ut* [Ll]og*

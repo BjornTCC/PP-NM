@@ -25,6 +25,12 @@ public void remove(int i){
 		}
 	else {Error.WriteLine($"Removce: Index {i} not in list of length {data.Length}");}
 	}
+
+public T[] get_data(){
+	T[] _data = new T[size];
+       	for(int i=0;i<size;i++)_data[i]=data[i];
+	return _data;
+	}
 }
 
 public class node<T>{

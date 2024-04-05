@@ -3,10 +3,27 @@ using static System.Console;
 using static System.Math;
 
 public static class main{
-	public static int Main(){
-		vector t = new vector("1 2 3 4 6 9 10 13 15");
-		vector y = new vector("117 100 88 72 53 29.5 25.2 15.2 11.1");
-		vector dy = new vector("6 5 4 4 4 3 3 2 2");
+	public static int Main(string[] args){
+		//Read the data from file
+		string infile = null;
+		foreach(var arg in args){
+			var words = arg.Split(':');
+			if(words[0]=="-input")infile=words[1];
+		}
+		if(infile==null){Error.WriteLine("Wrong filename"); return 1;}
+		genlist<double> _t = new genlist<double>(), _y = new genlist<double>(), _dy = new genlist<double>();
+		var instream = new System.IO.StreamReader(infile);
+		for(string line = instream.ReadLine();line!=null;line=instream.ReadLine()){
+			var nums = line.Split(' ');
+			_t.add(double.Parse(nums[0]));
+                        _y.add(double.Parse(nums[1]));
+                        _dy.add(double.Parse(nums[2]));
+		}
+		vector t = _t.get_data();
+		vector y = _y.get_data();
+		vector dy = _dy.get_data();
+
+		//begin processing
 		vector lny = new vector(9), dlny = new vector(9);
 		for(int i = 0; i < 9; i++){
 			lny[i] = Log(y[i]);
