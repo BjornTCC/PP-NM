@@ -111,7 +111,7 @@ public class diff_nn{
 			res += integrate.adint(Phi2,a,b).Item1;
 			return res;
 		};
-		var minip = min.downhill_sim(cost,p);
+		var minip = min.downhill_sim(cost,p,acc: 1e-5);
                 steps = minip.Item3;
                 p = minip.Item1;
 	}//train	

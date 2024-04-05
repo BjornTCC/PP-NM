@@ -89,7 +89,7 @@ public class min{
 		void update_min(){
                         nmin = 0;
                         for(int i=1;i<dim+1;i++){
-				if(phi(points[i])<phi(points[nmax])) nmin = i;}
+				if(phi(points[i])<phi(points[nmin])) nmin = i;}
                 	minval = phi(points[nmin]);
 		}
 
@@ -150,10 +150,6 @@ public class min{
 			for(int i=1;i<=dim;i++)fact*=i;
 			return Abs(QRGS.det(M))/fact;
 		}
-
-		public double size(){
-			return (points[nmax]-points[nmin]).norm();
-		}//size
 	}//simplex
 	
 	public static (vector,double,int) downhill_sim(
