@@ -51,10 +51,10 @@ public static class ODE{
 		steps++;
         	}while(steps<=nmax);
 		if(xlist!=null) return y;
-		throw new ArgumentException("Driver: Did not reach final step within alloted steps");
+		throw new ArgumentException($"Driver: Did not finish within alloted steps, time reached {x}");
 	}//driver
 	
-	public static interp.vcspline driver_interp( /*returns a vector spline of the solution, room for optimization */
+	public static interp.vcspline driver_interp( /*returns a vector cubic spline of the solution, room for optimization */
                 Func<double,vector,vector> f,/* the f from dy/dx=f(x,y) */
                 double a,                    /* the start-point a */
                 vector ya,                   /* y(a) */
