@@ -117,8 +117,11 @@ public static class integrate{
                 if(vars[1,k] > maxvar){maxvar=vars[1,k]; wdim = k;}}
 	vector a_new = a.copy(), b_new = b.copy();				//subdivide the volume
 	a_new[wdim] = (a[wdim]+b[wdim])/2; b_new[wdim] = (a[wdim]+b[wdim])/2;
-	int N_up = 0; do{N_up++;}while(N_up+1<(N-nmin)/(1+vars[0,wdim]/vars[1,wdim]));	//calculate the point distribution
+
+	int N_est = (int)Floor((N-nmin)/(1+vars[0,wdim]/vars[1,wdim]));
+	int N_up = Min(N-nmin-2,Max(2,N_est));		//calculate the point distribution, Need at least 2 points in each vol
         int N_down = N-nmin - N_up;
+	
 	(double int_down, double sigma_down) = stratmc(f, a, b_new, N_down, nmin);
         (double int_up, double sigma_up) = stratmc(f, a_new, b, N_up, nmin);
 	double grandint = ((int_down+int_up)*(N-nmin) + V*mean*nmin)/N;	//estimate the grand integral and error
