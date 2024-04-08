@@ -23,7 +23,7 @@ public class main{
 		
 		//Generate and write wavefunction data
 		vector Estart = new vector("-1");
-		vector Es = root.newton(M, Estart);
+		vector Es = root.newton(M, Estart).Item1;
 		Func<double,vector,vector> end_diff = delegate(double r, vector f){vector w = new vector(2); w[0] = f[1];
                                                                 w[1] = (-2.0/r - 2*Es[0])*f[0]; return w;};
 		ODE.driver(end_diff, rmin, fmin, rmax, acc:acc, eps:eps, xlist:rs, ylist:fs);
@@ -38,16 +38,16 @@ public class main{
 			rmins[i] = 0.01/Pow(2,i); rmaxs[i] = 6 + i;
 			accs[i] = 0.5/Pow(2,i); epss[i] = 0.5/Pow(2,i);}
 		//rmin calculations
-		for(int i=0;i<N;i++){rmin = rmins[i]; Ermin[i] = root.newton(M, Estart)[0];}
+		for(int i=0;i<N;i++){rmin = rmins[i]; Ermin[i] = root.newton(M, Estart).Item1[0];}
 		rmin = 1e-4;
 		//rmax calculations
-		for(int i=0;i<N;i++){rmax = rmaxs[i]; Ermax[i] = root.newton(M, Estart)[0];}
+		for(int i=0;i<N;i++){rmax = rmaxs[i]; Ermax[i] = root.newton(M, Estart).Item1[0];}
                 rmax = 8;
 		//acc calculations
-		for(int i=0;i<N;i++){acc = accs[i]; Eacc[i] = root.newton(M, Estart)[0];}
+		for(int i=0;i<N;i++){acc = accs[i]; Eacc[i] = root.newton(M, Estart).Item1[0];}
                 acc = 0.01;
 		//eps calculations
-		for(int i=0;i<N;i++){eps = epss[i]; Eeps[i] = root.newton(M, Estart)[0];}
+		for(int i=0;i<N;i++){eps = epss[i]; Eeps[i] = root.newton(M, Estart).Item1[0];}
                 eps = 0.01;
 
 		//Write the data to a file

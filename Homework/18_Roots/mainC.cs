@@ -3,32 +3,67 @@ using static System.Console;
 using static System.Math;
 
 public class main{
+	public static int Main(){
+		//Three simple functions
+		Func<vector,vector> f1 = delegate(vector v){vector w = new vector(1); w[0] = v[0]*Exp(-v[0]*v[0]); return w;};
+		matrix xs = new matrix("-0.5 0 0.5");
+                WriteLine("f = x*e(-x^2). v0 = 0");
+                WriteLine("");
+                for(int i=0;i<3;i++){
+                        vector x = xs[i];
+			var Root = root.newton_quad_int(f1,x);
+                        vector xmin = Root.Item1;
+                        vector fmin = Root.Item2;
+                        WriteLine($"Numerical results, v0 = {x[0]}:");
+                        WriteLine($"v0 = {xmin[0]}. f(v0) = {fmin[0]}");
+                        WriteLine("");
+                }
 
-	public static int Main(string[] args){
-		double rmin = 1e-4, rmax = 8, acc = 0.001, eps = 0.001;
-		vector fmin = new vector(2);
-		vector fm = new vector(1);
-		fmin[0] = rmin*(1-rmin);
-		fm[0] = rmin*(1-rmin);
-		fmin[1] = 1-2*rmin;
-		// M to be minimized without recording wavefunction
-		Func<vector,vector> M = delegate(vector v){ 
-		Func<double,vector,vector> diff = delegate(double r, vector f){vector w = new vector(2); w[0] = f[1];
-                                                                w[1] = (-2.0/r - 2*v[0])*f[0]; return w;};
-                vector res = ODE.driver(diff, rmin, fmin, rmax, acc: acc, eps: eps);
-		vector tres = new vector(2); tres[0] = res[0] - rmax*Exp(-Sqrt(-2*v[0])*rmax); 
-		tres[1] = res[1] - (1 - rmax*Sqrt(-2*v[0]))*Exp(-Sqrt(-2*v[0])*rmax); return tres;};
-
-		//Start of convergence calculations
-		int N = 10;
-		vector rmaxs = new vector(N), Ermax = new vector(N), Estart = new vector("-1");
-		//construct the values of the parameters
-		for(int i=0;i<N;i++)rmaxs[i] = 6 + i;
-		//rmax calculations
-		for(int i=0;i<N;i++){rmax = rmaxs[i]; Ermax[i] = root.newton(M, Estart)[0];}
-		//Write the data to a file
-		for(int i=0;i<N;i++){
-			WriteLine($"{rmaxs[i]} {Ermax[i]}");}
+		Func<vector,vector> f2 = delegate(vector v){vector w = new vector(2); w[0] = 1+v[1]*v[0]; w[1] = 1-v[0]*v[0]; return w;};
+                matrix xs2 = new matrix("-0.5 0.001 0.001;0 -0.001 0.5");
+                WriteLine("(x,y) -> (1+xy, 1-x^2). v0 = (1,-1) & (-1,1)");
+                WriteLine("");
+                for(int i=0;i<3;i++){
+                        vector x = xs2[i];
+                        var Root = root.newton_quad_int(f2,x);
+			vector xmin = Root.Item1;
+			vector fmin = Root.Item2;  
+                        WriteLine($"Numerical results, v0 = ({x[0]}, {x[1]}):");
+                        WriteLine($"v0 = ({xmin[0]}, {xmin[1]}). f(v0) = ({fmin[0]}, {fmin[1]})");
+                        WriteLine("");
+		}
+		
+		Func<vector,vector> f3 = delegate(vector v){vector w = new vector(2); w[0] = Pow(v[0]-1,2); w[1] = Log(v[0]); return w;};
+		matrix xs3 = new matrix("0.5 1.2 2");
+                WriteLine("f = ((x-1)^2, ln(x)). x0 = 1");
+                WriteLine("");
+                for(int i=0;i<3;i++){
+                        vector x = xs3[i];
+			var Root = root.newton_quad_int(f3,x);
+                        vector xmin = Root.Item1;
+                        vector fmin = Root.Item2;
+                        WriteLine($"Numerical results, x0 = {x[0]}:");
+                        WriteLine($"x0 = {xmin[0]}. f(x0) = ({fmin[0]}, {fmin[1]}).");
+                        WriteLine("");
+                }
+		//Rosenbrock function part
+		Func<vector,double> Rf = delegate(vector v){return Pow(1-v[0],2)+100*Pow(v[1] - v[0]*v[0],2);};
+		Func<vector,vector> dRf = delegate(vector v){vector w = new vector(2);
+							w[0] = -2*(1-v[0]) - 400*v[0]*(v[1]-v[0]*v[0]);
+							w[1] = 200*(v[1]-v[0]*v[0]); return w;};
+		matrix x0s = new matrix("2 0 0; 0 0 2");
+		WriteLine("f = Rosenbrock function(a=1 b=100). vmin = (1,1), f(vmin) = 0, df(vmin) = 0");
+		WriteLine("");
+		for(int i=0;i<3;i++){
+			vector x0 = x0s[i];
+			var Root = root.newton_quad_int(dRf,x0);
+			vector xmin = Root.Item1;
+			double fmin = Rf(xmin);
+			vector dfmin = Root.Item2;
+			WriteLine($"Numerical results, v0 = ({x0[0]}, {x0[1]}):");
+			WriteLine($"vmin = ({xmin[0]}, {xmin[1]}). f(vmin) = {fmin}. df(vmin) = ({dfmin[0]}, {dfmin[1]})");
+			WriteLine("");	
+		}
 		return 0;
 	}//Main
 }//main

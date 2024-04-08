@@ -11,8 +11,9 @@ public class main{
                 WriteLine("");
                 for(int i=0;i<3;i++){
                         vector x = xs[i];
-                        vector xmin = root.newton(f1, x);
-                        vector fmin = f1(xmin);
+			var Root = root.newton(f1,x);
+                        vector xmin = Root.Item1;
+                        vector fmin = Root.Item2;
                         WriteLine($"Numerical results, v0 = {x[0]}:");
                         WriteLine($"v0 = {xmin[0]}. f(v0) = {fmin[0]}");
                         WriteLine("");
@@ -24,8 +25,9 @@ public class main{
                 WriteLine("");
                 for(int i=0;i<3;i++){
                         vector x = xs2[i];
-                        vector xmin = root.newton(f2, x);
-                        vector fmin = f2(xmin);
+                        var Root = root.newton(f2,x);
+			vector xmin = Root.Item1;
+			vector fmin = Root.Item2;  
                         WriteLine($"Numerical results, v0 = ({x[0]}, {x[1]}):");
                         WriteLine($"v0 = ({xmin[0]}, {xmin[1]}). f(v0) = ({fmin[0]}, {fmin[1]})");
                         WriteLine("");
@@ -37,8 +39,9 @@ public class main{
                 WriteLine("");
                 for(int i=0;i<3;i++){
                         vector x = xs3[i];
-                        vector xmin = root.newton(f3, x);
-                        vector fmin = f3(xmin);
+			var Root = root.newton(f3,x);
+                        vector xmin = Root.Item1;
+                        vector fmin = Root.Item2;
                         WriteLine($"Numerical results, x0 = {x[0]}:");
                         WriteLine($"x0 = {xmin[0]}. f(x0) = ({fmin[0]}, {fmin[1]}).");
                         WriteLine("");
@@ -53,9 +56,10 @@ public class main{
 		WriteLine("");
 		for(int i=0;i<3;i++){
 			vector x0 = x0s[i];
-			vector xmin = root.newton(dRf, x0);
+			var Root = root.newton(dRf,x0);
+			vector xmin = Root.Item1;
 			double fmin = Rf(xmin);
-			vector dfmin = dRf(xmin);
+			vector dfmin = Root.Item2;
 			WriteLine($"Numerical results, v0 = ({x0[0]}, {x0[1]}):");
 			WriteLine($"vmin = ({xmin[0]}, {xmin[1]}). f(vmin) = {fmin}. df(vmin) = ({dfmin[0]}, {dfmin[1]})");
 			WriteLine("");	

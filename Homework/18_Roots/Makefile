@@ -3,19 +3,7 @@ LIBS = $(addprefix -reference:,$(filter %.dll,$^)) # macros
 MKEXE = mcs -target:exe -out:$@ $(LIBS) $(CODE)
 MKLIB = mcs -target:library -out:$@ $(LIBS) $(CODE)
 
-all: OutA.txt OutBWF.svg OutBconv.svg OutCrmax.svg
-
-OutCrmax.svg: dataCrmax.txt Makefile
-	echo '\
-                set terminal svg background "white" ;\
-                set out "$@" ;\
-                set xlabel "r_{max}";\
-                set ylabel "E";\
-		set grid;\
-		f(x) = -0.5;\
-                plot "$<" using 1:2 with lp pt 7 notitle\
-                ,f(x) with lines lt rgb "green" title "exact value";\
-                '|tee logWF.gpi | gnuplot
+all: OutA.txt OutBWF.svg OutBconv.svg OutC.txt
 
 OutBconv.svg: dataBconv.txt Makefile
 	echo '\
@@ -75,7 +63,7 @@ OutA.txt: mainA.exe
 dataBWF.txt: mainB.exe
 	mono $< 1> dataBconv.txt 2> $@
 
-dataCrmax.txt: mainC.exe
+OutC.txt: mainC.exe
 	mono $< > $@
 
 mainA.exe: mainA.cs root.dll extlib.dll; $(MKEXE)
