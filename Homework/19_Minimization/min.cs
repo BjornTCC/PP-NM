@@ -5,7 +5,7 @@ public class min{
 
 	public class newton{
 		public static readonly double ε = Pow(2,-26);
-		public static readonly double λmin=Pow(2,-26);
+		public static readonly double λmin=Pow(2,-24);
 
                 public readonly Func<vector,double> F;  /* objective function */
                 public readonly int n;                  /* dimension */
@@ -61,11 +61,12 @@ public class min{
 		}//gradient_forward
 
 		matrix hessian_forward(vector x,double fx = Double.NaN,vector gradx = null){
+			double sε = Pow(ε,0.5);
 			matrix H=new matrix(n);
                         if(Double.IsNaN(fx)){fx = F(x); f_eval++;}
 			if(gradx==null) gradx=gradient_forward(x,fx);
 			for(int j=0;j<n;j++){
-				double dx=Abs(x[j])*ε;
+				double dx=Abs(x[j])*sε;
 				x[j]+=dx;
 				vector dgrad=gradient_forward(x)-gradx;
 				for(int i=0;i<n;i++) H[i,j]=dgrad[i]/dx;
