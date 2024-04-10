@@ -3,16 +3,16 @@ Minima: vmin = (1,1) f(vmin) = 0
 
 Starting point= (3,3)
 Numerical minima: vmin = (0.999988091057937,0.999976182229871), f(vmin) = 1.41822901127784E-10
-steps = 20, no. of evaluations = 445
+steps = 20, no. of evaluations = 285
 Starting point= (-3,3)
 Numerical minima: vmin = (0.999977514278433,0.99995469071779), f(vmin) = 5.1705538691552E-10
-steps = 29, no. of evaluations = 647
+steps = 29, no. of evaluations = 415
 Starting point= (-2,-3)
 Numerical minima: vmin = (0.999975364881738,0.999950663044755), f(vmin) = 6.07342325558393E-10
-steps = 24, no. of evaluations = 536
+steps = 24, no. of evaluations = 344
 Starting point= (3,-3)
 Numerical minima: vmin = (0.999988233186557,0.999976454649999), f(vmin) = 1.38471968286693E-10
-steps = 21, no. of evaluations = 468
+steps = 21, no. of evaluations = 300
 
 Himmelblau's function: f(x,y) = (x^2+y-11)^2 + (x+y^2-7)^2
 Minima: vmin = (3,2), f(vmin) = 0
@@ -22,13 +22,13 @@ Minima: vmin = (3.584,-1.848), f(vmin) = 0
 
 Starting point= (3,3)
 Numerical minima: vmin = (2.99999757605773,2.00001058899307), f(vmin) = 1.61021526893106E-09
-steps = 5, no. of evaluations = 109
+steps = 5, no. of evaluations = 69
 Starting point= (-3,3)
 Numerical minima: vmin = (-2.8051180131183,3.13131242780556), f(vmin) = 4.97339164723786E-13
-steps = 4, no. of evaluations = 87
+steps = 4, no. of evaluations = 55
 Starting point= (-2,-3)
 Numerical minima: vmin = (3.5844282373154,-1.84812649050471), f(vmin) = 5.49400145669854E-13
-steps = 7, no. of evaluations = 155
+steps = 7, no. of evaluations = 99
 Starting point= (3,-3)
 Numerical minima: vmin = (3.58442823050977,-1.84812645062263), f(vmin) = 6.59109337637497E-13
-steps = 6, no. of evaluations = 131
+steps = 6, no. of evaluations = 83

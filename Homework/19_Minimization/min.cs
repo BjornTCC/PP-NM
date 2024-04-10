@@ -80,7 +80,7 @@ public class min{
 		}//hessian_forward
 		
 		(vector,matrix) grad_hess(vector x, double fx = Double.NaN){
-			if(_central) return central_grad_hess(x);
+			if(_central) return central_grad_hess(x,fx);
 			else return forward_grad_hess(x,fx);
 		}//grad_hess
 		
@@ -107,9 +107,8 @@ public class min{
                                 if(i==j){
 					grad[j] = (F_pp-F_mm)/(4*dxj); 
 					F_mp = fx; F_pm = fx; 
-					f_eval+=2;}
-				else{F_pm = F(x_pm); F_mp = F(x_mp);}
-				f_eval+=2;
+					}
+				else{F_pm = F(x_pm); F_mp = F(x_mp);f_eval+=2;}
                         	H[i,j]=(F_pp-F_mp-F_pm+F_mm)/(4*dxj*dxi);
                         	x_pp[i] = x[i];x_mp[i] = x[i];x_pm[i] = x[i];x_mm[i] = x[i];
                         	x_pp[j] = x[j];x_mp[j] = x[j];x_pm[j] = x[j];x_mm[j] = x[j];
