@@ -4,40 +4,42 @@ using static System.Math;
 
 public class main{
 	public static int Main(){
-		//read the data file
-		var energy = new genlist<double>();
-		var signal = new genlist<double>();
-		var error  = new genlist<double>();
-		var separators = new char[] {' ','\t'};
-		var options = StringSplitOptions.RemoveEmptyEntries;
-		do{
-        		string line=Console.In.ReadLine();
-        		if(line==null)break;
-        		string[] words=line.Split(separators,options);
-        		energy.add(double.Parse(words[0]));
-        		signal.add(double.Parse(words[1]));
-        		error.add(double.Parse(words[2]));
-		}while(true);
-		int n = energy.size;
+		Func<vector,double> Rosen = v => Pow(1-v[0],2) + 100*Pow(v[1] - v[0]*v[0],2);
+		Func<vector,double> Himmel = v => Pow(v[0]*v[0]+v[1]-11,2)+Pow(v[0]+v[1]*v[1]-7,2);
+		int steps = 0, f_eval = 0;
+		matrix vstart = new matrix("3 -3 -2 3; 3 3 -3 -3"), vmin = new matrix(2,4);
+		vector fvmin = new vector(4);
 		
-		Func<double,double,double,double,double> F = delegate(double E, double m, double gam, double A){
-						return A/(Pow(E-m,2) + gam*gam/4);};
+		//vstart.print("Starting vectors:");
+		//WriteLine("");
 
-		vector geuss = new vector("125 5 5");
-		Func<vector,double> chi2 = delegate(vector v){double m = v[0], gam = v[1], A = v[2], chi = 0; 
-						for(int i=0;i<n;i++)chi+=Pow((F(energy[i],m,gam,A)-signal[i])/error[i],2);
-						return chi;};
+		WriteLine("Rosenbrocks function: f(x,y) = (1-x)^2 + 100*(y-x^2)^2");
+		WriteLine("Minima: vmin = (1,1) f(vmin) = 0");
+		WriteLine("");
 		
-		(vector param, double chival, double steps) = min.downhill_sim(chi2, geuss, acc: 1e-5);
-		int N = 1000;
-		double En = 0, fit = 0;
-		for(int i=0;i<N;i++){
-			En = energy[0] + (energy[n-1]-energy[0])*i/N;
-			fit = F(En,param[0],param[1],param[2]);
-			Out.WriteLine($"{En} {fit}");
+                for(int i=0;i<4;i++){
+			min.newton minimum = new min.newton(Rosen, vstart[i],central: true);
+			vmin[i] = minimum.x; fvmin[i] = minimum.f; steps = minimum.steps; f_eval = minimum.f_eval;
+			WriteLine($"Starting point= ({vstart[0,i]},{vstart[1,i]})");
+			WriteLine($"Numerical minima: vmin = ({vmin[0,i]},{vmin[1,i]}), f(vmin) = {fvmin[i]}");
+		       	WriteLine($"steps = {steps}, no. of evaluations = {f_eval}");
+                }
+		WriteLine("");
+
+		WriteLine("Himmelblau's function: f(x,y) = (x^2+y-11)^2 + (x+y^2-7)^2");
+		WriteLine("Minima: vmin = (3,2), f(vmin) = 0");
+                WriteLine("Minima: vmin = (-2.805,3.313), f(vmin) = 0");
+                WriteLine("Minima: vmin = (-3.779,-3.283), f(vmin) = 0");
+                WriteLine("Minima: vmin = (3.584,-1.848), f(vmin) = 0");
+		WriteLine("");
+
+		for(int i=0;i<4;i++){
+                        min.newton minimum = new min.newton(Himmel, vstart[i],central: true);
+                        vmin[i] = minimum.x; fvmin[i] = minimum.f; steps = minimum.steps; f_eval = minimum.f_eval;
+                        WriteLine($"Starting point= ({vstart[0,i]},{vstart[1,i]})");
+			WriteLine($"Numerical minima: vmin = ({vmin[0,i]},{vmin[1,i]}), f(vmin) = {fvmin[i]}");
+                        WriteLine($"steps = {steps}, no. of evaluations = {f_eval}");
 		}
-		Error.WriteLine($"Chi^2 value: {chival}. #Simplex steps: {steps}");
-		Error.WriteLine($"Parameters: m = {param[0]}, gamma = {param[1]}, A = {param[2]}");
 		return 0;
 	}//Main
 }//main

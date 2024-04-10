@@ -14,22 +14,25 @@ public class min{
                 public int steps;                       /* no. of steps taken */
                 public int f_eval;                      /* no. of function evaluations */
                 public bool status;                     /* whether convergence was achieved within alloted steps*/
+		bool _central;
 
                 //Constructor
                 public newton(Func<vector,double> func,	/* objective function */
                 vector start,                           /* starting point */
                 double acc = 0.001,                     /* accuracy goal, on exit |gradient| should be < acc */
-                int max_steps = 9999			/* Maximum allowed steps */
+                int max_steps = 9999,			/* Maximum allowed steps */
+		bool central = false			/* whether to use central difference formula */
                 ){
+		_central = central;
                 F=func; n = start.size; steps = 0; f_eval = 0;
                 x = start.copy();
         	double lambda = 1, fx = 0, fy = 0;
+		
 		do{
 			steps++;
 			fx = F(x); f_eval++;
-			vector gradx = gradient_forward(x,fx);
+			(vector gradx, matrix H) = grad_hess(x,fx);
 			if(gradx.norm() < acc) break;
-			matrix H = hessian_forward(x,fx,gradx);
 			vector Dx = QRGS.solve(H, -gradx);
 			lambda = 1;
 			do{
@@ -75,6 +78,44 @@ public class min{
 			//return H;
 			return 0.5*(H+H.transpose()); // you think?
 		}//hessian_forward
+		
+		(vector,matrix) grad_hess(vector x, double fx = Double.NaN){
+			if(_central) return central_grad_hess(x);
+			else return forward_grad_hess(x,fx);
+		}//grad_hess
+		
+		(vector,matrix) forward_grad_hess(vector x, double fx = Double.NaN){
+			vector gradx = gradient_forward(x,fx);
+			return(gradx,hessian_forward(x,fx,gradx));
+		}//forward_grad_hess
+
+		(vector,matrix) central_grad_hess(vector x,double fx = Double.NaN){
+			double sε = Pow(ε,0.5);
+			double F_pp = 0, F_mp = 0, F_pm = 0, F_mm = 0;
+			if(Double.IsNaN(fx))fx = F(x);
+			matrix H = new matrix(n); vector grad = new vector(n);
+			vector x_pp = x.copy(), x_pm = x.copy(), x_mp = x.copy(), x_mm = x.copy();
+                	for(int j=0;j<n;j++)
+	                for(int i=0;i<n;i++){
+        	                double dxj=Abs(x[j])*sε;
+                	        double dxi=Abs(x[i])*sε;
+	                        x_pp[j]+=dxj; x_pm[j]+=dxj;
+        	                x_mp[j]-=dxj; x_mm[j]-=dxj;
+                	        x_pp[i]+=dxi; x_pm[i]-=dxi;
+                        	x_mp[i]+=dxi; x_mm[i]-=dxi;
+				F_pp = F(x_pp); F_mm = F(x_mm); f_eval+=2;
+                                if(i==j){
+					grad[j] = (F_pp-F_mm)/(4*dxj); 
+					F_mp = fx; F_pm = fx; 
+					f_eval+=2;}
+				else{F_pm = F(x_pm); F_mp = F(x_mp);}
+				f_eval+=2;
+                        	H[i,j]=(F_pp-F_mp-F_pm+F_mm)/(4*dxj*dxi);
+                        	x_pp[i] = x[i];x_mp[i] = x[i];x_pm[i] = x[i];x_mm[i] = x[i];
+                        	x_pp[j] = x[j];x_mp[j] = x[j];x_pm[j] = x[j];x_mm[j] = x[j];
+			}
+			return(grad,H);
+		}//grad_hess_central
 	}//newton
 	
 
