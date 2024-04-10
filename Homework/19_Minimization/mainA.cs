@@ -6,20 +6,23 @@ public class main{
 	public static int Main(){
 		Func<vector,double> Rosen = v => Pow(1-v[0],2) + 100*Pow(v[1] - v[0]*v[0],2);
 		Func<vector,double> Himmel = v => Pow(v[0]*v[0]+v[1]-11,2)+Pow(v[0]+v[1]*v[1]-7,2);
-		int steps = 0;
-		matrix vstart = new matrix("1 -1 -1 1; 1 1 -1 -1"), vmin = new matrix(2,4);
+		int steps = 0, f_eval = 0;
+		matrix vstart = new matrix("3 -1 -2 2; 3 2 -3 -2"), vmin = new matrix(2,4);
 		vector fvmin = new vector(4);
 		
-		vstart.print("Starting vectors:");
-		WriteLine("");
+		//vstart.print("Starting vectors:");
+		//WriteLine("");
 
 		WriteLine("Rosenbrocks function: f(x,y) = (1-x)^2 + 100*(y-x^2)^2");
 		WriteLine("Minima: vmin = (1,1) f(vmin) = 0");
 		WriteLine("");
 		
                 for(int i=0;i<4;i++){
-                        (vmin[i],fvmin[i],steps) = min.qnewton(Rosen, vstart[i]);
-			WriteLine($"Numerical minima: vmin = ({vmin[0,i]},{vmin[1,i]}), f(vmin) = {fvmin[i]}, steps = {steps}");
+			min.newton minimum = new min.newton(Rosen, vstart[i]);
+			vmin[i] = minimum.x; fvmin[i] = minimum.f; steps = minimum.steps; f_eval = minimum.f_eval;
+			WriteLine($"Starting point= ({vstart[0,i]},{vstart[1,i]})");
+			WriteLine($"Numerical minima: vmin = ({vmin[0,i]},{vmin[1,i]}), f(vmin) = {fvmin[i]}");
+		       	WriteLine($"steps = {steps}, no. of evaluations = {f_eval}");
                 }
 		WriteLine("");
 
@@ -31,9 +34,11 @@ public class main{
 		WriteLine("");
 
 		for(int i=0;i<4;i++){
-                        (vmin[i],fvmin[i],steps) = min.qnewton(Himmel, vstart[i]);
-                        fvmin[i] = Himmel(vmin[i]);
-                        WriteLine($"Numerical minima: vmin = ({vmin[0,i]},{vmin[1,i]}), f(vmin) = {fvmin[i]}, steps = {steps}");
+                        min.newton minimum = new min.newton(Himmel, vstart[i]);
+                        vmin[i] = minimum.x; fvmin[i] = minimum.f; steps = minimum.steps; f_eval = minimum.f_eval;
+                        WriteLine($"Starting point= ({vstart[0,i]},{vstart[1,i]})");
+			WriteLine($"Numerical minima: vmin = ({vmin[0,i]},{vmin[1,i]}), f(vmin) = {fvmin[i]}");
+                        WriteLine($"steps = {steps}, no. of evaluations = {f_eval}");
 		}
 		return 0;
 	}//Main

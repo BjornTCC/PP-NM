@@ -28,7 +28,10 @@ public class main{
 						for(int i=0;i<n;i++)chi+=Pow((F(energy[i],m,gam,A)-signal[i])/error[i],2);
 						return chi;};
 		
-		(vector param, double chival, int steps) = min.qnewton(chi2, geuss);
+		min.newton minimum = new min.newton(chi2, geuss);
+		vector param = minimum.x;
+		double chival = minimum.f;
+		int steps = minimum.steps, f_eval = minimum.f_eval;
 		int N = 1000;
 		double En = 0, fit = 0;
 		for(int i=0;i<N;i++){
@@ -36,7 +39,7 @@ public class main{
 			fit = F(En,param[0],param[1],param[2]);
 			Out.WriteLine($"{En} {fit}");
 		}
-		Error.WriteLine($"Chi^2 value: {chival}. Number of steps: {steps}");
+		Error.WriteLine($"Chi^2 value: {chival}. Number of steps: {steps}. Number of evaluations: {f_eval}");
 		Error.WriteLine($"Parameters: m = {param[0]}, gamma = {param[1]}, A = {param[2]}");
 		return 0;
 	}//Main

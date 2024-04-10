@@ -152,12 +152,13 @@ public matrix copy(){
 }
 
 //String methods
-public void print(string s="", string format="{0,10:g3} "){
-	WriteLine(s);
+public void print(string s="", string format="{0,10:g3} ", System.IO.TextWriter file=null){
+	if(file==null)file = System.Console.Out;
+	file.WriteLine(s);
 	for(int ir=0; ir < this.size1; ir++){
 	for(int ic=0; ic < this.size2; ic++)
-		Write(format, this[ir,ic]);
-		WriteLine();
+		file.Write(format, this[ir,ic]);
+		file.WriteLine();
 	}
 }
 

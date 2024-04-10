@@ -23,7 +23,7 @@ OutBhiggs.svg: datahiggs.txt outBdatahiggs.txt Makefile
                 set out "$@" ;\
                 set xlabel "E [GeV]";\
                 set ylabel "{/symbol s} (background subtracted)";\
-		set title "Higgs particle resonance fit with quasi-newton method";\
+		set title "Higgs particle resonance fit with newton method";\
 		set grid;\
                 plot "$<" with errorbars t "Data"\
 		, "outBdatahiggs.txt" with l t "Breit-Wigner fit"\

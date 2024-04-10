@@ -2,56 +2,154 @@ using System;
 using static System.Math;
 
 public class min{
-	
-	static vector grad(Func<vector,double> f, vector x){
-		double eps = Pow(2,-26);
-		int n = x.size;
-		vector res = new vector(n), y = x.copy();
-		for(int i=0;i<n;i++){
-			double dx = Abs(x[i])*eps;
-			y[i]+=dx;
-			res[i] = (f(y)-f(x))/dx;
-			y[i]=x[i];}
-		return res;
-	}//grad
 
-	public static (vector,double,int) qnewton( //returns (vmin, f(vmin), #steps taken)
-	Func<vector,double> f, /* objective function */
-	vector start, /* starting point */
-	double acc = 0.001 /* accuracy goal, on exit |gradient| should be < acc */
-	){
-	int n = start.size, step = 0;
-	matrix B = matrix.id(n);
-	vector gradf = new vector(n), Dx = new vector(n), x = start.copy();
-	double lambda = 1, fx = 0, gamma = 0, sy = 0;
-	vector y = new vector(n), u = new vector(n), a = new vector(n); //parameters for update
-	do{
-	step++;
-	fx = f(x);
-	gradf = grad(f,x);
-	Dx = -B*gradf;
-	lambda = 1;
-	while(true){
-		if(f(x+lambda*Dx)<fx){
-			x+=lambda*Dx; 			//accept step
-			y = grad(f,x+lambda*Dx)-gradf;	//update B using symmetric Broydens update
-			sy = lambda*Dx.dot(y);
-			if(Abs(sy) > Pow(10,-6)){	//update only if denominator is sufficiently large
-				u = lambda*Dx - B*y;
-				gamma = u.dot(y)/(2*sy);
-				a = (u-gamma*lambda*Dx)/sy;
-				B.sym2update(a,Dx,lambda);
-				}
-			break;
+	public class newton{
+		public static readonly double ε = Pow(2,-26);
+		public static readonly double λmin=Pow(2,-26);
+
+                public readonly Func<vector,double> F;  /* objective function */
+                public readonly int n;                  /* dimension */
+                public vector x;                        /* found minimum */
+                public double f;                        /* value of f at minimum */
+                public int steps;                       /* no. of steps taken */
+                public int f_eval;                      /* no. of function evaluations */
+                public bool status;                     /* whether convergence was achieved within alloted steps*/
+
+                //Constructor
+                public newton(Func<vector,double> func,	/* objective function */
+                vector start,                           /* starting point */
+                double acc = 0.001,                     /* accuracy goal, on exit |gradient| should be < acc */
+                int max_steps = 9999			/* Maximum allowed steps */
+                ){
+                F=func; n = start.size; steps = 0; f_eval = 0;
+                x = start.copy();
+        	double lambda = 1, fx = 0, fy = 0;
+		do{
+			steps++;
+			fx = F(x); f_eval++;
+			vector gradx = gradient_forward(x,fx);
+			if(gradx.norm() < acc) break;
+			matrix H = hessian_forward(x,fx,gradx);
+			vector Dx = QRGS.solve(H, -gradx);
+			lambda = 1;
+			do{
+				fy = F(x+lambda*Dx); f_eval++;
+				if(fy < fx ) break; /* step acceptance */
+				if(lambda < λmin) break; /* step acceptance */
+				lambda /= 2;
+			}while(true);
+			fx = fy; x+=lambda*Dx;
+		}while(steps < max_steps);
+                f = fx;
+                if(steps >= max_steps)status = false;
+                else status = true;
+                }
+		
+		//numerical gradients and hessian
+
+		vector gradient_forward(vector x,double fx = Double.NaN){
+			vector grad = new vector(n);
+			if(Double.IsNaN(fx)){fx = F(x); f_eval++;} /* no need to recalculate at each step */
+			for(int i=0;i<n;i++){
+				double dx=Abs(x[i])*ε;
+				x[i]+=dx;
+				grad[i]=(F(x)-fx)/dx; 
+				f_eval++;
+				x[i]-=dx;
 			}
-		lambda/=2;
-		if(lambda*1024 < 1){
-			x+=lambda*Dx;
-			B = matrix.id(n);
-			break;}
+			return grad;
+		}//gradient_forward
+
+		matrix hessian_forward(vector x,double fx = Double.NaN,vector gradx = null){
+			matrix H=new matrix(n);
+                        if(Double.IsNaN(fx)){fx = F(x); f_eval++;}
+			if(gradx==null) gradx=gradient_forward(x,fx);
+			for(int j=0;j<n;j++){
+				double dx=Abs(x[j])*ε;
+				x[j]+=dx;
+				vector dgrad=gradient_forward(x)-gradx;
+				for(int i=0;i<n;i++) H[i,j]=dgrad[i]/dx;
+				x[j]-=dx;
+			}
+			//return H;
+			return 0.5*(H+H.transpose()); // you think?
+		}//hessian_forward
+	}//newton
+	
+
+	// From here on methods used for the homework ends
+	// I implemented qnewton and nelder-mead based on old homework 
+	// just for the fun of it
+
+	public class qnewton{ 
+		static readonly double λmin=Pow(2,-26);
+		
+		public readonly Func<vector,double> F;	/* objective function */
+		public readonly int n; 			/* dimension */
+		public vector x;	 		/* found minimum */
+		public double f;			/* value of f at minimum */
+		public int steps; 			/* no. of steps taken */
+		public int f_eval;			/* no. of function evaluations */
+		public bool status;			/* whether convergence was achieved within alloted steps*/
+
+		//Constructor
+		public qnewton(Func<vector,double> func,/* objective function */
+		vector start, 				/* starting point */
+		double acc = 0.001, 			/* accuracy goal, on exit |gradient| should be < acc */
+		int max_steps = 9999			/* Maximum allowed steps */
+		){
+		F=func; n = start.size; steps = 0; f_eval = 0;
+		matrix B = matrix.id(n);					//Hessian inverse estimate
+		vector gradf = new vector(n), Dx = new vector(n); 
+		x = start.copy();
+		double lambda = 1, fx = 0, fy = 0, gamma = 0, sy = 0;		//dummy variables for the algorithm
+		vector y = new vector(n), u = new vector(n), a = new vector(n); //parameters for update
+
+		do{
+			steps++;
+			fx = F(x); f_eval++;
+			gradf = grad(x,fx);
+			Dx = -B*gradf;
+			lambda = 1;
+			while(true){
+				fy = F(x+lambda*Dx); f_eval++;
+				if(fy<fx){
+					x+=lambda*Dx; 			//accept step
+					y = grad(x,fy)-gradf;	//update B using symmetric Broydens update
+					sy = lambda*Dx.dot(y);
+					if(Abs(sy) > Pow(10,-6)){	//update only if denominator is sufficiently large
+						u = lambda*Dx - B*y;
+						gamma = u.dot(y)/(2*sy);
+						a = (u-gamma*lambda*Dx)/sy;
+						B.sym2update(a,Dx,lambda);
+					}
+					break;
+				}
+				lambda/=2;
+				if(lambda < λmin){
+					x+=lambda*Dx;
+					B = matrix.id(n);
+					break;}
+			}
+		}while(gradf.norm()>acc && steps < max_steps);
+		f = fx;
+		if(steps >= max_steps)status = false;
+		else status = true;
 		}
-	}while(gradf.norm()>acc);
-	return (x,fx,step);
+
+	        vector grad(vector x, double f0 = double.NaN){
+        	        if(f0 == double.NaN) f0 = F(x);
+			double eps = Pow(2,-26);
+               		vector res = new vector(n), y = x.copy();
+               		for(int i=0;i<n;i++){
+                        	double dx = Abs(x[i])*eps;
+                        	y[i]+=dx;
+                        	res[i] = (F(y)-f0)/dx;
+				f_eval++;
+                        	y[i]=x[i];}
+                	return res;
+        	}//grad
+	
 	}//qnewton
 	
 	class simplex{
