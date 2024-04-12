@@ -1,11 +1,11 @@
 using System;
 using static System.Math;
 
-public class min{
+namespace min{
 
 	public class newton{
 		public static readonly double ε = Pow(2,-26);
-		public static readonly double λmin=Pow(2,-24);
+		public static readonly double λmin=Pow(2,-13);
 
                 public readonly Func<vector,double> F;  /* objective function */
                 public readonly int n;                  /* dimension */
@@ -193,7 +193,7 @@ public class min{
 	
 	}//qnewton
 	
-	class simplex{
+	public class simplex{
 		public readonly int dim;
 		public int nmax, nmin;
 		public vector[] points;
@@ -206,7 +206,8 @@ public class min{
 			dim = ps.Length -1; nmax = 0; nmin = 0;
 			if(dim!=ps[0].size) throw new ArgumentException($"simplex: Must have {dim + 1} points for dimension {dim}.");
 			points = ps; phi = f;
-			this.update_max(); this.update_min(); this.update_cent();	
+                        maxval = phi(ps[nmax]); minval = phi(ps[nmin]);
+			this.update_max_min(); this.update_cent();	
 		}
 
 		public simplex(Func<vector,double> f, vector x, double d=5){
@@ -214,22 +215,17 @@ public class min{
 			vector[] ps = new vector[dim+1]; ps[0] = x.copy();
 			for(int i=1;i<dim+1;i++){ps[i]=x.copy();ps[i][i-1]+=d;} //create by adding a point in each dimension
 			points = ps;
-                        this.update_max(); this.update_min(); this.update_cent();
+			maxval = phi(ps[nmax]); minval = phi(ps[nmin]);
+                        this.update_max_min(); this.update_cent();
 		}
 		
 		//update data
-		void update_max(){
-			nmax = 0;
-			for(int i=1;i<dim+1;i++){
-				if(phi(points[i])>phi(points[nmax])) nmax = i;}
-			maxval = phi(points[nmax]);
-		}
-
-		void update_min(){
-                        nmin = 0;
-                        for(int i=1;i<dim+1;i++){
-				if(phi(points[i])<phi(points[nmin])) nmin = i;}
-                	minval = phi(points[nmin]);
+		void update_max_min(){
+			for(int i=0;i<dim+1;i++){
+				double phi_comp = phi(points[i]);
+				if(phi_comp>maxval){nmax = i; maxval = phi_comp;}
+				if(phi_comp<minval){nmin = i; minval = phi_comp;}
+			}
 		}
 
 		void update_cent(){
@@ -257,21 +253,21 @@ public class min{
 
 		public void reflection(){
 			points[nmax] = 2*centroid - points[nmax];
-                        this.update_max(); this.update_min(); this.update_cent();
+                        this.update_max_min(); this.update_cent();
 		}
 		
 		public double ref_val(){return phi(2*centroid - points[nmax]);}
 
 		public void expansion(){
 			points[nmax] = 3*centroid - 2*points[nmax];
-                        this.update_max(); this.update_min(); this.update_cent();
+                        this.update_max_min(); this.update_cent();
 		}
 		
 		public double exp_val(){return phi(3*centroid - 2*points[nmax]);}
 
 		public void contraction(){
                         points[nmax] = 3*centroid/2 - points[nmax]/2;
-                        this.update_max(); this.update_min(); this.update_cent();
+                        this.update_max_min(); this.update_cent();
                 }
 		public double con_val(){return phi(3*centroid/2 - points[nmax]/2);}
 
@@ -279,6 +275,7 @@ public class min{
 			for(int i=0;i<dim+1;i++){
 				if(i!=nmin)points[i]=(points[i]+points[nmin])/2;
 			}
+			this.update_max_min(); this.update_cent();
 		}
 
 		//volume
@@ -291,27 +288,45 @@ public class min{
 		}
 	}//simplex
 	
-	public static (vector,double,int) downhill_sim(
-			Func<vector,double> f, /* objective function */
-			vector start, /* starting point */
-			double acc = 0.001
+	public class downhill_sim{
+			public readonly Func<vector,double> F;  /* objective function */
+                	public readonly int n;                  /* dimension */
+                	public vector x;                        /* found minimum */
+	                public double f;                        /* value of f at minimum */
+        	        public int steps;                       /* no. of steps taken */
+	                public int f_eval;                      /* no. of function evaluations */
+        	        public bool status;                     /* whether convergence was achieved within alloted steps*/
+			
+			//constructor
+			public downhill_sim(Func<vector,double> func,	/* objective function */
+                	vector start,                         		/* starting point */
+                	double acc = 0.001,                    	 	/* accuracy goal, on exit |gradient| should be < acc */
+                	int max_steps = 9999,				/* Maximum allowed steps */
+			double d = 5					/* starting spread */
 			){
-			int steps = 0;
-			simplex simp = new simplex(f,start);
+			F = func;
+			steps = 0; status = false;
+			simplex simp = new simplex(F,start,d:d);
+			f_eval = simp.dim+1;
 			acc = Pow(acc,simp.dim);
 			do{
-			double phiref = simp.ref_val();
+			double phiref = simp.ref_val(); f_eval++;
 			if(phiref < simp.minval){
-				if(simp.exp_val() < phiref)simp.expansion();
-				else simp.reflection();
+				f_eval++;
+				if(simp.exp_val() < phiref){simp.expansion(); f_eval += simp.dim+1;}
+				else {simp.reflection(); f_eval += simp.dim+1;}
 			}
 			else{
-				if(phiref < simp.maxval) simp.reflection();
-				else if(simp.con_val() < simp.maxval) simp.contraction();
-				else simp.reduction();
+				if(phiref < simp.maxval){simp.reflection();f_eval += simp.dim+1;}
+				else{f_eval++; if(simp.con_val() < simp.maxval){ simp.contraction();f_eval+=simp.dim+1;}
+				else{simp.reduction(); f_eval += simp.dim+1;};}
 			}
 			steps++;
-			}while(simp.volume()>acc);
-			return(simp.min(),simp.minval,steps);
+			}while(simp.volume()>acc && steps < max_steps);
+			if(steps < max_steps) status = true;
+			x = simp.min();
+			//f = simp.minval;
+			f = F(simp.min());
+			}//constructor
 	}//downhill_sim
 }//min

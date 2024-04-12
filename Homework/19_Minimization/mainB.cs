@@ -23,12 +23,13 @@ public class main{
 		Func<double,double,double,double,double> F = delegate(double E, double m, double gam, double A){
 						return A/(Pow(E-m,2) + gam*gam/4);};
 
-		vector geuss = new vector("125 5 5");
+		vector geuss = new vector("123 3 6");
 		Func<vector,double> chi2 = delegate(vector v){double m = v[0], gam = v[1], A = v[2], chi = 0; 
 						for(int i=0;i<n;i++)chi+=Pow((F(energy[i],m,gam,A)-signal[i])/error[i],2);
 						return chi;};
 		
-		min.newton minimum = new min.newton(chi2, geuss);
+		min.newton minimum = new min.newton(chi2, geuss, central: true);
+		//min.downhill_sim minimum = new min.downhill_sim(chi2, geuss);
 		vector param = minimum.x;
 		double chival = minimum.f;
 		int steps = minimum.steps, f_eval = minimum.f_eval;

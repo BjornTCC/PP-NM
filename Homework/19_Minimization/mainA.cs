@@ -19,6 +19,7 @@ public class main{
 		
                 for(int i=0;i<4;i++){
 			min.newton minimum = new min.newton(Rosen, vstart[i]);
+			//min.downhill_sim minimum = new min.downhill_sim(Rosen, vstart[i],d:0.5);
 			vmin[i] = minimum.x; fvmin[i] = minimum.f; steps = minimum.steps; f_eval = minimum.f_eval;
 			WriteLine($"Starting point= ({vstart[0,i]},{vstart[1,i]})");
 			WriteLine($"Numerical minima: vmin = ({vmin[0,i]},{vmin[1,i]}), f(vmin) = {fvmin[i]}");
@@ -35,6 +36,7 @@ public class main{
 
 		for(int i=0;i<4;i++){
                         min.newton minimum = new min.newton(Himmel, vstart[i]);
+                        //min.downhill_sim minimum = new min.downhill_sim(Himmel, vstart[i],d:0.5);
                         vmin[i] = minimum.x; fvmin[i] = minimum.f; steps = minimum.steps; f_eval = minimum.f_eval;
                         WriteLine($"Starting point= ({vstart[0,i]},{vstart[1,i]})");
 			WriteLine($"Numerical minima: vmin = ({vmin[0,i]},{vmin[1,i]}), f(vmin) = {fvmin[i]}");
