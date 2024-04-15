@@ -193,7 +193,7 @@ namespace min{
 	
 	}//qnewton
 	
-	public class simplex{
+	class simplex{
 		public readonly int dim;
 		public int nmax, nmin;
 		public vector[] points;
@@ -300,32 +300,136 @@ namespace min{
 			//constructor
 			public downhill_sim(Func<vector,double> func,	/* objective function */
                 	vector start,                         		/* starting point */
-                	double acc = 0.001,                    	 	/* accuracy goal, on exit |gradient| should be < acc */
+                	double acc = 1e-10,                    	 	/* accuracy goal, on exit std should be < acc */
                 	int max_steps = 9999,				/* Maximum allowed steps */
 			double d = 5					/* starting spread */
 			){
 			F = func;
 			steps = 0; status = false;
 			simplex simp = new simplex(F,start,d:d);
-			f_eval = 0;
-			acc = Pow(acc,simp.dim);
 			do{
-			double phiref = simp.ref_val();
-			if(phiref < simp.minval){
-				if(simp.exp_val() < phiref)simp.expansion();
+			simp.update_op_vals();
+			if(simp.ref_val < simp.minval){
+				if(simp.exp_val < simp.ref_val)simp.expansion();
 				else simp.reflection();
 			}
 			else{
-				if(phiref < simp.maxval)simp.reflection();
-				else if(simp.con_val() < simp.maxval) simp.contraction();
+				if(simp.ref_val < simp.maxval)simp.reflection();
+				else if(simp.con_val < simp.maxval)simp.contraction();
 				else simp.reduction();
 			}
 			steps++;
-			}while(simp.volume()>acc && steps < max_steps);
+			}while(simp.std()>acc && steps < max_steps);
 			if(steps < max_steps) status = true;
 			x = simp.min();
 			f = simp.minval;
-			//f = F(simp.min());
+			f_eval = simp.simp_f_eval;
 			}//constructor
+
+			class simplex{
+			public readonly int dim;
+			public int nmax, nmin, simp_f_eval;
+			public vector[] points;
+			public vector phi_vals;
+			public readonly Func<vector,double> phi;
+			public vector centroid;
+			public double maxval, minval, ref_val, exp_val, con_val;
+
+			//constructors
+			public simplex(Func<vector,double> f, vector[] ps){
+				dim = ps.Length -1; nmax = 0; nmin = 0;
+				if(dim!=ps[0].size) throw new ArgumentException($"simplex: Must have {dim + 1} points for dimension {dim}.");
+				points = ps; phi = f; simp_f_eval = 0;
+				phi_vals = new double[dim+1];
+				update_phi_vals(); update_cent();
+			}
+
+			public simplex(Func<vector,double> f, vector x, double d=5){
+				dim = x.size; phi = f; nmax = 0; nmin = 0;
+				vector[] ps = new vector[dim+1]; ps[0] = x.copy();
+				for(int i=1;i<dim+1;i++){ps[i]=x.copy();ps[i][i-1]+=d;} //create by adding a point in each dimension
+				points = ps; simp_f_eval = 0;
+        	               	phi_vals = new double[dim+1]; 
+				update_phi_vals(); update_cent();
+			}
+
+			//update data
+			void update_phi_vals(){
+				for(int i=0;i<dim+1;i++)phi_vals[i] = phi(points[i]);
+				simp_f_eval += dim+1;
+				nmin = 0; nmax = 0; maxval = phi_vals[0]; minval = phi_vals[0];
+				for(int i=1;i<dim+1;i++){
+				if(phi_vals[i]<minval){nmin=i; minval = phi_vals[i];}
+				if(phi_vals[i]>maxval){nmax=i; maxval = phi_vals[i];}
+				}
+			}
+
+			void update_max(){
+				nmax = 0; maxval = phi_vals[0];
+				for(int i=1;i<dim+1;i++){
+				if(phi_vals[i]>maxval){nmax=i; maxval = phi_vals[i];}
+				}
+			}
+
+			void update_cent(){
+				centroid = new vector(dim);
+				for(int i=0;i<dim+1;i++){
+					if(i!=nmax)centroid+=points[i]/dim;
+				}
+			}
+			
+			public void update_op_vals(){
+				ref_val = phi(2*centroid - points[nmax]);
+				exp_val = phi(3*centroid - 2*points[nmax]);
+				con_val = phi(centroid/2 - points[nmax]/2);
+				simp_f_eval += 3;
+			}
+			
+			//getters and setters
+
+			public vector min(){return points[nmin];}
+			
+			//operations on simplex
+
+			public void reflection(){
+				points[nmax] = 2*centroid - points[nmax];
+                                phi_vals[nmax] = ref_val;
+				if(ref_val < minval){nmin=nmax; minval = ref_val;}
+				update_max(); update_cent();
+			}
+
+			public void expansion(){
+				points[nmax] = 3*centroid - 2*points[nmax];
+                                phi_vals[nmax] = exp_val;
+                                if(exp_val < minval){nmin=nmax; minval = exp_val;}
+                                update_max(); update_cent();
+			}
+
+
+			public void contraction(){
+	                        points[nmax] = centroid/2 - points[nmax]/2;
+                                phi_vals[nmax] = con_val;
+                                if(con_val < minval){nmin=nmax; minval = con_val;}
+                                update_max(); update_cent();
+        	        }
+				
+			public void reduction(){
+				for(int i=0;i<dim+1;i++){
+					if(i!=nmin)points[i]=(points[i]+points[nmin])/2;
+				}
+				update_phi_vals(); update_cent();
+			}
+	
+			//volume
+			public double std(){					//compute standard deviation of function vals
+				double mean = 0, mean_sq = 0;
+				for(int i=0;i<dim+1;i++){
+					mean += phi_vals[i]/(dim+1);
+					mean_sq += Pow(phi_vals[i],2)/(dim+1);
+				}
+				return mean_sq - mean*mean;
+			}
+		}//simplex
+
 	}//downhill_sim
 }//min

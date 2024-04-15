@@ -4,12 +4,12 @@ Minima: vmin = (1,1) f(vmin) = 0
 Starting point= (3,3)
 Numerical minima: vmin = (0.999988091057843,0.999976182229682), f(vmin) = 1.4182290338603E-10
 steps = 20, no. of evaluations = 285
-Starting point= (-3,3)
-Numerical minima: vmin = (0.999988079096848,0.999976158224135), f(vmin) = 1.4210793321288E-10
-steps = 30, no. of evaluations = 429
-Starting point= (-2,-3)
-Numerical minima: vmin = (0.999988079705041,0.999976159390482), f(vmin) = 1.42093434524051E-10
-steps = 25, no. of evaluations = 358
+Starting point= (-3,4)
+Numerical minima: vmin = (0.999988078299688,0.999976156736567), f(vmin) = 1.42126938338216E-10
+steps = 29, no. of evaluations = 416
+Starting point= (-3,-4)
+Numerical minima: vmin = (0.999988042577409,0.999976082831137), f(vmin) = 1.42980563468242E-10
+steps = 30, no. of evaluations = 430
 Starting point= (3,-3)
 Numerical minima: vmin = (0.999988233186811,0.999976454650491), f(vmin) = 1.38471962357829E-10
 steps = 21, no. of evaluations = 300
@@ -23,12 +23,12 @@ Minima: vmin = (3.584,-1.848), f(vmin) = 0
 Starting point= (3,3)
 Numerical minima: vmin = (2.99999991457396,1.99999999422802), f(vmin) = 2.80439415638388E-13
 steps = 6, no. of evaluations = 83
-Starting point= (-3,3)
-Numerical minima: vmin = (-2.8051180131183,3.13131242780556), f(vmin) = 4.97339164723786E-13
-steps = 4, no. of evaluations = 55
-Starting point= (-2,-3)
-Numerical minima: vmin = (3.58442823731539,-1.84812649050461), f(vmin) = 5.49400286924893E-13
-steps = 7, no. of evaluations = 99
+Starting point= (-3,4)
+Numerical minima: vmin = (-2.80511800349424,3.13131243763956), f(vmin) = 4.78777042908469E-13
+steps = 5, no. of evaluations = 69
+Starting point= (-3,-4)
+Numerical minima: vmin = (-3.77931010823629,-3.2831858491936), f(vmin) = 1.53275281974412E-12
+steps = 6, no. of evaluations = 83
 Starting point= (3,-3)
 Numerical minima: vmin = (3.58442823050977,-1.84812645062263), f(vmin) = 6.59109339030158E-13
 steps = 6, no. of evaluations = 83

@@ -8,7 +8,7 @@ public class main{
 		Func<vector,double> Rosen = v => Pow(1-v[0],2) + 100*Pow(v[1] - v[0]*v[0],2);
 		Func<vector,double> Himmel = v => Pow(v[0]*v[0]+v[1]-11,2)+Pow(v[0]+v[1]*v[1]-7,2);
 		int steps = 0, f_eval = 0;
-		matrix vstart = new matrix("3 -3 -2 3; 3 3 -3 -3"), vmin = new matrix(2,4);
+		matrix vstart = new matrix("3 -3 -3 3; 3 4 -4 -3"), vmin = new matrix(2,4);
 		vector fvmin = new vector(4);
 		
 		//vstart.print("Starting vectors:");

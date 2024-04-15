@@ -31,7 +31,7 @@ public class main{
 		
 		min.newton minimum = new min.newton(chi2, geuss, central: false);
 		//min.qnewton minimum = new min.qnewton(chi2, geuss);	
-		//min.downhill_sim minimum = new min.downhill_sim(chi2, geuss);
+		//min.downhill_sim minimum = new min.downhill_sim(chi2, geuss,acc:1e-10,d:1);
 		vector param = minimum.x;
 		double chival = minimum.f;
 		int steps = minimum.steps, f_eval = minimum.f_eval;

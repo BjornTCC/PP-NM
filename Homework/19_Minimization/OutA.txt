@@ -1,18 +1,18 @@
 Rosenbrocks function: f(x,y) = (1-x)^2 + 100*(y-x^2)^2
 Minima: vmin = (1,1) f(vmin) = 0
 
+Starting point= (3,3)
+Numerical minima: vmin = (1.00000880807769,1.00001752021741), f(vmin) = 7.85041311351897E-11
+steps = 20, no. of evaluations = 205
+Starting point= (-3,4)
+Numerical minima: vmin = (0.999992980636249,0.999985954343202), f(vmin) = 4.92763375140254E-11
+steps = 30, no. of evaluations = 311
 Starting point= (-3,-4)
 Numerical minima: vmin = (0.999990974230462,0.999981938150206), f(vmin) = 8.14753154998007E-11
 steps = 31, no. of evaluations = 326
-Starting point= (-3,3)
-Numerical minima: vmin = (0.999990013137363,0.999980013231617), f(vmin) = 9.97546987703702E-11
-steps = 30, no. of evaluations = 313
-Starting point= (-2,-3)
-Numerical minima: vmin = (0.999994708640298,0.999989410597648), f(vmin) = 2.80029911727722E-11
-steps = 26, no. of evaluations = 268
 Starting point= (3,-3)
-Numerical minima: vmin = (0.999996284652117,0.9999925606725), f(vmin) = 1.38112844246674E-11
-steps = 21, no. of evaluations = 215
+Numerical minima: vmin = (1.00001187804053,1.00002364530332), f(vmin) = 1.42318145208882E-10
+steps = 20, no. of evaluations = 205
 
 Himmelblau's function: f(x,y) = (x^2+y-11)^2 + (x+y^2-7)^2
 Minima: vmin = (3,2), f(vmin) = 0
@@ -20,15 +20,15 @@ Minima: vmin = (-2.805,3.313), f(vmin) = 0
 Minima: vmin = (-3.779,-3.283), f(vmin) = 0
 Minima: vmin = (3.584,-1.848), f(vmin) = 0
 
+Starting point= (3,3)
+Numerical minima: vmin = (2.99999997710626,2.0000000005969), f(vmin) = 1.91253193222988E-14
+steps = 6, no. of evaluations = 59
+Starting point= (-3,4)
+Numerical minima: vmin = (-2.80511810691798,3.13131253666694), f(vmin) = 2.61062981544944E-14
+steps = 5, no. of evaluations = 49
 Starting point= (-3,-4)
 Numerical minima: vmin = (-3.77931028767657,-3.28318602596889), f(vmin) = 8.785063188176E-14
 steps = 6, no. of evaluations = 59
-Starting point= (-3,3)
-Numerical minima: vmin = (-2.80511809316143,3.13131250686882), f(vmin) = 6.55436711551646E-15
-steps = 4, no. of evaluations = 39
-Starting point= (-2,-3)
-Numerical minima: vmin = (3.58442833310597,-1.84812653077623), f(vmin) = 3.13886348520859E-15
-steps = 7, no. of evaluations = 71
 Starting point= (3,-3)
 Numerical minima: vmin = (3.58442831423999,-1.84812652949944), f(vmin) = 3.62179150856347E-14
 steps = 6, no. of evaluations = 59
