@@ -37,7 +37,7 @@ public class root{
 		Dx = QRGS.solve(J, -f0);
 		lambda = 1;
 		f1 = f(x + Dx);
-		while(f1.norm() > (1-lambda/2)*f0.norm() && 1 < lambda*1024){
+		while(f1.norm() > (1-lambda/2)*f0.norm() && 1/1024 < lambda){
 			lambda/=2;
 			f1 = f(x+lambda*Dx);
 			}
