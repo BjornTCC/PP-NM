@@ -15,7 +15,7 @@ public class root{
 		double eps = Pow(2,-26), dx = 1;
 		vector x2 = x.copy(), df = new vector(n);
 		for(int i=0;i<m;i++){
-			dx = eps*(Abs(x2[i])+1e-4);
+			dx = eps*Max(1,Abs(x2[i]));
 			x2[i] += dx;
 			df = f(x2) - f0;
 			jac[i] = df/dx;
