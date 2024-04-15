@@ -5,6 +5,7 @@ namespace min{
 
 	public class newton{
 		public static readonly double ε = Pow(2,-26);
+		public static readonly double ε4 = Pow(2,-13);
 		public static readonly double λmin=Pow(2,-13);
 
                 public readonly Func<vector,double> F;  /* objective function */
@@ -52,7 +53,7 @@ namespace min{
 
 		vector gradient_forward(vector x,double fx = Double.NaN){
 			vector grad = new vector(n);
-			if(Double.IsNaN(fx)){fx = F(x); f_eval++;} /* no need to recalculate at each step */
+			if(Double.IsNaN(fx)){fx = F(x); f_eval++;} 	/* no need to recalculate at each step */
 			for(int i=0;i<n;i++){
 				double dx=Abs(x[i])*ε;
 				x[i]+=dx;
@@ -64,12 +65,11 @@ namespace min{
 		}//gradient_forward
 
 		matrix hessian_forward(vector x,double fx = Double.NaN,vector gradx = null){
-			double sε = Pow(ε,0.5);
 			matrix H=new matrix(n);
                         if(Double.IsNaN(fx)){fx = F(x); f_eval++;}
 			if(gradx==null) gradx=gradient_forward(x,fx);
 			for(int j=0;j<n;j++){
-				double dx=Abs(x[j])*sε;
+				double dx=Abs(x[j])*ε4;
 				x[j]+=dx;
 				vector dgrad=gradient_forward(x)-gradx;
 				for(int i=0;i<n;i++) H[i,j]=dgrad[i]/dx;
@@ -90,15 +90,14 @@ namespace min{
 		}//forward_grad_hess
 
 		(vector,matrix) central_grad_hess(vector x,double fx = Double.NaN){
-			double sε = Pow(ε,0.5);
 			double F_pp = 0, F_mp = 0, F_pm = 0, F_mm = 0;
 			if(Double.IsNaN(fx))fx = F(x);
 			matrix H = new matrix(n); vector grad = new vector(n);
 			vector x_pp = x.copy(), x_pm = x.copy(), x_mp = x.copy(), x_mm = x.copy();
                 	for(int j=0;j<n;j++)
 	                for(int i=0;i<n;i++){
-        	                double dxj=Abs(x[j])*sε;
-                	        double dxi=Abs(x[i])*sε;
+        	                double dxi=Abs(x[i])*ε4;
+                	        double dxj=Abs(x[j])*ε4;
 	                        x_pp[j]+=dxj; x_pm[j]+=dxj;
         	                x_mp[j]-=dxj; x_mm[j]-=dxj;
                 	        x_pp[i]+=dxi; x_pm[i]-=dxi;
@@ -106,10 +105,11 @@ namespace min{
 				F_pp = F(x_pp); F_mm = F(x_mm); f_eval+=2;
                                 if(i==j){
 					grad[j] = (F_pp-F_mm)/(4*dxj); 
-					F_mp = fx; F_pm = fx; 
+					F_mp = fx; F_pm = fx;
+				       	H[i,j]=(F_pp+F_mm-2*F_mp)/(4*dxi*dxj);	
 					}
-				else{F_pm = F(x_pm); F_mp = F(x_mp);f_eval+=2;}
-                        	H[i,j]=(F_pp-F_mp-F_pm+F_mm)/(4*dxj*dxi);
+				else{	F_pm = F(x_pm); F_mp = F(x_mp);f_eval+=2;
+                        		H[i,j]=(F_pp-F_mp-F_pm+F_mm)/(4*dxj*dxi);}
                         	x_pp[i] = x[i];x_mp[i] = x[i];x_pm[i] = x[i];x_mm[i] = x[i];
                         	x_pp[j] = x[j];x_mp[j] = x[j];x_pm[j] = x[j];x_mm[j] = x[j];
 			}
@@ -307,26 +307,25 @@ namespace min{
 			F = func;
 			steps = 0; status = false;
 			simplex simp = new simplex(F,start,d:d);
-			f_eval = simp.dim+1;
+			f_eval = 0;
 			acc = Pow(acc,simp.dim);
 			do{
-			double phiref = simp.ref_val(); f_eval++;
+			double phiref = simp.ref_val();
 			if(phiref < simp.minval){
-				f_eval++;
-				if(simp.exp_val() < phiref){simp.expansion(); f_eval += simp.dim+1;}
-				else {simp.reflection(); f_eval += simp.dim+1;}
+				if(simp.exp_val() < phiref)simp.expansion();
+				else simp.reflection();
 			}
 			else{
-				if(phiref < simp.maxval){simp.reflection();f_eval += simp.dim+1;}
-				else{f_eval++; if(simp.con_val() < simp.maxval){ simp.contraction();f_eval+=simp.dim+1;}
-				else{simp.reduction(); f_eval += simp.dim+1;};}
+				if(phiref < simp.maxval)simp.reflection();
+				else if(simp.con_val() < simp.maxval) simp.contraction();
+				else simp.reduction();
 			}
 			steps++;
 			}while(simp.volume()>acc && steps < max_steps);
 			if(steps < max_steps) status = true;
 			x = simp.min();
-			//f = simp.minval;
-			f = F(simp.min());
+			f = simp.minval;
+			//f = F(simp.min());
 			}//constructor
 	}//downhill_sim
 }//min

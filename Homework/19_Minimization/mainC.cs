@@ -4,6 +4,7 @@ using static System.Math;
 
 public class main{
 	public static int Main(){
+		double acc = 1e-5;
 		Func<vector,double> Rosen = v => Pow(1-v[0],2) + 100*Pow(v[1] - v[0]*v[0],2);
 		Func<vector,double> Himmel = v => Pow(v[0]*v[0]+v[1]-11,2)+Pow(v[0]+v[1]*v[1]-7,2);
 		int steps = 0, f_eval = 0;
@@ -18,7 +19,7 @@ public class main{
 		WriteLine("");
 		
                 for(int i=0;i<4;i++){
-			min.newton minimum = new min.newton(Rosen, vstart[i],central: true);
+			min.newton minimum = new min.newton(Rosen, vstart[i],central: true,acc:acc);
 			vmin[i] = minimum.x; fvmin[i] = minimum.f; steps = minimum.steps; f_eval = minimum.f_eval;
 			WriteLine($"Starting point= ({vstart[0,i]},{vstart[1,i]})");
 			WriteLine($"Numerical minima: vmin = ({vmin[0,i]},{vmin[1,i]}), f(vmin) = {fvmin[i]}");
@@ -34,7 +35,7 @@ public class main{
 		WriteLine("");
 
 		for(int i=0;i<4;i++){
-                        min.newton minimum = new min.newton(Himmel, vstart[i],central: true);
+                        min.newton minimum = new min.newton(Himmel, vstart[i],central: true,acc:acc);
                         vmin[i] = minimum.x; fvmin[i] = minimum.f; steps = minimum.steps; f_eval = minimum.f_eval;
                         WriteLine($"Starting point= ({vstart[0,i]},{vstart[1,i]})");
 			WriteLine($"Numerical minima: vmin = ({vmin[0,i]},{vmin[1,i]}), f(vmin) = {fvmin[i]}");
