@@ -29,8 +29,8 @@ Steps taken: 11. Function evals: 37
 f = ((x-1)^2, ln(x)). x0 = 1
 
 Numerical results, x0 = 0.5:
-x0 = 0.999756168015732. f(x0) = (5.94540365522463E-08, -0.000243861716119786).
-Steps taken: 3. Function evals: 7
+x0 = 0.999999970243413. f(x0) = (8.85454494665671E-16, -2.9756587859057E-08).
+Steps taken: 4. Function evals: 9
 
 Numerical results, x0 = 1.2:
 x0 = 0.999994113130424. f(x0) = (3.46552334104491E-11, -5.88688690416159E-06).
@@ -43,33 +43,33 @@ Steps taken: 4. Function evals: 9
 f = Rosenbrock function(a=1 b=100). vmin = (1,1), f(vmin) = 0, df(vmin) = 0
 
 Numerical results, v0 = (2, 0):
-vmin = (1.00000555537202, 1.00001088082786). f(vmin) = 3.6149722203729E-11. df(vmin) = (0.000103090069618999, -4.5989407304603E-05)
-Steps taken: 52. Function evals: 283
+vmin = (1.0000000002886, 1.00000000054625). f(vmin) = 1.79095684211111E-19. df(vmin) = (1.29581438948128E-08, -6.19047035854692E-09)
+Steps taken: 53. Function evals: 285
 
 Numerical results, v0 = (0, 0):
 vmin = (0.999999428584113, 0.999998836434798). f(vmin) = 3.69504969868881E-13. df(vmin) = (7.15066488271979E-06, -4.146750698375E-06)
-Steps taken: 55. Function evals: 309
+Steps taken: 55. Function evals: 308
 
 Numerical results, v0 = (0, 2):
 vmin = (0.999998924200791, 0.999997811745003). f(vmin) = 1.29172290918667E-12. df(vmin) = (1.25114808131067E-05, -7.33154750243159E-06)
-Steps taken: 56. Function evals: 312
+Steps taken: 56. Function evals: 311
 
 f = Himmelblaus function. vmin = (3,2), (-2.805,3.131), (-3.779,-3.283), (3.584,-1.848)
 f(vmin) = 0, df(vmin) = 0
 
 Numerical results, v0 = (4, 4):
 vmin = (2.99999913580942, 2.00000387895062). f(vmin) = 2.1637631032935E-10. df(vmin) = (1.36289529259223E-05, 5.59942372401406E-05)
-Steps taken: 5. Function evals: 17
+Steps taken: 5. Function evals: 16
 
 Numerical results, v0 = (-2, 2):
 vmin = (-2.80511823559233, 3.13131251410218). f(vmin) = 7.18984941785251E-13. df(vmin) = (-9.65947993639527E-06, 5.6593370326322E-07)
-Steps taken: 4. Function evals: 15
+Steps taken: 4. Function evals: 14
 
 Numerical results, v0 = (-3, -2):
 vmin = (-3.77931048935838, -3.28318699132714). f(vmin) = 4.0691376379924E-11. df(vmin) = (8.14739912489034E-07, -4.00021960197881E-05)
-Steps taken: 7. Function evals: 26
+Steps taken: 7. Function evals: 25
 
 Numerical results, v0 = (3, -2):
-vmin = (3.58443582805691, -1.84816997656082). f(vmin) = 2.83589852530462E-08. df(vmin) = (0.00048283993812918, -0.000600861162725938)
-Steps taken: 3. Function evals: 12
+vmin = (3.58442834047434, -1.84812652843232). f(vmin) = 3.12114784796604E-17. df(vmin) = (4.87777968310656E-09, -2.14601832341199E-08)
+Steps taken: 4. Function evals: 14
 
