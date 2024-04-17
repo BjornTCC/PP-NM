@@ -4,8 +4,9 @@ using static System.Math;
 namespace min{
 
 	public class newton{
-		public static readonly double ε = Pow(2,-26);
-		public static readonly double ε4 = Pow(2,-13);
+		public static readonly double ε = Pow(2,-26);	
+                public static readonly double εc = Pow(2,-20);
+		public static readonly double ε4 = Pow(2,-12);
 		public static readonly double λmin=Pow(2,-13);
 
                 public readonly Func<vector,double> F;  /* objective function */
@@ -96,8 +97,8 @@ namespace min{
 			vector x_pp = x.copy(), x_pm = x.copy(), x_mp = x.copy(), x_mm = x.copy();
                 	for(int j=0;j<n;j++)
 	                for(int i=0;i<n;i++){
-        	                double dxi=Abs(x[i])*ε4;
-                	        double dxj=Abs(x[j])*ε4;
+        	                double dxi=Abs(x[i])*εc;
+                	        double dxj=Abs(x[j])*εc;
 	                        x_pp[j]+=dxj; x_pm[j]+=dxj;
         	                x_mp[j]-=dxj; x_mm[j]-=dxj;
                 	        x_pp[i]+=dxi; x_pm[i]-=dxi;

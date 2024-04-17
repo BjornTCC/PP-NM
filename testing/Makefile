@@ -12,4 +12,7 @@ grad_centraltest.exe: matlib.dll grad_centraltest.cs; $(MKEXE)
 gradtest.exe: matlib.dll gradtest.cs; $(MKEXE)
 
 matlib.dll: ../libs/matrix/matrix.cs ../libs/matrix/vector.cs \
-	../libs/QRDecomp/QRGS.cs; $(MKLIB)
+	../libs/LinEq/QRGS.cs; $(MKLIB)
+
+clean:
+	$(RM) *.exe *.dll
