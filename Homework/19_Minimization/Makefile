@@ -33,7 +33,7 @@ mainB.exe: mainB.cs extlib.dll min.dll; $(MKEXE)
 mainC.exe: mainC.cs extlib.dll min.dll; $(MKEXE)
 
 extlib.dll: ../../libs/matrix/matrix.cs ../../libs/matrix/vector.cs \
-	../../libs/genlist/genlist.cs ../../libs/QRDecomp/QRGS.cs; $(MKLIB)
+	../../libs/genlist/genlist.cs ../../libs/LinEq/QRGS.cs; $(MKLIB)
 
 min.dll: min.cs extlib.dll; $(MKLIB)
 

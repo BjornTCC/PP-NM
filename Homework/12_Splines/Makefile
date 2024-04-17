@@ -97,7 +97,7 @@ main3diag.exe: main3diag.cs spline.dll extlib.dll; $(MKEXE)
 spline.dll: spline.cs extlib.dll; $(MKLIB)
 	
 extlib.dll: ../../libs/matrix/matrix.cs ../../libs/matrix/vector.cs\
-       	../../libs/QRDecomp/QRGS.cs ../../libs/QRDecomp/linsol.cs \
+       	../../libs/LinEq/QRGS.cs ../../libs/LinEq/linsol.cs \
 	../../libs/genlist/genlist.cs; $(MKLIB)
 
 clean: 

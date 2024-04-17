@@ -61,7 +61,7 @@ mainAB.exe: mainAB.cs ann.dll extlib.dll; $(MKEXE)
 mainC.exe: mainC.cs ann.dll extlib.dll; $(MKEXE)
 
 extlib.dll: ../../libs/matrix/vector.cs ../../libs/Minimization/min.cs\
-	../../libs/matrix/matrix.cs ../../libs/QRDecomp/QRGS.cs\
+	../../libs/matrix/matrix.cs ../../libs/LinEq/QRGS.cs\
 	../../libs/Integration/int.cs; $(MKLIB)
 
 ann.dll: ann.cs extlib.dll; $(MKLIB)

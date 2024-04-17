@@ -87,10 +87,10 @@ public static class main{
                 WriteLine("--------------------------------------------------------------");
 		//test determinant
                 double det = A_LU.determinant();
-                WriteLine($"LLT det: {det}");
-                double QR_det = Abs(QRGS.det(A));
+                WriteLine($"LU det: {det}");
+                double QR_det = QRGS.det(A);
                 WriteLine($"QR det: {QR_det}");
-                if(Abs(det-QR_det)<1e-6) WriteLine("Determinant test success");
+                if(Abs(Abs(det)-Abs(QR_det))<1e-6) WriteLine("Determinant test success");
                 else WriteLine("Determinant test failure");
                 WriteLine("--------------------------------------------------------------");
                 //test linear equation solver

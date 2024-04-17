@@ -72,7 +72,7 @@ mainB.exe: mainB.cs root.dll extlib.dll; $(MKEXE)
 
 mainC.exe: mainC.cs root.dll extlib.dll; $(MKEXE)
 
-extlib.dll: ../../libs/matrix/vector.cs ../../libs/matrix/matrix.cs ../../libs/QRDecomp/QRGS.cs \
+extlib.dll: ../../libs/matrix/vector.cs ../../libs/matrix/matrix.cs ../../libs/LinEq/QRGS.cs \
 	../../libs/ODE/ode.cs ../../libs/genlist/genlist.cs; $(MKLIB)
 
 root.dll: root.cs extlib.dll; $(MKLIB)

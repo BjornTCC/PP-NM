@@ -77,7 +77,7 @@ mainC.exe: mainC.cs genlib.dll ode.dll; $(MKEXE)
 
 genlib.dll: ../../libs/matrix/vector.cs ../../libs/genlist/genlist.cs \
 	../../libs/Spline/spline.cs ../../libs/matrix/matrix.cs \
-	../../libs/QRDecomp/QRGS.cs ../../libs/QRDecomp/linsol.cs; $(MKLIB)
+	../../libs/LinEq/QRGS.cs ../../libs/LinEq/linsol.cs; $(MKLIB)
 
 ode.dll: ode.cs genlib.dll; $(MKLIB)
 

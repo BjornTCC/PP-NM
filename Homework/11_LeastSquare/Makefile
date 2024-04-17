@@ -30,7 +30,7 @@ Out.txt: main.exe
 main.exe: main.cs extlib.dll lsfit.dll; $(MKEXE)
 
 extlib.dll: ../../libs/matrix/matrix.cs ../../libs/matrix/vector.cs \
-	../../libs/QRDecomp/QRGS.cs ../../libs/genlist/genlist.cs; $(MKLIB) 
+	../../libs/LinEq/QRGS.cs ../../libs/genlist/genlist.cs; $(MKLIB) 
 	
 lsfit.dll: extlib.dll lsfit.cs; $(MKLIB)
 
