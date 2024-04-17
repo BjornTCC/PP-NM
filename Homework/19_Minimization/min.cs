@@ -239,15 +239,7 @@ namespace min{
 			public vector centroid;
 			public double maxval, minval, ref_val, exp_val, con_val;
 
-			//constructors
-			public simplex(Func<vector,double> f, vector[] ps){
-				dim = ps.Length -1; nmax = 0; nmin = 0;
-				if(dim!=ps[0].size) throw new ArgumentException($"simplex: Must have {dim + 1} points for dimension {dim}.");
-				points = ps; phi = f; simp_f_eval = 0;
-				phi_vals = new double[dim+1];
-				update_phi_vals(); update_cent();
-			}
-
+			//constructor
 			public simplex(Func<vector,double> f, vector x, double d=5){
 				dim = x.size; phi = f; nmax = 0; nmin = 0;
 				vector[] ps = new vector[dim+1]; ps[0] = x.copy();
