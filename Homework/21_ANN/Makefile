@@ -15,9 +15,10 @@ OutC.svg: outdataC.txt Makefile
 		set xlabel "x";\
 		set ylabel "y";\
 		set grid;\
-		f(x) = cos(x);\
+		f(x) = (cos(x)+sin(x)/2)*exp(-x/2);\
 		set title "Harmonic oscillator with Neural Network";\
-		plot "$<" with l t "Network solution, 10 nodes" \
+		plot "$<" using 1:2 with l t "Network solution, 10 nodes" \
+		,"$<" using 1:($$2 + $$3 + $$4)  with l t "y(x) + dy(x) + ddy(x)"\
 		,f(x) with l lt 0 t "exact solution"\
 		'|tee logC.gpi | gnuplot
 
@@ -50,7 +51,7 @@ OutAB.svg: outdataAB.txt dataTable.txt Makefile
                 '|tee logAB.gpi | gnuplot
 
 outdataAB.txt: mainAB.exe
-	mono $< 1> $@ 2> dataTable.txt
+	mono $< -output:dataTable.txt 1> $@ 
 
 outdataC.txt: mainC.exe
 	mono $< > $@

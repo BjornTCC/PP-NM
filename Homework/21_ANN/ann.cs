@@ -5,7 +5,7 @@ namespace ann{
 
 public class interpol{
 	public readonly int n; /* number of neurons */
-	public int steps;
+	public bool train_status;
 	Func<double,double> f = x => x*Exp(-x*x);	/* activation function */
 	Func<double,double> df = x => (1-2*x*x)*Exp(-x*x); /* derivative of function */
 	Func<double,double> If = x => -Exp(-x*x)/2;	/* antiderivative of function */
@@ -47,7 +47,7 @@ public class interpol{
 		Func<vector,double> cost = delegate(vector v){double cst = 0; 
 			for(int i=0;i<x.size;i++)cst+=Pow(response(x[i],v)-y[i],2); return cst;};
 		min.downhill_sim minip = new min.downhill_sim(cost,p,acc:acc);
-		steps = minip.steps;	
+		train_status = minip.status;	
 		p = minip.x;
 	}
 
@@ -55,7 +55,7 @@ public class interpol{
 
 public class diff_eq{
 	public readonly int n; /* number of hidden nodes */
-	public int steps;
+	public bool train_status;
         Func<double,double> f = x => x*Exp(-x*x);       /* activation function */
         Func<double,double> df = x => (1-2*x*x)*Exp(-x*x); /* derivative of function */
 	Func<double,double> ddf= x => -2*x*(3-2*x*x)*Exp(-x*x); /* double derivative */
@@ -117,8 +117,8 @@ public class diff_eq{
 			return res;
 		};
 		min.downhill_sim minip = new min.downhill_sim(cost,p,acc:acc);
-                steps = minip.steps;
-                p = minip.x;
+                train_status = minip.status;
+		p = minip.x;
 	}//train	
 		
 }//diff_nn

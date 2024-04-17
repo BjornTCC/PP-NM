@@ -4,8 +4,9 @@
 	set xlabel "x";\
 	set ylabel "y";\
 	set grid;\
-	f(x) = cos(x);\
+	f(x) = (cos(x)+sin(x)/2)*exp(-x/2);\
 	set title "Harmonic oscillator with Neural Network";\
-	plot "outdataC.txt" with l t "Network solution, 10 nodes" \
+	plot "outdataC.txt" using 1:2 with l t "Network solution, 10 nodes" \
+	,"outdataC.txt" using 1:($2 + $3 + $4)  with l t "y(x) + dy(x) + ddy(x)"\
 	,f(x) with l lt 0 t "exact solution"\
 	
