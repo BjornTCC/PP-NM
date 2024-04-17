@@ -3,6 +3,8 @@ LIBS = $(addprefix -reference:,$(filter %.dll,$^)) # macros
 MKEXE = mcs -target:exe -out:$@ $(LIBS) $(CODE)
 MKLIB = mcs -target:library -out:$@ $(LIBS) $(CODE)
 
+SVD.exe: matlib.dll SVD.cs; $(MKEXE)
+
 LU.exe: matlib.dll LU.cs; $(MKEXE)
 
 cholesky.exe: matlib.dll cholesky.cs; $(MKEXE)
