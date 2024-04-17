@@ -312,10 +312,10 @@
 		L473.06,346.66 L477.43,348.04 L481.80,349.37 L486.16,350.64 L490.53,351.84 L494.89,352.99 L499.26,354.08 L503.62,355.11
 		L507.99,356.08 L512.35,357.00 L516.72,357.86 L521.08,358.66 L525.45,359.40 L529.81,360.08  '/></g>
 	</g>
-	<g id="gnuplot_plot_2" ><title>y(x) + dy(x) + ddy(x)</title>
+	<g id="gnuplot_plot_2" ><title>y(x) + y'(x) + y''(x)</title>
 <g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
 	<g transform="translate(507.09,93.91)" stroke="none" fill="black" font-family="Arial" font-size="12.00"  text-anchor="end">
-		<text><tspan font-family="Arial" >y(x) + dy(x) + ddy(x)</tspan></text>
+		<text><tspan font-family="Arial" >y(x) + y'(x) + y''(x)</tspan></text>
 	</g>
 </g>
 <g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
