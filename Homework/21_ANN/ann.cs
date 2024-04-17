@@ -1,7 +1,9 @@
 using System;
 using static System.Math;
 
-public class ann{
+namespace ann{
+
+public class interpol{
 	public readonly int n; /* number of neurons */
 	public int steps;
 	Func<double,double> f = x => x*Exp(-x*x);	/* activation function */
@@ -10,12 +12,12 @@ public class ann{
 	public vector p; /* network parameters */
 	
 	//constructors
-	public ann(int m){
+	public interpol(int m){
 		n = m; p = new vector(3*n);
 		for(int i=0;i<n;i++){p[3*i]=0;p[3*i+1]=1; p[3*i+2]=1;}
 	}
 
-	public ann(int m, Func<double,double> g){ /* note no derivative response in this case */
+	public interpol(int m, Func<double,double> g){ /* note no derivative response in this case */
 		n = m; p = new vector(n,3); f=g;
                 for(int i=0;i<n;i++){p[3*i]=0;p[3*i+1]=1; p[3*i+2]=1;}
 	}
@@ -41,17 +43,17 @@ public class ann{
 		return res;
 	}//Iresponse
 	//train
-	public void train_interp(vector x,vector y){
+	public void train_interp(vector x,vector y, double acc=1e-10){
 		Func<vector,double> cost = delegate(vector v){double cst = 0; 
 			for(int i=0;i<x.size;i++)cst+=Pow(response(x[i],v)-y[i],2); return cst;};
-		var minip = min.downhill_sim(cost,p);
-		steps = minip.Item3;	
-		p = minip.Item1;
+		min.downhill_sim minip = new min.downhill_sim(cost,p,acc:acc);
+		steps = minip.steps;	
+		p = minip.x;
 	}
 
 }//ann
 
-public class diff_nn{
+public class diff_eq{
 	public readonly int n; /* number of hidden nodes */
 	public int steps;
         Func<double,double> f = x => x*Exp(-x*x);       /* activation function */
@@ -61,7 +63,7 @@ public class diff_nn{
         public vector p; /* network parameters */
 
 	//constructors
-        public diff_nn(int m){
+        public diff_eq(int m){
                 n = m; p = new vector(3*n);
                 for(int i=0;i<n;i++){p[3*i]=0;p[3*i+1]=1; p[3*i+2]=1;}
         }
@@ -98,22 +100,27 @@ public class diff_nn{
         }//Iresponse
 	
 	public void train(
-			Func<Func<double,double>[],double,double> Phi, /*diff equation = 0 */
-			double a, double b,						/* interval */
-			double c, 							/*starting point*/
-			double[] Fc,							/* initial values */
+			Func<double[],double,double> Phi,	/*diff equation = 0 */
+			double a, double b,			/* interval */
+			double c, 				/*starting point*/
+			double[] Fc,				/* initial values */
 			double alp=100, 
-			double bet=100){
+			double bet=100,
+			double acc=1e-10){
 		Func<vector,double> cost = delegate(vector I){
 			double res = alp*Pow(Fc[0]-response(c,I),2) + bet*Pow(Fc[1]-dresponse(c,I),2);
-			Func<double,double>[] y = {x=>response(x,I),x=>dresponse(x,I),x=>ddresponse(x,I)};
-			Func<double,double> Phi2 = x=>Pow(Phi(y,x),2);
+			Func<double,double[]> y = delegate(double t){vector vres = new vector(3);
+				vres[0]=response(t,I); vres[1]=dresponse(t,I); vres[2]=ddresponse(t,I);
+				return vres;};
+			Func<double,double> Phi2 = x=>Pow(Phi(y(x),x),2);
 			res += integrate.adint(Phi2,a,b).Item1;
 			return res;
 		};
-		var minip = min.downhill_sim(cost,p,acc: 1e-5);
-                steps = minip.Item3;
-                p = minip.Item1;
+		min.downhill_sim minip = new min.downhill_sim(cost,p,acc:acc);
+                steps = minip.steps;
+                p = minip.x;
 	}//train	
 		
 }//diff_nn
+
+}//namespace ann

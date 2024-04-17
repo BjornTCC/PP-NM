@@ -11,9 +11,9 @@ public static class main{
 		for(int i=0;i<N;i++){
 			x[i] = -1+2.0*i/(N-1); y[i] = g(x[i]);
 			Error.WriteLine($"{x[i]} {y[i]}");}
-		ann[] Networks = new ann[ns.Length];
+		ann.interpol[] Networks = new ann.interpol[ns.Length];
 		for(int i=0;i<3;i++){
-			Networks[i] = new ann(ns[i]);
+			Networks[i] = new ann.interpol(ns[i]);
 			Networks[i].train_interp(x,y);
 		}
 		int M = 100;
