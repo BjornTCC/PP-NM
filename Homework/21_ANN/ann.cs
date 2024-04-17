@@ -4,7 +4,7 @@ using static System.Math;
 namespace ann{
 
 public class interpol{
-	public readonly int n; /* number of neurons */
+	public readonly int n; 				/* number of neurons */
 	public bool train_status;
 	Func<double,double> f = x => x*Exp(-x*x);	/* activation function */
 	Func<double,double> df = x => (1-2*x*x)*Exp(-x*x); /* derivative of function */
@@ -18,7 +18,7 @@ public class interpol{
 	}
 
 	public interpol(int m, Func<double,double> g){ /* note no derivative response in this case */
-		n = m; p = new vector(n,3); f=g;
+		n = m; p = new vector(n*3); f=g;
                 for(int i=0;i<n;i++){p[3*i]=0;p[3*i+1]=1; p[3*i+2]=1;}
 	}
 	
