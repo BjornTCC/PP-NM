@@ -13,5 +13,5 @@
 | 9  | Minimisation  | 6 | 3 | 1 | 10  |
 | 10 | Neural Network| 6 | 3 | 1 | 10  |
 |----|---------------|---|---|---|-----|
-|                    total points: 100 |
+| |||||              total points: 100 |
 
