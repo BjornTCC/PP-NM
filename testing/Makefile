@@ -3,6 +3,8 @@ LIBS = $(addprefix -reference:,$(filter %.dll,$^)) # macros
 MKEXE = mcs -target:exe -out:$@ $(LIBS) $(CODE)
 MKLIB = mcs -target:library -out:$@ $(LIBS) $(CODE)
 
+QR_evd.exe: matlib.dll QR_evd.cs; $(MKEXE)
+
 lanczos.exe: matlib.dll lanczos.cs; $(MKEXE)
 
 SVD.exe: matlib.dll SVD.cs; $(MKEXE)
