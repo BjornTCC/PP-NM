@@ -34,7 +34,7 @@ public class main{
 					for(int i=0;i<n+1;i++)for(int j=0;j<n+1;j++)A_copy[i,j] = D[i,j];	
 					w[n] = A_copy[n,n];			
 				}
-                                Error.WriteLine($"Made it here! n: {n}, steps: {steps}. Δ = {w[n]-D[n,n]}");
+                                //Error.WriteLine($"Made it here! n: {n}, steps: {steps}. Δ = {w[n]-D[n,n]}");
 			}while(true);
                         for(int i=0;i<dim;i++)w[i] += shift;
 			D+= shift*matrix.id(dim);
@@ -57,7 +57,7 @@ public class main{
 			return D;
                 }
 	}//QR_evd
-
+	
 	public static int Main(){
 		int N = 3;
 		matrix A = new matrix(N);
