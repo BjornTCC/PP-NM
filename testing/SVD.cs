@@ -87,6 +87,15 @@ public static class main{
                         A[q,i] = c*Aqi - s*Api;
                         }
 	 }//Jtimes
+	
+	public matrix pseudo_inverse(double zero = 1e-8){
+		matrix inv = D.copy();
+		for(int i=0;i<inv.size1;i++){
+			if(inv[i,i] > zero)inv[i,i] = 1.0/D[i,i];
+		}
+		inv = V*inv*U.transpose();
+		return inv;
+	}//pseudo_inverse
 
 	}//SVD
 
@@ -115,6 +124,11 @@ public static class main{
                 if(res.approx(A)) WriteLine($"UDV^T = A: Test success");
                 else WriteLine($"UDV^T = A: Test Failure");
                 WriteLine("--------------------------------------------------------------");
+		matrix psinv = A_SVD.pseudo_inverse();
+		matrix test = A*psinv*A;
+		test.print("A*A^-*A");
+		if(test.approx(A)) WriteLine("Pseudo-inverse test: success");
+		else WriteLine("Pseudo-inverse test: failure");
 		return 0;
 	}//Main
 }//main
