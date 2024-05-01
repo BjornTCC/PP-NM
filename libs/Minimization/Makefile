@@ -6,6 +6,6 @@ MKLIB = mcs -target:library -out:$@ $(LIBS) $(CODE)
 all: extlib.dll min.dll
 
 extlib.dll: ../matrix/matrix.cs ../matrix/vector.cs \
-	../genlist/genlist.cs ../QRDecomp/QRGS.cs; $(MKLIB)
+	../genlist/genlist.cs ../LinEq/QRGS.cs; $(MKLIB)
 
 min.dll: min.cs extlib.dll; $(MKLIB)

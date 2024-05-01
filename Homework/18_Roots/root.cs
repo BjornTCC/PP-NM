@@ -20,25 +20,23 @@ namespace root{
 			double acc = 1e-4)
 			{
 			F = func; f_eval = 0;
-			double lambda = 1; 
 			steps = 0; f_eval = 1;
-			x = x0.copy(); vector Dx = new vector(x0.size), f0 = F(x0), f1 = f0;
+			x = x0.copy(); f = F(x0); vector f1 = f, Dx = new vector(x0.size);
 			status = true;
 			do{
 			steps++;
-			matrix J = jacobian(x,f0);
-			Dx = QRGS.solve(J, -f0);
-			lambda = 1;
+			matrix J = jacobian(x,f);
+			Dx = QRGS.solve(J, -f);
+			double lambda = 1;
 			f1 = F(x + Dx); f_eval++;
-			while(f1.norm() > (1-lambda/2)*f0.norm() && λmin < lambda){
+			while(f1.norm() > (1-lambda/2)*f.norm() && λmin < lambda){
 				lambda/=2;
 				f1 = F(x+lambda*Dx); f_eval++;
 				}
 			x+=lambda*Dx;
-			f0 = f1;
-			}while(f0.norm() >= acc && Dx.norm() >= ε*x.norm() && steps < max_steps);
+			f = f1;
+			}while(f.norm() >= acc && Dx.norm() >= ε*x.norm() && steps < max_steps);
 			if(steps >= max_steps)status = false;
-			f=f0;
 			}
 		
 		matrix jacobian(
