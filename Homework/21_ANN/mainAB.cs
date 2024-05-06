@@ -3,6 +3,18 @@ using static System.Console;
 using static System.Math;
 
 public static class main{
+
+	public static (vector, vector) bound(int n, vector min, vector max){
+		vector pmin = new vector(3*n);
+		vector pmax = new vector(3*n);
+		for(int i=0;i<n;i++){
+			pmin[3*i+0] = min[0]; pmax[3*i+0] = max[0];
+                        pmin[3*i+1] = min[1]; pmax[3*i+1] = max[1];
+                        pmin[3*i+2] = min[2]; pmax[3*i+2] = max[2];
+		}
+		return (pmin,pmax);
+	}
+
 	public static int Main(string[] args){
 		//Config extra output file
 		string outfile=null;
@@ -17,8 +29,9 @@ public static class main{
 		var outstream = new System.IO.StreamWriter(outfile,append:false);
 		
 		//start of actual program
-		int N = 40; /* number of sample points */ 
+		int N = 40; /* number of sample points */	
 		int[] ns = new int[3]{3,5,9};
+		vector max = new vector("10 10 10"), min = new vector("-10 0.001 -10");	// parameter bounds for global optimization
 		Func<double,double> g = X => Cos(5*X-1)*Exp(-X*X);
 		vector x = new vector(N), y = new vector(N);
 		for(int i=0;i<N;i++){
@@ -27,7 +40,8 @@ public static class main{
 		ann.interpol[] Networks = new ann.interpol[ns.Length];
 		for(int i=0;i<3;i++){
 			Networks[i] = new ann.interpol(ns[i]);
-			Networks[i].train_interp(x,y);
+			(vector pmin, vector pmax) = bound(ns[i],max,min);
+			Networks[i].train_interp(x,y,pmin:pmin,pmax:pmax);
 			Error.WriteLine($"Training with {ns[i]} nodes terminated with success: {Networks[i].train_status}");
 		}
 		int M = 100;

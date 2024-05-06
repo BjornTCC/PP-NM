@@ -4,22 +4,18 @@ using static System.Math;
 namespace ann{
 
 public class interpol{
-	public readonly int n; 				/* number of neurons */
+	public readonly int n; 					/* number of neurons */
 	public bool train_status;
-	Func<double,double> f = x => x*Exp(-x*x);	/* activation function */
-	Func<double,double> df = x => (1-2*x*x)*Exp(-x*x); /* derivative of function */
-	Func<double,double> If = x => -Exp(-x*x)/2;	/* antiderivative of function */
-	public vector p; /* network parameters */
+	Func<double,double> f = x => x*Exp(-x*x);		/* activation function */
+	Func<double,double> df = x => (1-2*x*x)*Exp(-x*x); 	/* derivative of function */
+	Func<double,double> If = x => -Exp(-x*x)/2;		/* antiderivative of function */
+	public vector p; 					/* network parameters */
+	public double val;					/* value of cost function after training */
 	
 	//constructors
 	public interpol(int m){
 		n = m; p = new vector(3*n);
 		for(int i=0;i<n;i++){p[3*i]=0;p[3*i+1]=1; p[3*i+2]=1;}
-	}
-
-	public interpol(int m, Func<double,double> g){ /* note no derivative response in this case */
-		n = m; p = new vector(n*3); f=g;
-                for(int i=0;i<n;i++){p[3*i]=0;p[3*i+1]=1; p[3*i+2]=1;}
 	}
 	
 	//Response
@@ -43,12 +39,25 @@ public class interpol{
 		return res;
 	}//Iresponse
 	//train
-	public void train_interp(vector x,vector y, double acc=1e-10){
+	public void train_interp(vector x,vector y, double acc=1e-10, vector pmin = null, vector pmax = null){
 		Func<vector,double> cost = delegate(vector v){double cst = 0; 
 			for(int i=0;i<x.size;i++)cst+=Pow(response(x[i],v)-y[i],2); return cst;};
-		min.downhill_sim minip = new min.downhill_sim(cost,p,acc:acc);
-		train_status = minip.status;	
-		p = minip.x;
+		
+		if(pmin != null && pmax != null){ 		/* for global optimization */
+			if(pmin.size != 3*n) throw new System.ArgumentException($"train_interp: invalid size of parameter space: {pmin.size} != 3*dim = {3*n}.");
+                	else if(pmax.size != 3*n) throw new System.ArgumentException($"train_interp: invalid size of parameter space: {pmax.size} != 3*dim = {3*n}.");
+			min.glo_sto minip = new min.glo_sto(cost,pmin,pmax,5,acc:acc,d:5);
+			train_status = minip.status;
+                        p = minip.x;
+                        val = minip.f;
+		}
+		else if(pmin == null && pmax == null){ 		/* purely local optimization */
+			min.downhill_sim minip = new min.downhill_sim(cost,p,acc:acc);
+                        train_status = minip.status;
+                        p = minip.x;
+                        val = minip.f;
+		}	
+		else throw new ArgumentException($"train_interp: Must provide both pmin and pmax or neither.");
 	}
 
 }//ann

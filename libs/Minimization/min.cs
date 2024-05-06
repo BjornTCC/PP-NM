@@ -409,7 +409,7 @@ namespace min{
 	public readonly bool status;
 
 	//constructor
-	public glo_sto(Func<vector,double> φ, vector a, vector b, int seconds,double acc =1e-10){
+	public glo_sto(Func<vector,double> φ, vector a, vector b, int seconds,double acc =1e-10,double d = 1){
 		dim = a.size;
 		f_eval = 0;
 		f = Double.PositiveInfinity;
@@ -420,10 +420,10 @@ namespace min{
 			f_eval++;
 			halton(f_eval, dim, x_temp);
 			for(int i=0;i<dim;i++) x_temp[i] = a[i] + x_temp[i]*(b[i]-a[i]);
-			double f_temp = φ(x);
+			double f_temp = φ(x_temp);
 			if(f_temp < f){f = f_temp; x = x_temp;}
 		}while((DateTime.Now-start_time).Seconds < seconds);
-		min.downhill_sim mini = new min.downhill_sim(φ,x,acc);
+		min.downhill_sim mini = new min.downhill_sim(φ,x,acc,d:d);
 		x = mini.x;
 		f = mini.f;
 		f_eval += mini.f_eval;
