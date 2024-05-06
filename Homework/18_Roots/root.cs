@@ -19,16 +19,17 @@ namespace root{
 			int max_steps = 9999,
 			double acc = 1e-4)
 			{
-			F = func; f_eval = 0;
-			steps = 0; f_eval = 1;
-			x = x0.copy(); f = F(x0); vector f1 = f.copy(), Dx = new vector(x0.size);
+			F = func;
+			steps = 0; 
+			f_eval = 1;
+			x = x0.copy(); f = F(x0);
 			status = false;
 			do{
 			steps++;
 			matrix J = jacobian(x,f);
-			Dx = QRGS.solve(J, -f);
+			vector Dx = QRGS.solve(J, -f);
 			double lambda = 1;
-			f1 = F(x + Dx); f_eval++;
+			vector f1 = F(x + Dx); f_eval++;
 			while(f1.norm() > (1-lambda/2)*f.norm() && λmin < lambda){
 				lambda/=2;
 				f1 = F(x+lambda*Dx); f_eval++;
@@ -71,27 +72,26 @@ namespace root{
 			vector x0, 
 			double acc = 1e-4,
 			int max_steps = 9999){
-		F = func; f_eval = 1; status = false;
-		double lambda = 1; 
-		steps = 0; int _steps = 0;
-	        x = x0.copy(); vector Dx = new vector(x0.size);
-		f = F(x0); vector f1 = f.copy();
-		double a = 0, b = 0, c = 0;
+		F = func; 
+		f_eval = 1; 
+		steps = 0;
+	        x = x0.copy(); 
+		f = F(x0); 
+                status = false;
 		do{
                 steps++;
 		matrix J = jacobian(x,f);
-                Dx = QRGS.solve(J, -f);
-		lambda = 1;
-	       	f1 = F(x + Dx);	f_eval++;
-		_steps = 0;
-		c = 0.5*f.dot(f);                             //compute quad. interpolation
-                b = f.dot(J*Dx);
-		while(f1.norm() > (1-lambda/2)*f.norm() && _steps<3){		//compute quad. interpolation
-				a = (f1.dot(f1)-c)/(lambda*lambda) - b/lambda;
-				if(0.1<-b/(2*a) && -b/(2*a)<=1)lambda = -b/(2*a);	//we wish to have lambda in (0,1]
-				else lambda/=2;
-				f1 = F(x+lambda*Dx); f_eval++;
-				_steps++;
+                vector Dx = QRGS.solve(J, -f);
+	       	vector f1 = F(x + Dx);	f_eval++;
+		double c = 0.5*f.dot(f);                             //compute quad. interpolation
+                double b = f.dot(J*Dx);
+		double λ = 1;
+		for(int i=0;i<3;i++){		//compute quad. interpolation
+				double a = (f1.dot(f1)-c)/(λ*λ) - b/λ;
+				if(0.1<-b/(2*a) && -b/(2*a)<=1)λ = -b/(2*a);	//we wish to have lambda in (0,1]
+				else λ/=2;
+				f1 = F(x+λ*Dx); f_eval++;
+				if(f1.norm() < (1-λ/2)*f.norm()) break;
 				}
 		x+=lambda*Dx;
 		f=f1;
