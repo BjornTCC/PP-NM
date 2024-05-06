@@ -21,8 +21,8 @@ namespace root{
 			{
 			F = func; f_eval = 0;
 			steps = 0; f_eval = 1;
-			x = x0.copy(); f = F(x0); vector f1 = f, Dx = new vector(x0.size);
-			status = true;
+			x = x0.copy(); f = F(x0); vector f1 = f.copy(), Dx = new vector(x0.size);
+			status = false;
 			do{
 			steps++;
 			matrix J = jacobian(x,f);
@@ -36,7 +36,7 @@ namespace root{
 			x+=lambda*Dx;
 			f = f1;
 			}while(f.norm() >= acc && Dx.norm() >= ε*x.norm() && steps < max_steps);
-			if(steps >= max_steps)status = false;
+			if(f.norm() < acc)status = true;
 			}
 		
 		matrix jacobian(
@@ -71,21 +71,22 @@ namespace root{
 			vector x0, 
 			double acc = 1e-4,
 			int max_steps = 9999){
-		F = func; f_eval = 1; status = true;
+		F = func; f_eval = 1; status = false;
 		double lambda = 1; 
 		steps = 0; int _steps = 0;
-	        x = x0.copy(); vector Dx = new vector(x0.size), f0 = F(x0), f1 = f0;
+	        x = x0.copy(); vector Dx = new vector(x0.size);
+		f = F(x0); vector f1 = f.copy();
 		double a = 0, b = 0, c = 0;
 		do{
                 steps++;
-		matrix J = jacobian(x,f0);
-                Dx = QRGS.solve(J, -f0);
+		matrix J = jacobian(x,f);
+                Dx = QRGS.solve(J, -f);
 		lambda = 1;
 	       	f1 = F(x + Dx);	f_eval++;
 		_steps = 0;
-		c = 0.5*f0.dot(f0);                             //compute quad. interpolation
-                b = f0.dot(J*Dx);
-		while(f1.norm() > (1-lambda/2)*f0.norm() && _steps<3){		//compute quad. interpolation
+		c = 0.5*f.dot(f);                             //compute quad. interpolation
+                b = f.dot(J*Dx);
+		while(f1.norm() > (1-lambda/2)*f.norm() && _steps<3){		//compute quad. interpolation
 				a = (f1.dot(f1)-c)/(lambda*lambda) - b/lambda;
 				if(0.1<-b/(2*a) && -b/(2*a)<=1)lambda = -b/(2*a);	//we wish to have lambda in (0,1]
 				else lambda/=2;
@@ -93,10 +94,9 @@ namespace root{
 				_steps++;
 				}
 		x+=lambda*Dx;
-		f0=f1;
-                }while(f0.norm() >= acc && Dx.norm() >= ε*x.norm() && steps <= max_steps);
-                if(steps >= max_steps)status = false;
-                f = f0;
+		f=f1;
+                }while(f.norm() >= acc && Dx.norm() >= ε*x.norm() && steps <= max_steps);
+                if(f.norm() < acc)status = true;
 		}
 
 		matrix jacobian(
