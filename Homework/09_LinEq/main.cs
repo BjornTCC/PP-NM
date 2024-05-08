@@ -7,28 +7,40 @@ static class main{
 		matrix A = new matrix(m,n);
 		for(int i = 0; i < m; i++){
 		for(int j = 0; j < n; j++) A[i,j] = random.NextDouble();}
+
+		WriteLine("Part A: Test QR factorization");
+
 		A.print("A = ");
 		(matrix Q, matrix R) = QRGS.decomp(A);
 		Q.print("Q = ");
 		R.print("R = ");
 		matrix QQ = Q.transpose()*Q;
-		QQ.print("QQ^T =");
+		QQ.print("Q^TQ =");
 		matrix QR = Q*R;
 		QR.print("QR =");
 
+		WriteLine("");
+		if(QR.approx(A) && QQ.approx(matrix.id(n))) WriteLine("Test; QR = A, Q orthogonal: Success");
+                else WriteLine("Test; QR = A, Q orthogonal: Failure");
+		WriteLine("");
+		WriteLine("Test linear equation solver on square matrix");
 		matrix B = new matrix(m);
-		double[] b = new double[m];
+		vector b = new vector(m);
                 for(int i = 0; i < m; i++){ 
-			b[i] = random.NextDouble();
-                	for(int j = 0; j < m; j++) B[i,j] = random.NextDouble();}
+			b[i] = 2*random.NextDouble()-1;
+                	for(int j = 0; j < m; j++) B[i,j] = 2*random.NextDouble()-1;}
 		B.print("B = ");
-		WriteLine("b = [{0}]", string.Join(",", b));
-		double[] sol = QRGS.solve(B, b);
-                WriteLine("x = [{0}]", string.Join(",", sol));
-		double[] Bx = B*sol;
-                WriteLine("Bx = [{0}]", string.Join(",", Bx));
+		b.print("b = ");
+		vector sol = QRGS.solve(B, b);
+                sol.print("x = ");
+		vector Bx = B*sol;
+                Bx.print("Bx = ");
 
-		WriteLine("Matrix inverse part:");
+		if(Bx.approx(b)) WriteLine("Test of linear equation solver: Success");
+		else WriteLine("Test of linear equation solver: Failure");
+
+		WriteLine("");
+		WriteLine("Part B, Matrix inverse:");
 		WriteLine("");
 		matrix C = new matrix(m);
                 for(int i = 0; i < m; i++){
@@ -38,6 +50,8 @@ static class main{
 		Cinv.print("C^-1 = ");
 		matrix CCinv = C*Cinv;
 		CCinv.print("C*C^-1 = ");
+		if(CCinv.approx(matrix.id(m))) WriteLine("Test of matrix inverse: Success");
+                else WriteLine("Test of matrix inverse: Failure");
 		return 0;
 	}//Main
 }//main
