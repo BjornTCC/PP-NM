@@ -3,6 +3,8 @@ LIBS = $(addprefix -reference:,$(filter %.dll,$^)) # macros
 MKEXE = mcs -target:exe -out:$@ $(LIBS) $(CODE)
 MKLIB = mcs -target:library -out:$@ $(LIBS) $(CODE)
 
+gen_evd.exe: matlib.dll gen_evd.cs; $(MKEXE)
+
 FFT.exe: matlib.dll FFT.cs; $(MKEXE)
 
 gmin.exe: matlib.dll gmin.cs; $(MKEXE)
@@ -25,7 +27,8 @@ gradtest.exe: matlib.dll gradtest.cs; $(MKEXE)
 
 matlib.dll: ../libs/matrix/matrix.cs ../libs/matrix/vector.cs \
 	../libs/LinEq/QRGS.cs ../libs/Minimization/min.cs \
-	../libs/complex/complex.cs ../libs/complex/cmath.cs; $(MKLIB)
+	../libs/complex/complex.cs ../libs/complex/cmath.cs \
+	../libs/EVD/jacobi.cs; $(MKLIB)
 
 clean:
 	$(RM) *.exe *.dll
