@@ -4,8 +4,24 @@ MKEXE = mcs -target:exe -out:$@ $(LIBS) $(CODE)
 MKLIB = mcs -target:library -out:$@ $(LIBS) $(CODE)
 
 
+Out_convolution.svg: data.txt Makefile
+	echo '\
+		set terminal svg background "white" ;\
+		set out "$@" ;\
+		set xlabel "s";\
+		set ylabel "F(s)*G(s)";\
+		set size 1,1;\
+		plot "$<" using 1:2 with l title "analytic"\
+		, "$<" using 1:3 with l title "numerical"\
+		'|tee log.gpi|gnuplot
+
 Test_Result.txt: test.exe;
-	mono $< 1> $@ 2> err.txt
+	mono $< 1> $@ 2> err1.txt
+
+data.txt: conv.exe;
+	mono $< 1> $@ 2> err2.txt
+
+conv.exe: int2.dll matlib.dll conv.cs; $(MKEXE)
 
 test.exe: int2.dll matlib.dll test.cs; $(MKEXE)
 

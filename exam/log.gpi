@@ -1,0 +1,9 @@
+\
+	set terminal svg background "white" ;\
+	set out "Out_convolution.svg" ;\
+	set xlabel "s";\
+	set ylabel "F(s)*G(s)";\
+	set size 1,1;\
+	plot "data.txt" using 1:2 with l title "analytic"\
+	, "data.txt" using 1:3 with l title "numerical"\
+	

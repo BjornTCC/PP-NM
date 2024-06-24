@@ -50,7 +50,24 @@ To test the implementation we evaluate the four (easily verified) integrals:
 
 The results are written in the file: Test\_Result.txt
 
-### Challenge:
+### Extra:
 
+The laplace transform is defined as:
+
+![equation](https://latex.codecogs.com/svg.image?F(s)=\int_0^{\infty}f(t)e^{-ts}dt)
+
+The convolution between two functions f,g is:
+
+![equation](https://latex.codecogs.com/svg.image?f*g(t)=\int&space;_0^t&space;f(u)g(t-u)du&space;)
+
+The convolution theorem states that:
+
+![equation](https://latex.codecogs.com/svg.image?\mathcal{L}(f*g)(s)=F(s)\cdot&space;G(s))
+
+We can check this theorem by numerically evaluating the resulting double integral:
+
+![equation](https://latex.codecogs.com/svg.image?F(s)G(s)=\int_{0}^{\infty}\int_{0}^{t}f(u)g(t-u)e^{-st}dudt)
+
+In the plot Out.convolution.svg the numerical and analytical results are plotted for. f(t) = te^-t, g(t) = sin(t).
 ### Evaluation:
 
