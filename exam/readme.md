@@ -6,21 +6,13 @@ The algorithm is implemented in int2.cs, compiled into the library int2.dll.
 
 The signature is:
 
-
-static (double,double,int) integ2D(
-
+	static (double,double,int) integ2D(
 			Func<double,double,double> f,
-
 			double a, double b,
-
 			Func<double,double> d,
-
 			Func<double,double> u,
-
 			double acc = 0.001,
-
 			double eps = 0.001,
-
 			int max_nfev = 9999){ ... }
 
 The function returns a tuple containing (integral estimate, error estimate, number of function evaluations).
