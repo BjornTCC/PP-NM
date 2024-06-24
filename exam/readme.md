@@ -1,10 +1,10 @@
-##Exam Project: Adaptive 2D integrator
+## Exam Project: Adaptive 2D integrator
 
-###Implementation:
+### Implementation:
 
-###Testing:
+### Testing:
 
-###Challenge:
+### Challenge:
 
-###Evaluation:
+### Evaluation:
 
