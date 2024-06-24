@@ -71,3 +71,5 @@ We can check this theorem by numerically evaluating the resulting double integra
 In the plot Out.convolution.svg the numerical and analytical results are plotted for. f(t) = te^-t, g(t) = sin(t).
 ### Evaluation:
 
+I rate myself 9/10. Subtracting one point for the superficial error calculation.
+

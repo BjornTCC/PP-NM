@@ -3,6 +3,7 @@ LIBS = $(addprefix -reference:,$(filter %.dll,$^)) # macros
 MKEXE = mcs -target:exe -out:$@ $(LIBS) $(CODE)
 MKLIB = mcs -target:library -out:$@ $(LIBS) $(CODE)
 
+default: Out_convolution.svg Test_Result.txt
 
 Out_convolution.svg: data.txt Makefile
 	echo '\
@@ -30,4 +31,4 @@ int2.dll: int2.cs matlib.dll; $(MKLIB)
 matlib.dll: ../libs/Integration/int.cs ../libs/matrix/vector.cs ../libs/matrix/matrix.cs; $(MKLIB)
 
 clean:
-	$(RM) *.dll *.exe [Oo]ut* [Ll]og* *.[Ll]og
+	$(RM) *.dll *.exe [Oo]ut* [Ll]og* *.[Ll]og err*
