@@ -18,7 +18,8 @@ public static class int2{
 				f_eval++;
 				return f(x,y);}
 			else{
-				throw new OperationCanceledException($"integ2D max_fev of {max_nfev} reached.");
+				Console.Error.WriteLine($"integ2D: max_nfev of {max_nfev} reached");
+				throw new OperationCanceledException($"integ2D: max_nfev of {max_nfev} reached.");
 			}
 		};	
 		Func<double,double> F = delegate(double x){

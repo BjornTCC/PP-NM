@@ -29,6 +29,7 @@ public class main{
 
 		for(int i=0;i<4;i++){
 			var res = int2.integ2D(fs[i],ass[i],bss[i],ds[i],us[i],max_nfev: 99999999);
+			WriteLine($"{i+1}:");
 			WriteLine($"{res.Item1} =?= {exact[i]}.");
 		       	WriteLine($"est err = {res.Item2}, exact error = {Abs(res.Item1-exact[i])} nfev = {res.Item3}");
 			WriteLine();
