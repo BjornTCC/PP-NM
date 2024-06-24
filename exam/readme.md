@@ -7,23 +7,34 @@ The algorithm is implemented in int2.cs, compiled into the library int2.dll.
 The signature is:
 
 static (double,double,int) integ2D(
+
 			Func<double,double,double> f,
+
 			double a, double b,
+
 			Func<double,double> d,
+
 			Func<double,double> u,
+
 			double acc = 0.001,
+
 			double eps = 0.001,
+
 			int max_nfev = 9999){ ... }
 
 The function returns a tuple containing (integral estimate, error estimate, number of function evaluations).
 It throws an OperationCanceledException if the maximum number of function evaluations is reached.
 
 The function works by first defining a function:
+
 ![equation](https://latex.codecogs.com/svg.image?&space;F(x)=\int_{d(x)}^{u(x)}f(x,y)dy)
+
 Which evaluates the integral using the adaptive integrator from the integration homework part C.
 This ensures that we can also submit functions which take the value double.Infinity.
+The requested absolute error passed to this integration is rescaled relative to the total requested error: 
 
-The requested absolute error is rescaled: ![equation](https://latex.codecogs.com/svg.image?\delta\to\delta/\sqrt{b-a}).
+![equation](https://latex.codecogs.com/svg.image?\delta\to\delta/\sqrt{b-a}).
+
 This is needed since the total variance in the inner integral is (roughly) scaled up by the length of the outer integration.
 
 The function F is then passed to the same adaptive integrator as before. This is also the only part that calculates the estimated error. This is quite an informal way to estimate the error since it seems the error is only accounted for along 1 dimension. However, we we see in the next section that the error estimates seem to be reliable.
