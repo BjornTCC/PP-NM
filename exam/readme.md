@@ -6,6 +6,7 @@ The algorithm is implemented in int2.cs, compiled into the library int2.dll.
 
 The signature is:
 
+
 static (double,double,int) integ2D(
 
 			Func<double,double,double> f,
